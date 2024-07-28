@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { registerUser } from '../api';
+import { registerUser } from '../api/index';
+import { TextInput, PasswordInput, Button, Container } from '@mantine/core';
 
 const Register = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
@@ -15,21 +16,35 @@ const Register = () => {
     };
 
     return (
+        <Container w="25%">
         <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={formData.username}
-                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            />
-            <button type="submit">Register</button>
-        </form>
+                <TextInput
+                    label="Email"
+                    placeholder="youremail@example.com"
+                    required
+                    mt="md"
+                    value={formData.username}
+                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                />
+                <TextInput
+                    label="Username"
+                    placeholder="Your username"
+                    required
+                    mt="md"
+                    value={formData.username}
+                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                />
+                <PasswordInput
+                    label="Password"
+                    placeholder="Your password"
+                    required
+                    mt="md"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                />
+                <Button mt="md" type="submit">Register</Button>   
+            </form>
+            </Container>
     );
 };
 
