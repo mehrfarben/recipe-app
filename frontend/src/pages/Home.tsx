@@ -8,9 +8,7 @@ import { Login } from '../components/Login';
 function Home() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false);
-  const [opened, { open, close }] = useDisclosure(false);
 
-  
 
   return (
     <AppShell
@@ -46,11 +44,10 @@ function Home() {
         <Link to="/favorites">
         <Button leftSection={<IconHeart size={30} />} justify="start" variant="subtle" color="rgba(128, 128, 128, 1)" size="md" w={"100%"} mt={"md"}>Favorites</Button>
         </Link>
-
         <Group pos="absolute" bottom={50} left={30}>
-          <Button px={50} onClick={open}>Sign In</Button>
-          <Login opened={opened} open={open} close={close} />
+          <Login />
         </Group>
+        
       </AppShell.Navbar>
 
       <AppShell.Main>

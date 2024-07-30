@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createRecipe } from '../api/index';
 import { Modal, TextInput, Button, Textarea, } from '@mantine/core';
 
 export const AddRecipe = ({ opened, close }
     : { opened: boolean, open: () => void, close: () => void }
 ) => {
-    const [formData, setFormData] = useState({ image: '', name: '', description: '',preptime: '', prep: '', ingredients: '' });
+    const [formData, setFormData] = useState({ image: '', name: '', description: '',preptime: '', prep: '', ingredients: '', author: '' });
+    const [userData, setUserData] = useState(null);
+    
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+            setFormData({ image: '', name: '', description: '',preptime: '', prep: '', ingredients: '', author: userData?.username });
+        }
+    }, []);
     
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
@@ -16,7 +25,7 @@ export const AddRecipe = ({ opened, close }
             console.error(error);
         }
         finally{
-            setFormData({ image: '', name: '', description: '',preptime: '', prep: '', ingredients: '' });
+            setFormData({ image: '', name: '', description: '',preptime: '', prep: '', ingredients: '', author: '' });
         }
     };
 
@@ -25,7 +34,7 @@ export const AddRecipe = ({ opened, close }
         <form onSubmit={handleSubmit}>
             <TextInput
                 label="Name"
-                size='md'
+
                 mb="md"
                 type="text"
                 placeholder="Name"
@@ -34,7 +43,6 @@ export const AddRecipe = ({ opened, close }
             />
             <TextInput
                 label="Image"
-                size='md'
                 mb="md"
                 type="text"
                 placeholder="Image URL"
@@ -43,7 +51,6 @@ export const AddRecipe = ({ opened, close }
             />
             <TextInput
                 label="Preparation Time"
-                size='md'
                 mb="md"
                 placeholder="1hr 30min"
                 value={formData.preptime}
@@ -51,23 +58,24 @@ export const AddRecipe = ({ opened, close }
             />
             <Textarea
                 label="Description"
-                size='md'
                 mb="md"
+                autosize
+                minRows={5}
                 placeholder="Description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
             <Textarea
                 label="Preparation"
-                size='md'
                 mb="md"
+                autosize
+                minRows={5}
                 placeholder="Add preparation steps"
                 value={formData.prep}
                 onChange={(e) => setFormData({ ...formData, prep: e.target.value })}
             />
             <TextInput
                 label="Ingredients"
-                size='md'
                 mb="md"
                 placeholder="2 Eggs, 1/2 cup sugar, 1/2 cup flour..."
                 value={formData.ingredients}
@@ -78,3 +86,4 @@ export const AddRecipe = ({ opened, close }
         </Modal>
     );
 };
+

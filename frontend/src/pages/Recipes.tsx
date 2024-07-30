@@ -5,24 +5,15 @@ import { IconHeart } from '@tabler/icons-react';
 import { fetchRecipes } from '../api/index';
 import {AddRecipe} from '../components/AddRecipe';
 import { useDisclosure } from '@mantine/hooks';
-
+import { RecipeType } from '../api/index';
 
 const Recipes = () => {
   
-  function removeNonAscii(str) {
+  function removeNonAscii(str: string) {
     return str.replace(/[^\x00-\x7F]/g, '');
   }
 
   const [opened, { open, close }] = useDisclosure(false);
-  type RecipeType = {
-    id: number;
-    name: string;
-    image: string;
-    description: string;
-    preptime: string;
-    prep: string;
-    ingredients: string;
-  };
   
     const [recipes, setRecipes] = useState<RecipeType[]>([]);
   
@@ -46,16 +37,14 @@ const Recipes = () => {
       <Container maw="80%">
         <Flex justify="space-between" mb="md">
           <Text size="xl" fw={600} >Newest Recipes</Text>
-          <Button mr={50} onClick={open}>Add New Recipe</Button>
+          <Button mr={50} bg="#1ac455" onClick={open}>Add New Recipe</Button>
           <AddRecipe opened={opened} open={open} close={close}></AddRecipe>
-
         </Flex>
   
-        
         <SimpleGrid cols={{base:1 , sm:2, lg:3, xl:4}}>
           {recipes.map((recipe) => (
             <Container>
-              <Card w={300} h={450} shadow="sm" padding="md" radius="md" withBorder>
+              <Card w={330} h={450} shadow="sm" padding="md" radius="md" withBorder>
                 <Card.Section>
                   <Image
                     src={recipe.image}
@@ -86,7 +75,7 @@ const Recipes = () => {
                 <Flex mt={26} mb={10} align="center" justify="space-between">
                   <Group gap={4}>
                     <Avatar radius="xl" />
-                    <Text>Author Name</Text>
+                    <Text>{recipe.author || "Anon User"}</Text>
                   </Group>
   
                   <Group>

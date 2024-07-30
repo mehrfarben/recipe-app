@@ -16,7 +16,18 @@ export type UserCredentials = {
     password: string;
   };
 
+  export type RecipeType = {
+    id: number;
+    name: string;
+    image: string;
+    description: string;
+    preptime: string;
+    prep: string;
+    ingredients: string;
+    author: string;
+  };
+
 export const fetchRecipes = () => API.get('/recipes');
 export const registerUser = (userData: UserCredentials) => API.post('/auth/register', userData);
 export const loginUser = (userData: UserCredentials) => API.post('/auth/login', userData);
-export const createRecipe = (recipeData: any) => API.post('/recipes', recipeData);
+export const createRecipe = (recipeData: RecipeType) => API.post('/recipes', recipeData);

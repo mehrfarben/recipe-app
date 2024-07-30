@@ -4,9 +4,9 @@ const Recipe = require('../models/recipe');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { name, description, image, preptime, prep, ingredients } = req.body;
+    const { name, description, image, preptime, prep, ingredients, author } = req.body;
 
-    const newRecipe = new Recipe({ name, description, image, preptime, prep, ingredients });
+    const newRecipe = new Recipe({ name, description, image, preptime, prep, ingredients, author });
 
     try {
         await newRecipe.save();
