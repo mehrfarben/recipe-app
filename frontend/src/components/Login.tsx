@@ -11,6 +11,7 @@ export const Login = () => {
     const [formData, setFormData] = useState({ identifier: '', password: '' });
     const [userData, setUserData] = useState<UserCredentials | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+    const[loginMessage, setLoginMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,12 +29,17 @@ export const Login = () => {
             localStorage.setItem('userData', JSON.stringify(data.user));
             setUserData(data.user);
             setIsLoggedIn(true);
-            navigate('/profile');
-            close();
-        } catch (error) {
-            console.error(error);
-        } finally {
+            navigate('/');
             setFormData({ identifier: '', password: '' });
+            close();
+            setLoginMessage('');
+        } 
+        catch (error) {
+            console.error(error);
+            setLoginMessage('Something went wrong. Please try again.');
+        }
+        finally {
+            setLoginMessage('');
         }
     };
 
@@ -81,13 +87,16 @@ export const Login = () => {
                     <Flex mt={24} justify="space-between" align="center">
                         
                         <Button type="submit">Login</Button>
+                        
 
                         <Link style={{ textDecoration: 'none', color: 'inherit' }} onClick={close} to="/register">
                             <Text size="sm">
                                 Don't have an account? Click here to register.
                             </Text>
                         </Link>
+                        
                     </Flex>
+                    <Text ta="center" mt={10} size='sm' c='red'>{loginMessage}</Text>
                 </form>
             </Modal>
         </>

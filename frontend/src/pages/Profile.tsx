@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { UserCredentials } from '../api';
+import { Text, Flex, Group, Button } from '@mantine/core';
+import { Login } from '../components/Login';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
-    const [userData, setUserData] = useState<UserCredentials[]>(null);
+    const [userData, setUserData] = useState<UserCredentials[] | null>(null);
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('userData');
@@ -12,7 +15,19 @@ const Profile = () => {
     }, []);
 
     if (!userData) {
-        return <div>Please Log in or Sign up</div>;
+        return ( 
+        <Flex direction="column" justify="center" align="center" h="80vh">
+            <Text size='xl' fw={600}>You are not signed in. Please sign in or sign up.</Text>
+            <Group mt={20}>
+                <Login/>
+                <Link to="/register">
+                <Button px={50}>Sign Up</Button>
+                </Link>
+                
+            </Group>
+            
+        </Flex>
+        )
     }
 
     return (

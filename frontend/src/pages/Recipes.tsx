@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Card, Image, Text, Button, Group, ActionIcon, Flex, Avatar, Rating, Container, SimpleGrid } from '@mantine/core';
+import { Card, Image, Text, Button, Group, ActionIcon, Flex, Avatar, Rating, Container, SimpleGrid, Tooltip } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconHeart } from '@tabler/icons-react';
 import { fetchRecipes } from '../api/index';
 import {AddRecipe} from '../components/AddRecipe';
 import { useDisclosure } from '@mantine/hooks';
 import { RecipeType } from '../api/index';
+import { IconNotes } from '@tabler/icons-react';
 
 const Recipes = () => {
   
@@ -37,7 +38,15 @@ const Recipes = () => {
       <Container maw="80%">
         <Flex justify="space-between" mb="md">
           <Text size="xl" fw={600} >Newest Recipes</Text>
-          <Button mr={50} bg="#1ac455" onClick={open}>Add New Recipe</Button>
+
+          <Container pos={'fixed'} right={100} bottom={70}>
+            <Tooltip position='left' label="Add Recipe" color='#1ac455'>
+          <ActionIcon radius="xl" size={72} bg="#1ac455" onClick={open}>
+            <IconNotes size={36} stroke={2} color="white" />
+          </ActionIcon>
+          </Tooltip>
+          </Container>
+
           <AddRecipe opened={opened} open={open} close={close}></AddRecipe>
         </Flex>
   
