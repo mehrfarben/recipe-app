@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, Text, Button, Flex } from '@mantine/core';
+import { AppShell, Burger, Group, Text, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link} from 'react-router-dom';
 import { IconUserCircle, IconHeart, IconHome2 } from '@tabler/icons-react';
@@ -9,6 +9,7 @@ function Home() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
+
   
 
   return (
@@ -24,15 +25,13 @@ function Home() {
       <AppShell.Header>
         
         <Group h="100%" w="100%" px="md">
-          
-          <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
-          <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
 
-          <Flex justify="center" align="center">
+          <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="md" />
+          <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="md" />
+
           <Link style={{ textDecoration: 'none', color: '#000' }} to="/">
           <Text size="xl" fw={800}>Recipe App</Text>
-          </Link>
-          </Flex>
+          </Link> 
           
         </Group>
       </AppShell.Header>
@@ -48,14 +47,14 @@ function Home() {
         <Button leftSection={<IconHeart size={30} />} justify="start" variant="subtle" color="rgba(128, 128, 128, 1)" size="md" w={"100%"} mt={"md"}>Favorites</Button>
         </Link>
 
-        <Flex pos="absolute" bottom={50} left={50} w={"100%"}>
-          <Button onClick={open}>Sign In</Button>
+        <Group pos="absolute" bottom={50} left={30}>
+          <Button px={50} onClick={open}>Sign In</Button>
           <Login opened={opened} open={open} close={close} />
-        </Flex>
+        </Group>
       </AppShell.Navbar>
 
       <AppShell.Main>
-
+       
         <Router/>
 
       </AppShell.Main>

@@ -3,16 +3,26 @@ const Recipe = require('../models/recipe');
 
 const router = express.Router();
 
-// router.post('/', async (req, res) => {
-//     const { img, name, desc } = req.body;
-//     const recipe = new Recipe({ img, name, desc });
-//     await recipe.save();
-//     res.status(201).send('Recipe added');
-// });
+router.post('/', async (req, res) => {
+    const { name, description, image, preptime, prep, ingredients } = req.body;
+
+    const newRecipe = new Recipe({ name, description, image, preptime, prep, ingredients });
+
+    try {
+        await newRecipe.save();
+        res.status(201).json(newRecipe);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
 
 router.get('/', async (req, res) => {
-    const recipes = await Recipe.find();
-    res.json(recipes);
+    try {
+        const recipes = await Recipe.find();
+        res.status(200).json(recipes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 module.exports = router;

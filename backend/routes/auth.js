@@ -6,16 +6,18 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
+    const user = new User({ email, username, password: hashedPassword });
     await user.save();
     res.status(201).send('User created');
 });
 
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { identifier, password } = req.body;
+    const user = await User.findOne({ 
+        $or: [ { username: identifier }, { email: identifier } ]
+    });
     if (!user) return res.status(400).send('Invalid credentials');
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(400).send('Invalid credentials');
