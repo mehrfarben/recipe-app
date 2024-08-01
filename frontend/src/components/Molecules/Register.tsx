@@ -1,19 +1,17 @@
 import { useState } from 'react';
-import { registerUser } from '../api/index';
-import { TextInput, PasswordInput, Button, Container, Text } from '@mantine/core';
+import { registerUser } from '../../api/index';
+import { TextInput, PasswordInput, Button, Flex, Fieldset} from '@mantine/core';
 
 const Register = () => {
     const [formData, setFormData] = useState({ email: '', username: '', password: '' });
-    const [registerMessage, setRegisterMessage] = useState("");
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
             const { data } = await registerUser(formData);
-            setRegisterMessage("Successfully registered. Please sign in.");
+
         } catch (error) {
             console.error(error);
-            setRegisterMessage("Something went wrong. Please try again.");
         }
         finally {
             setFormData({ email: '', username: '', password: '' });
@@ -21,8 +19,8 @@ const Register = () => {
     };
 
     return (
-        <Container w="35%">
-        <form onSubmit={handleSubmit}>
+        <Flex h='50vh' align="center" justify="center">
+        <Fieldset w="35%">
                 <TextInput
                     label="Email"
                     type='email'
@@ -48,10 +46,9 @@ const Register = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-                <Button mt="md" type="submit">Register</Button>   
-            </form>
-            <Text mt={10}>{registerMessage}</Text>
-            </Container>
+                <Button mt="md" onClick={handleSubmit}>Register</Button>   
+           </Fieldset>
+           </Flex>
     );
 };
 

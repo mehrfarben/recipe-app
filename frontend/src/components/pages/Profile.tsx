@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { UserCredentials } from '../api';
+import { UserCredentials } from '../../api';
 import { Text, Flex, Group, Button } from '@mantine/core';
-import { Login } from '../components/Login';
+import { Login } from '../Molecules/Login';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
@@ -21,7 +21,7 @@ const Profile = () => {
             <Group mt={20}>
                 <Login/>
                 <Link to="/register">
-                <Button px={50}>Sign Up</Button>
+                <Button bg='#ffba08' px={50}>Sign Up</Button>
                 </Link>
                 
             </Group>

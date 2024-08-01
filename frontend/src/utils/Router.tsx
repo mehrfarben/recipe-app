@@ -1,20 +1,22 @@
-import { Routes, Route } from "react-router-dom"
-import Recipes from "../pages/Recipes"
-import Favorites from "../pages/Favorites"
-import Profile from "../pages/Profile"
-import Register from "../components/Register"
+import { Routes, Route } from "react-router-dom";
+import Recipes from "../components/pages/Recipes";
+import Favorites from "../components/pages/Favorites";
+import Profile from "../components/pages/Profile";
+import Register from "../components/Molecules/Register";
+import RecipeDetail from "../components/pages/RecipeDetail";
 
 const Router = () => {
   return (
     <div>
-    <Routes>
+      <Routes>
         <Route path="/" element={<Recipes />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="/profile" element={<Profile />}/>
-        <Route path="/register" element={<Register />}/>
-    </Routes>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default Router
+export default Router;

@@ -1,10 +1,11 @@
 import { Modal, TextInput, PasswordInput, Button, Text, Flex } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { loginUser } from '../api/index';
+import { loginUser } from '../../api/index';
 import { useDisclosure } from '@mantine/hooks';
 import { IconLogout } from '@tabler/icons-react';
-import { UserCredentials } from '../api/index';
+import { UserCredentials } from '../../api/index';
+import DefaultLink from '../Atoms/DefaultLink';
 
 export const Login = () => {
     const [opened, { open, close }] = useDisclosure(false);
@@ -52,11 +53,11 @@ export const Login = () => {
 
     return (
         <>
-            {!isLoggedIn && <Button px={50} onClick={open}>Sign In</Button>}
+            {!isLoggedIn && <Button px={50} bg="green" onClick={open}>Sign In</Button>}
             {isLoggedIn && (
-                <Flex gap={15} direction='column' align="center">
+                <Flex gap={10} direction='column' align="center">
                     <Text fw={500} size='sm'>Welcome, {userData?.username || 'User'}.</Text>
-                    <Button leftSection={<IconLogout/>} variant='subtle' color='#808080' onClick={handleLogout}>
+                    <Button leftSection={<IconLogout/>} variant='subtle' color='#ff3131' onClick={handleLogout}>
                     Logout
                     </Button>
                 </Flex>
@@ -89,11 +90,11 @@ export const Login = () => {
                         <Button type="submit">Login</Button>
                         
 
-                        <Link style={{ textDecoration: 'none', color: 'inherit' }} onClick={close} to="/register">
+                        <DefaultLink onClick={close} to="/register">
                             <Text size="sm">
                                 Don't have an account? Click here to register.
                             </Text>
-                        </Link>
+                        </DefaultLink>
                         
                     </Flex>
                     <Text ta="center" mt={10} size='sm' c='red'>{loginMessage}</Text>
