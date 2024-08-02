@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Title, Flex } from '@mantine/core';
+import { Container} from '@mantine/core';
 
 import { fetchRecipes } from '../../api/index';
 import AddRecipeButton from '../Atoms/AddRecipeButton';
@@ -27,10 +27,7 @@ const Recipes = () => {
 
   
   return (
-      <Container maw="80%">
-        <Flex justify="center" mb="md">
-          <Title order={1} fw={700} my={15} >Newest Recipes</Title>
-        </Flex>
+      <Container maw={{base: '100%', lg: '80%'}}>
 
         <AddRecipeButton />
   

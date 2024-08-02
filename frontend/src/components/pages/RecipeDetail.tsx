@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRecipeById, RecipeType } from '../../api/index';
-import { Card, Center, Flex, Image, Text, Badge, Title, SimpleGrid } from '@mantine/core';
+import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group } from '@mantine/core';
+import { IconInnerShadowLeft, IconClock, IconUserCircle } from '@tabler/icons-react';
 
 const RecipeDetails: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -28,43 +29,65 @@ const RecipeDetails: React.FC = () => {
   if (error) return <Center h='80vh'> <Text fw={700} size='xl'>{error}</Text></Center>;
 
   return (
-    <Center >
+    <Center>
       {recipe ? (
-        <Card w='60%' shadow="sm" padding="lg" radius="md" withBorder>
+        <Card pb={50} w={{base: '100%', lg: '70%', xl: '60%'}} shadow="lg" padding="xl" radius="md">
         <Card.Section p={50}>
             <Flex direction='column' justify='center' align='center'>
 
-          <Flex pos='relative' justify='center'>
-          <Image mb={15} radius='lg' w='50%' src={recipe.image} alt={recipe.name}></Image>
-          <Title c='white' pos='absolute' bottom={0} right={270} order={1} mb={15}>{recipe.name}</Title>
+          <Flex w='100%' direction='column' align='center' justify='center' mb={30}>
+          <Image w='80%' src={recipe.image} alt={recipe.name}></Image>
+          <Container py={25} w='80%' bg='#e00000'>
+          <Title c='#f2f2f2' order={1}>{recipe.name}</Title>
+          </Container>
           </Flex>
-            <Badge size='lg' color='green' my={15}>Preparation time: {recipe.preptime}</Badge>
 
-          <Text>{recipe.description}</Text>
-          
-          <SimpleGrid mt={25} cols={2}>
+        <Flex mb={30} w='80%' justify='space-around' align='center'>
+          <Group gap={5}>
+            <IconClock size={30} color='red'/>
+            <Text size='xl' fw={700} c='red'>{recipe.preptime}</Text>
+            </Group>
             
-        <Flex direction='column'>
-          <Title ta='center' order={2}>Ingredients</Title>
-                <ul>
+            <Group gap={5}>
+            <IconUserCircle size={30} color='#FF9505'/>
+            <Text size='xl' fw={700} c='#FF9505'>{recipe.author}</Text>
+            </Group>
+            </Flex>
+          <Text mb={30} ta='left' w='85%'>{recipe.description}</Text>
+          
+        <SimpleGrid w='80%' mt={25} cols={{base: 1, lg: 2}}>
+        <Flex direction='column' >
+          <Title mb={20} order={2}>Ingredients</Title>
+                <List spacing='md'
+                icon={
+                    <IconInnerShadowLeft size={20} color='red'/>
+                }>
                 {recipe.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
+              <List.Item key={index}>
+                <Text>
+                {ingredient}
+                </Text>
+                </List.Item>
                 ))}
-                </ul>
+                </List>
         </Flex>
+        
 
-        <Flex direction='column'>
-          <Title ta='center' order={2}>Preparation Steps</Title>
-                <ol>
+        <Flex w='90%' direction='column'>
+          <Title mb={20} order={2}>Preparation Steps</Title>
+                <List center spacing='md'>
                 {recipe.prep.map((step, index) => (
-                 <li key={index}>{step}</li>
+                 <List.Item key={index}>
+                  <Text w='100%'>
+                  {step}
+                  </Text>
+                  </List.Item>
                 ))}
-                 </ol>
+                 </List>
         </Flex>
 
         </SimpleGrid>
 
-          <Text mt={25}>Author: {recipe.author}</Text>
           </Flex>
         </Card.Section>
         </Card>

@@ -1,5 +1,5 @@
 import { Modal, TextInput, PasswordInput, Button, Text, Flex } from '@mantine/core';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { loginUser } from '../../api/index';
 import { useDisclosure } from '@mantine/hooks';
@@ -53,11 +53,10 @@ export const Login = () => {
 
     return (
         <>
-            {!isLoggedIn && <Button px={50} bg="green" onClick={open}>Sign In</Button>}
+            {!isLoggedIn && <Button px={50} bg="#e00000" onClick={open}>Sign In</Button>}
             {isLoggedIn && (
                 <Flex gap={10} direction='column' align="center">
-                    <Text fw={500} size='sm'>Welcome, {userData?.username || 'User'}.</Text>
-                    <Button leftSection={<IconLogout/>} variant='subtle' color='#ff3131' onClick={handleLogout}>
+                    <Button leftSection={<IconLogout size={30}/>} variant='subtle' color='#e00000' size="md" onClick={handleLogout}>
                     Logout
                     </Button>
                 </Flex>
@@ -87,7 +86,7 @@ export const Login = () => {
                     />
                     <Flex mt={24} justify="space-between" align="center">
                         
-                        <Button type="submit">Login</Button>
+                        <Button bg='#e00000' type="submit">Login</Button>
                         
 
                         <DefaultLink onClick={close} to="/register">

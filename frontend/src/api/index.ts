@@ -32,3 +32,9 @@ export const fetchRecipeById = (id: number) => API.get(`/recipes/${id}`);
 export const registerUser = (userData: UserCredentials) => API.post('/auth/register', userData);
 export const loginUser = (userData: UserCredentials) => API.post('/auth/login', userData);
 export const createRecipe = (recipeData: RecipeType) => API.post('/recipes', recipeData);
+
+export const addRecipeToFavorites = (recipeId: number, username: string) => {
+  return API.post('/userdata/favorites', { username, recipeId });
+};
+
+export const fetchFavoriteRecipes = (username: string) => API.get(`/userdata/favorites/${username}`);

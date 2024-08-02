@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { createRecipe } from '../../api/index';
-import { Modal, TextInput, Button, Textarea, Group, Flex, TagsInput, ActionIcon } from '@mantine/core';
+import { Modal, TextInput, Button, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Container } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
+import { Login } from './Login';
 
 interface AddRecipeProps {
     opened: boolean;
@@ -9,7 +10,7 @@ interface AddRecipeProps {
 }
 
 interface FormData {
-    recipeId: number | null;
+    recipeId: string | null;
     image: string;
     name: string;
     description: string;
@@ -67,7 +68,9 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
     };
 
     const handleIngredientsChange = (value: string[]) => {
-        const filteredValue = value.filter(ingredient => ingredient.trim() !== '');
+        const filteredValue = value
+            .map(ingredient => ingredient.trim())
+            .filter(ingredient => ingredient !== '');
         setFormData(prevData => ({ ...prevData, ingredients: filteredValue }));
     };
 
@@ -104,6 +107,16 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
             });
         }
     };
+
+    if (!userData) {
+        return (
+            <Modal size="lg" opened={opened} title='Please sign in to add a recipe.' onClose={close} centered transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}>
+                <Container py={10}>
+                <Login />
+                </Container>
+            </Modal>
+        );
+    }
 
     return (
         <Modal size="lg" opened={opened} onClose={close} title="Add New Recipe" centered transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}>
@@ -142,21 +155,22 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 />
                 <Flex mb="md" direction="column">
-                    <label>Ingredients</label>
+                    <Text size='sm' fw={600}>Ingredients</Text>
                     <TagsInput
                         value={formData.ingredients}
                         onChange={handleIngredientsChange}
                         placeholder="Add ingredients"
-                        mt="sm"
                         mb="lg"
                         radius="md"
                     />
                 </Flex>
                 <Flex mb="md" direction="column">
-                    <label>Preparation Steps</label>
+                    <Text size='sm' fw={600}>Preparation Steps</Text>
                     {formData.prep.map((step, index) => (
                         <Group key={index} mb="sm" align="center">
                             <TextInput
+                                w={{base: '85%', lg: '90%'}}
+                                radius="md"
                                 placeholder={`Step ${index + 1}`}
                                 value={step}
                                 onChange={(e) => handleStepChange(index, e.target.value)}
@@ -168,7 +182,7 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
                             )}
                         </Group>
                     ))}
-                    <Button radius='xl' color='green' w="30%" mt="sm" mb='lg' variant='outline' onClick={handleAddStep}>Add Step</Button>
+                    <Button radius='xl' color='green' w="20%" mb='lg' variant='outline' onClick={handleAddStep}>Add Step</Button>
                 </Flex>
                 <Button mt="md" w="100%" type="submit">Add Recipe</Button>
             </form>

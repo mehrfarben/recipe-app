@@ -17,11 +17,11 @@ const Profile = () => {
     if (!userData) {
         return ( 
         <Flex direction="column" justify="center" align="center" h="80vh">
-            <Text size='xl' fw={600}>You are not signed in. Please sign in or sign up.</Text>
+            <Text size='xl' fw={400}>You are not signed in. Please sign in or sign up.</Text>
             <Group mt={20}>
                 <Login/>
                 <Link to="/register">
-                <Button bg='#ffba08' px={50}>Sign Up</Button>
+                <Button bg='#FF9505' px={50}>Sign Up</Button>
                 </Link>
                 
             </Group>

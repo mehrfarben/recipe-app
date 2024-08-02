@@ -10,7 +10,10 @@ import { BrowserRouter } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-    <MantineProvider>
+    <MantineProvider
+    theme={{
+      fontFamily: "Roboto, monospace, sans-serif",
+    }}>
     <App />
     </MantineProvider>
     </BrowserRouter>

@@ -1,3 +1,9 @@
-html {
+html, *, body {
   font-family: "Roboto", monospace;
+}
+
+.mantine-Fieldset-legend{
+  font-family: "Dancing Script", cursive;
+  font-weight: 600;
+  font-size: 40px !important;
 }
