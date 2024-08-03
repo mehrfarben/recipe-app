@@ -17,10 +17,6 @@ const StyledLikeButton = styled.button`
 
 const StyledLikeButtonIcon = styled(IconHeart)<{ filled: boolean }>`
   ${({ filled }) => filled && 'fill: #ff5050;'}
-
-  &:hover {
-    fill: #ff5050;
-  }
 `;
 
 const LikeButton = ({ isFavorite, onClick }: { isFavorite: boolean; onClick: () => void }) => {

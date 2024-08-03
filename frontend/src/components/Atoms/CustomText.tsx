@@ -1,6 +1,5 @@
 import { Text, TextProps } from "@mantine/core";
 import styled from "styled-components";
-import React from "react";
 
 interface CustomTextProps extends TextProps, React.PropsWithChildren<{}> {
   textOverflow?: string;

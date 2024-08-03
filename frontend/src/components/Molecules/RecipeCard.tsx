@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Image, Text, Group, Flex, SimpleGrid, Container, Avatar, Rating, Badge, Fieldset } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import Button from '../Atoms/Button';
+import Button from '../Atoms/CustomButton';
 import LikeButton from '../Atoms/LikeButton';
 import CustomFlex from '../Layout/CustomFlex';
 import CustomText from '../Atoms/CustomText';
@@ -98,8 +98,8 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
               <Flex h='100%' justify='end'>
                 <Flex w="100%" align="center" justify="space-between">
                   <Link to={`/recipe/${recipe.recipeId}`}>
-                    <Button>
-                      See full recipe
+                    <Button w={200}>
+                      See recipe detail
                     </Button>
                   </Link>
 
