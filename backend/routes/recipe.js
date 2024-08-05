@@ -4,13 +4,13 @@ const Recipe = require('../models/recipe');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { recipeId, name, description, image, preptime, prep, ingredients, author } = req.body;
+    const { recipeId, name, description, image, preptime, prep, ingredients, category, serving, author } = req.body;
 
     if (!Array.isArray(prep) || !Array.isArray(ingredients)) {
         return res.status(400).json({ message: "Prep and ingredients must be arrays" });
     }
 
-    const newRecipe = new Recipe({ recipeId, name, description, image, preptime, prep, ingredients, author });
+    const newRecipe = new Recipe({ recipeId, name, description, image, preptime, prep, ingredients, category, serving, author });
 
     try {
         await newRecipe.save();
@@ -22,12 +22,23 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const recipes = await Recipe.find();
+        const { author } = req.query;
+        console.log('Received author query:', author);
+        
+        let query = {};
+        if (author) {
+            query.author = author;
+        } else {
+            console.log('No author specified, returning all recipes');
+        }
+        const recipes = await Recipe.find(query);
         res.status(200).json(recipes);
     } catch (error) {
+        console.error('Error in /recipes route:', error);
         res.status(500).json({ message: error.message });
     }
 });
+
 
 router.get('/:recipeId', async (req, res) => {
     const { recipeId } = req.params;

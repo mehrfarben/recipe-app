@@ -29,10 +29,21 @@ const recipeSchema = mongoose.Schema({
         type: [String],
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
+    serving: {
+        type: String,
+        required: true
+    },
     author: {
         type: String,
         required: true
-    }
+    },
+    createdAt: {
+         type: Date, 
+         default: Date.now }
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);

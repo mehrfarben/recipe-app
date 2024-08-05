@@ -24,17 +24,32 @@ export type RecipeType = {
   preptime: string;
   prep: string[];
   ingredients: string[];
+  category: string;
+  serving: string;
   author: string;
 };
 
 export const fetchRecipes = () => API.get('/recipes');
+
 export const fetchRecipeById = (id: number) => API.get(`/recipes/${id}`);
+
 export const registerUser = (userData: UserCredentials) => API.post('/auth/register', userData);
+
 export const loginUser = (userData: UserCredentials) => API.post('/auth/login', userData);
+
 export const createRecipe = (recipeData: RecipeType) => API.post('/recipes', recipeData);
 
-export const addRecipeToFavorites = (recipeId: number, username: string) => {
-  return API.post('/userdata/favorites', { username, recipeId });
-};
+export const addRecipeToFavorites = (recipeId: number, username: string) => API.post('/userdata/favorites', { username, recipeId });
 
 export const fetchFavoriteRecipes = (username: string) => API.get(`/userdata/favorites/${username}`);
+
+export const fetchYourRecipes = (currentUser: string) => {
+  console.log('Fetching recipes for user in API call:', currentUser);
+  return API.get(`/recipes`, { params: { author: currentUser } });
+};
+
+export const addComment = (recipeId: number, username: string, comment: string) => API.post('/comments', { recipeId, username, comment });
+
+export const fetchComments = (recipeId: number) => API.get(`/comments/${recipeId}`);
+
+export const deleteComment = (commentId: string) => API.delete(`/comments/${commentId}`);

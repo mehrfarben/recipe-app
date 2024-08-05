@@ -5,7 +5,7 @@ import { AddRecipe } from "../Molecules/AddRecipe";
 import styled from 'styled-components';
 
 const StyledAddRecipeButton = styled.div`
-  z-index: 100;
+  z-index: 25;
   position: fixed;
   right: 100px;
   bottom: 70px;
@@ -20,8 +20,8 @@ const AddRecipeButton = () => {
 
   return (
     <StyledAddRecipeButton>
-      <Tooltip position='left' label="Add Recipe" color='#1ac455'>
-        <ActionIcon bd={15} radius={100} size={80} bg="#1ac455" onClick={open}>
+      <Tooltip position='left' label="Add Recipe" color='#ff9505'>
+        <ActionIcon bd={15} radius={100} size={80} bg="#ff9505" onClick={open}>
           <IconNotes size={45} stroke={2} color="white" />
         </ActionIcon>
       </Tooltip>

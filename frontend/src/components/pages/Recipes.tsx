@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Container} from '@mantine/core';
-
 import { fetchRecipes } from '../../api/index';
 import AddRecipeButton from '../Atoms/AddRecipeButton';
 import { RecipeType } from '../../api/index';

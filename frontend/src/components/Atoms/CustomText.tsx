@@ -7,8 +7,10 @@ interface CustomTextProps extends TextProps, React.PropsWithChildren<{}> {
 
 const StyledText = styled(Text)<CustomTextProps>`
   text-overflow: ${(props) => props.textOverflow || 'ellipsis'};
-  white-space: nowrap;
+  white-space: initial;
   overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 `;
 
 const CustomText = ({ children, textOverflow, ...props }: CustomTextProps) => {

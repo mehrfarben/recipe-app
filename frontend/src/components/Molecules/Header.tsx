@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Button, Flex, Image, Group } from "@mantine/core"
-import { IconUserCircle, IconHeart } from "@tabler/icons-react"
+import { IconUserCircle} from "@tabler/icons-react"
 import Logo from "../../assets/logotexticon.png"
 import { Login } from "./Login"
 
@@ -13,9 +13,6 @@ const Header = () => {
     <Group>
     <Link to="/profile">
         <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"100%"}>Profile</Button>
-    </Link>
-    <Link to="/favorites">
-        <Button leftSection={<IconHeart size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"100%"}>Favorites</Button>
     </Link>
     <Login/>
     </Group>

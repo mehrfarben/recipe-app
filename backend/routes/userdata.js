@@ -1,6 +1,5 @@
 const express = require('express');
 const UserData = require('../models/userdata');
-
 const router = express.Router();
 
 router.post('/favorites', async (req, res) => {

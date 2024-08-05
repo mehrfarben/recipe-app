@@ -12,7 +12,7 @@ export const Login = () => {
     const [formData, setFormData] = useState({ identifier: '', password: '' });
     const [userData, setUserData] = useState<UserCredentials | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-    const[loginMessage, setLoginMessage] = useState('');
+    const [loginMessage, setLoginMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,17 +30,13 @@ export const Login = () => {
             localStorage.setItem('userData', JSON.stringify(data.user));
             setUserData(data.user);
             setIsLoggedIn(true);
-            navigate('/');
             setFormData({ identifier: '', password: '' });
             close();
             setLoginMessage('');
-        } 
-        catch (error) {
+            window.location.reload();
+        } catch (error) {
             console.error(error);
             setLoginMessage('Something went wrong. Please try again.');
-        }
-        finally {
-            setLoginMessage('');
         }
     };
 
@@ -49,6 +45,7 @@ export const Login = () => {
         localStorage.removeItem('userData');
         setUserData(null);
         setIsLoggedIn(false);
+        window.location.reload();
     };
 
     return (
@@ -56,8 +53,8 @@ export const Login = () => {
             {!isLoggedIn && <Button px={50} bg="#e00000" onClick={open}>Sign In</Button>}
             {isLoggedIn && (
                 <Flex gap={10} direction='column' align="center">
-                    <Button leftSection={<IconLogout size={30}/>} variant='subtle' color='#e00000' size="md" onClick={handleLogout}>
-                    Logout
+                    <Button leftSection={<IconLogout size={30} />} variant='subtle' color='#e00000' size="md" onClick={handleLogout}>
+                        Logout
                     </Button>
                 </Flex>
             )}
@@ -85,16 +82,12 @@ export const Login = () => {
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
                     <Flex mt={24} justify="space-between" align="center">
-                        
                         <Button bg='#e00000' type="submit">Login</Button>
-                        
-
                         <DefaultLink onClick={close} to="/register">
                             <Text size="sm">
                                 Don't have an account? Click here to register.
                             </Text>
                         </DefaultLink>
-                        
                     </Flex>
                     <Text ta="center" mt={10} size='sm' c='red'>{loginMessage}</Text>
                 </form>

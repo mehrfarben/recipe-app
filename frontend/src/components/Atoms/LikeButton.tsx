@@ -10,13 +10,14 @@ const StyledLikeButton = styled.button`
   padding: 0;
   width: 30px;
   height: 30px;
+  margin-right: 10px;
   &:active {
     transform: scale(80%);
   }
 `;
 
 const StyledLikeButtonIcon = styled(IconHeart)<{ filled: boolean }>`
-  ${({ filled }) => filled && 'fill: #ff5050;'}
+  ${({ filled }) => filled && 'fill: #ff0000;'}
 `;
 
 const LikeButton = ({ isFavorite, onClick }: { isFavorite: boolean; onClick: () => void }) => {
