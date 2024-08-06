@@ -4,6 +4,7 @@ import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, P
 import { IconTrash } from '@tabler/icons-react';
 import Button from '../Atoms/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   recipeId: string | null;
@@ -33,6 +34,7 @@ export const AddRecipe = () => {
   });
   const [userData, setUserData] = useState<{ username: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -90,7 +92,8 @@ export const AddRecipe = () => {
         recipeId: Math.floor(Math.random() * 1000000) + 1
       };
       await createRecipe(updatedFormData);
-      close();
+      navigate('/');
+      
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
         setError('A recipe with this name already exists. Please choose a different name.');
@@ -117,7 +120,7 @@ export const AddRecipe = () => {
 
   return (
     <Flex w='100%' justify='center'>
-    <Paper shadow='xl' p={50} w='50%'>
+    <Paper shadow='xl' p={50} w={{base: '100%', md: '50%'}}>
       <Title mb={20} size={40}>Add Recipe</Title>
       <hr />
       <form onSubmit={handleSubmit}>
@@ -180,7 +183,7 @@ export const AddRecipe = () => {
           {formData.prep.map((step, index) => (
             <Group key={index} mb="sm" align="center">
               <Textarea
-                w={{ base: '85%', lg: '90%' }}
+                w={{ base: '80%', lg: '90%' }}
                 minRows={2}
                 maxRows={5}
                 autosize
@@ -196,7 +199,7 @@ export const AddRecipe = () => {
               )}
             </Group>
           ))}
-          <Button radius='xl' w="20%" mb='lg' color='white' variant='outline' onClick={handleAddStep}>Add Step</Button>
+          <Button radius='xl' w={{ base: '60%', lg: '20%' }} mb='lg' color='white' variant='outline' onClick={handleAddStep}>Add Step</Button>
         </Flex>
         {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
         <Button mt="md" radius='md' w="100%" h={50} type="submit">Add Recipe</Button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../api/index';
-import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group, Paper, Rating } from '@mantine/core';
+import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group, Paper, Rating, Loader } from '@mantine/core';
 import { IconInnerShadowLeft, IconClock, IconUserCircle, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
 import CommentForm from '../Molecules/CommentForm';
 import CommentList from '../Molecules/CommentList';
@@ -62,7 +62,7 @@ const RecipeDetails: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='#ff3131'/></Flex>;
   if (error) return <Center h='80vh'> <Text fw={700} size='xl'>{error}</Text></Center>;
 
   return (

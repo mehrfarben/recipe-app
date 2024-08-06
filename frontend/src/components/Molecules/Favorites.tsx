@@ -39,22 +39,13 @@ const Favorites = () => {
     }
   }, [favoriteIds]);
 
-  if (favoriteRecipes.length === 0) {
-    return (
-      <Flex justify='center'>
-        <Fieldset legend='Favorite Recipes' w='90%' mt={20} mb={20} radius='md' p={30}>
-          <div style={{ textAlign: 'center', padding: '20px' }}>
-            <p>No favorite recipes found.</p>
-          </div>
-        </Fieldset>
-      </Flex>
-    );
-  }
-
   return (
     <Flex justify='center'>
       <Fieldset legend='Favorite Recipes' w='100%' mt={20} mb={20} radius='md' p={30}>
-        <Carousel slideSize="25%" height={275} slideGap="md" controlSize={35} align='start' dragFree controlsOffset="xs">
+        {favoriteRecipes.length > 0 ? (
+          
+        
+      <Carousel slideSize="25%" height={275} slideGap="md" controlSize={35} align='start' dragFree controlsOffset="xs">
           {favoriteRecipes.map(recipe => (
             <Carousel.Slide key={recipe.recipeId}>
               <Card w={250} h={275} shadow="md" padding='md' radius='md' withBorder>
@@ -71,6 +62,9 @@ const Favorites = () => {
             </Carousel.Slide>
           ))}
         </Carousel>
+        ) : (
+          <Text>You have any favorite recipes.</Text>
+        )}
       </Fieldset>
     </Flex>
   );

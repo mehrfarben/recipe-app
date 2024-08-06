@@ -34,7 +34,7 @@ const Profile = () => {
 
     return (
         <Flex  justify='center' align='center'>
-            <Card p={50} w='70%' shadow='sm'>
+            <Card p={{base:15, md:50}} w={{base:'100%', md:'70%'}} shadow='sm'>
             <Text>Welcome, {userData.username}</Text>
             <Text>Email: {userData.email}</Text>
             <Favorites/>

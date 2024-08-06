@@ -25,8 +25,8 @@ const YourRecipes = () => {
             console.log('API Response:', response);
             console.log('Fetched data:', response.data);
             
-            if (Array.isArray(response.data)) {
-              setRecipes(response.data);
+            if (Array.isArray(response.data.recipes)) {
+              setRecipes(response.data.recipes);
               console.log('Recipes set:', response.data.length);
               console.log('Recipe authors:', response.data.map(r => r.author));
             } else {

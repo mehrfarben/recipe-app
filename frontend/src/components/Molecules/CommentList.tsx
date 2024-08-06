@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Text, Group, Avatar, ActionIcon, Flex, Container } from '@mantine/core';
+import { Text, Group, Avatar, ActionIcon, Flex, Container, Paper } from '@mantine/core';
 import { fetchComments, deleteComment } from '../../api/index';
 import { IconX } from '@tabler/icons-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
@@ -41,7 +41,8 @@ const CommentList = ({ recipeId }) => {
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Group py={15} key={comment._id}>
-            <Flex  p={10} bg='#fbfbfd' justify='space-between'>
+            <Flex w='100%' justify='space-between'>
+              <Paper w='100%' p={20}>
               <Avatar mr={10}/>
               <Flex  justify='space-between'>
                 <Flex  align="start" justify='space-between' direction='column'>
@@ -63,7 +64,7 @@ const CommentList = ({ recipeId }) => {
                 </ActionIcon>
               )}
               </Flex>
-              
+              </Paper>
             </Flex>
           </Group>
         ))

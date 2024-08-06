@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Container, Pagination, Group } from '@mantine/core';
+import { Container, Pagination, Group, Loader, Flex } from '@mantine/core';
 import { fetchRecipes } from '../../api/index';
-import AddRecipeButton from '../Atoms/AddRecipeButton';
 import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
 
@@ -32,7 +31,7 @@ const Recipes = () => {
   }, [currentPage]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='#ff3131'/></Flex>;
   }
 
   if (error) {
@@ -44,6 +43,7 @@ const Recipes = () => {
       <RecipeCard recipes={recipes} />
       <Group my={30} justify='end'>
         <Pagination
+          size='lg'
           total={totalPages}
           value={currentPage}
           onChange={setCurrentPage}

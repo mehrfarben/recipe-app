@@ -80,9 +80,9 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
                 </Flex>
 
                 <Flex gap={5} mih={20} align='center'>
-                <Badge color='green' variant='light' m={0}>{recipe.preptime}</Badge>
-                <Badge color='red' variant='light' m={0}>{recipe.serving} Servings</Badge>
-                <Badge color="#FF9505" variant="light">{recipe.category}</Badge>
+                <Badge size='xs' color='green' variant='light' m={0}>{recipe.preptime}</Badge>
+                <Badge size='xs' color='red' variant='light' m={0}>{recipe.serving} Servings</Badge>
+                <Badge size='xs' color="#FF9505" variant="light">{recipe.category}</Badge>
                 </Flex>
 
                   <Flex align='center' justify='space-between' mt={10} mih={60}>
@@ -96,7 +96,7 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
 
                 <Flex justify='space-between' align='center' mih={60}>
                   <Link to={`/recipe/${recipe.recipeId}`}>
-                    <Button w={{base: '180px', xl:'11vw'}}>
+                    <Button w={{base: '150px', md:'180px', xl:'11vw'}}>
                       See recipe detail
                     </Button>
                   </Link>

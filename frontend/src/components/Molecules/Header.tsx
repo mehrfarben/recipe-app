@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button, Flex, Image, Group, useMantineColorScheme, ActionIcon, Tooltip } from "@mantine/core";
-import { IconUserCircle, IconSun, IconMoonStars, IconLibraryPlus } from "@tabler/icons-react";
+import { IconUserCircle, IconSunFilled, IconMoonFilled, IconLibraryPlus } from "@tabler/icons-react";
 import Logo from "../../assets/logotexticon.png";
 import { Login } from "./Login";
 
@@ -24,9 +24,9 @@ const Header = () => {
             size="xl"
           >
             {colorScheme === "dark" ? (
-              <IconSun stroke={1.5} />
+              <IconSunFilled stroke={1.5} />
             ) : (
-              <IconMoonStars color="black" stroke={1.5} fill="black" />
+              <IconMoonFilled color="black" stroke={1.5} />
             )}
           </ActionIcon>
         </Tooltip>
