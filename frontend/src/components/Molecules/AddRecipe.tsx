@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react';
 import { createRecipe } from '../../api/index';
-import { Modal, TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Container } from '@mantine/core';
+import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper, Dialog } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
-import { Login } from './Login';
 import Button from '../Atoms/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
-
-interface AddRecipeProps {
-  opened: boolean;
-  close: () => void;
-}
 
 interface FormData {
   recipeId: string | null;
@@ -24,7 +18,7 @@ interface FormData {
   author: string;
 }
 
-export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
+export const AddRecipe = () => {
   const [formData, setFormData] = useState<FormData>({
     recipeId: null,
     image: '',
@@ -120,21 +114,15 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
     }
   };
 
-  if (!userData) {
-    return (
-      <Modal size="lg" opened={opened} title='Please sign in to add a recipe.' onClose={close} centered transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}>
-        <Container py={10}>
-          <Login />
-        </Container>
-      </Modal>
-    );
-  }
 
   return (
-    <Modal size="lg" opened={opened} onClose={close} title="Add New Recipe" centered transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}>
+    <Flex w='100%' justify='center'>
+    <Paper shadow='xl' p={50} w='50%'>
+      <Title mb={20} size={40}>Add Recipe</Title>
+      <hr />
       <form onSubmit={handleSubmit}>
-        {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
         <TextInput
+        mt={30}
           label="Name"
           mb="md"
           type="text"
@@ -191,8 +179,11 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
           <Text size='sm' fw={600}>Preparation Steps</Text>
           {formData.prep.map((step, index) => (
             <Group key={index} mb="sm" align="center">
-              <TextInput
+              <Textarea
                 w={{ base: '85%', lg: '90%' }}
+                minRows={2}
+                maxRows={5}
+                autosize
                 radius="md"
                 placeholder={`Step ${index + 1}`}
                 value={step}
@@ -200,15 +191,17 @@ export const AddRecipe = ({ opened, close }: AddRecipeProps) => {
               />
               {formData.prep.length > 1 && (
                 <ActionIcon variant='outline' color="red" onClick={() => handleRemoveStep(index)}>
-                  <IconTrash size={16} />
+                  <IconTrash size={20} />
                 </ActionIcon>
               )}
             </Group>
           ))}
           <Button radius='xl' w="20%" mb='lg' color='white' variant='outline' onClick={handleAddStep}>Add Step</Button>
         </Flex>
-        <Button mt="md" w="100%" type="submit">Add Recipe</Button>
+        {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
+        <Button mt="md" radius='md' w="100%" h={50} type="submit">Add Recipe</Button>
       </form>
-    </Modal>
+      </Paper>
+      </Flex>
   );
 };

@@ -1,39 +1,58 @@
 import { useState, useEffect } from 'react';
-import { Container} from '@mantine/core';
+import { Container, Pagination, Group } from '@mantine/core';
 import { fetchRecipes } from '../../api/index';
 import AddRecipeButton from '../Atoms/AddRecipeButton';
 import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
 
 const Recipes = () => {
+  const [recipes, setRecipes] = useState<RecipeType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-
-    const [recipes, setRecipes] = useState<RecipeType[]>([]);
-  
-    useEffect(() => {
-      async function getRecipes(): Promise<void> {
-        try {
-          const { data } = await fetchRecipes();
-          const recipes: RecipeType[] = data;
-          setRecipes(recipes);
-        } catch (error) {
-          console.error(error);
-        }
+  useEffect(() => {
+    async function getRecipes(page: number): Promise<void> {
+      setLoading(true);
+      try {
+        const { data } = await fetchRecipes(page);
+        setRecipes(data.recipes);
+        setTotalPages(data.totalPages);
+        setError(null);
+      } catch (error) {
+        console.error(error);
+        setError('Failed to fetch recipes');
+      } finally {
+        setLoading(false);
       }
-  
-      getRecipes();
-    }, []);
+    }
 
-  
+    getRecipes(currentPage);
+  }, [currentPage]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-      <Container maw={{base: '100%', lg: '80%'}}>
+    <Container maw={{ base: '100%', lg: '80%' }}>
+      <RecipeCard recipes={recipes} />
+      <Group my={30} justify='end'>
+        <Pagination
+          total={totalPages}
+          value={currentPage}
+          onChange={setCurrentPage}
+          color="#ff3131"
+          withEdges
+        />
+      </Group>
+    </Container>
+  );
+};
 
-        <AddRecipeButton />
-  
-        <RecipeCard recipes={recipes}/>
-
-      </Container>
-    );
-  };
-
-export default Recipes
+export default Recipes;

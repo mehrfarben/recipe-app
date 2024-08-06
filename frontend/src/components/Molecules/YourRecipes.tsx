@@ -43,7 +43,7 @@ const YourRecipes = () => {
 
     return (
         <Flex justify='center'>
-          <Fieldset legend='Recipes Created By You' w='100%' mt={20} mb={20} radius='md' p={30}>
+          <Fieldset legend='Recipes By You' w='100%' mt={20} mb={20} radius='md' p={30}>
             {recipes.length > 0 ? (
               <Carousel slideSize="25%" height={275} slideGap="md" controlSize={35} align='start' dragFree controlsOffset="xs">
                 {recipes.map((recipe) => (

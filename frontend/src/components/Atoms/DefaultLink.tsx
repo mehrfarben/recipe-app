@@ -6,7 +6,7 @@ interface CustomLinkProps extends LinkProps, React.PropsWithChildren<{}> {
 }
 
 const StyledLink = styled(Link)<CustomLinkProps>`
-  color: #000;
+  color: inherit;
   text-decoration: none;
 `;
 

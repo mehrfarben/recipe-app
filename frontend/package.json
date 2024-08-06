@@ -31,6 +31,7 @@
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.12",
     "embla-carousel-react": "^8.1.7",
+    "jotai": "^2.9.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",

@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipe');
+const Rating = require('../models/rating');
 
 exports.addRecipe = async (req, res) => {
     const { recipeId, name, description, image, preptime, prep, ingredients, category, serving, author } = req.body;
@@ -19,22 +20,43 @@ exports.addRecipe = async (req, res) => {
 
 exports.getRecipes = async (req, res) => {
     try {
-        const { author } = req.query;
-        console.log('Received author query:', author);
+        const { author, page = 1, limit = 12 } = req.query;
         
         let query = {};
         if (author) {
             query.author = author;
-        } else {
-            console.log('No author specified, returning all recipes');
         }
-        const recipes = await Recipe.find(query);
-        res.status(200).json(recipes);
+
+        const recipes = await Recipe.find(query)
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(Number(limit));
+
+        const totalRecipes = await Recipe.countDocuments(query);
+
+        const recipesWithRatings = await Promise.all(recipes.map(async (recipe) => {
+            const ratings = await Rating.find({ recipeId: recipe.recipeId });
+            const avgRating = ratings.length > 0
+                ? ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
+                : 0;
+            
+            return {
+                ...recipe.toObject(),
+                averageRating: Number(avgRating.toFixed(1))
+            };
+        }));
+
+        res.status(200).json({
+            totalPages: Math.ceil(totalRecipes / limit),
+            currentPage: Number(page),
+            recipes: recipesWithRatings,
+        });
     } catch (error) {
         console.error('Error in /recipes route:', error);
         res.status(500).json({ message: error.message });
     }
 };
+
 
 exports.getRecipeById = async (req, res) => {
     const { recipeId } = req.params;
@@ -44,7 +66,18 @@ exports.getRecipeById = async (req, res) => {
         if (!recipe) {
             return res.status(404).json({ message: 'Recipe not found' });
         }
-        res.status(200).json(recipe);
+
+        const ratings = await Rating.find({ recipeId: Number(recipeId) });
+        const avgRating = ratings.length > 0
+            ? ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
+            : 0;
+
+        const recipeWithRating = {
+            ...recipe.toObject(),
+            averageRating: Number(avgRating.toFixed(1))
+        };
+
+        res.status(200).json(recipeWithRating);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

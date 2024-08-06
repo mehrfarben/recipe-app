@@ -11,11 +11,13 @@ const authRoutes = require('./routes/auth');
 const recipeRoutes = require('./routes/recipe');
 const userDataRoutes = require('./routes/userdata');
 const commentRoutes = require('./routes/comments');
+const ratingRoutes = require('./routes/rating');
 
 app.use('/auth', authRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/userdata', userDataRoutes);
 app.use('/comments', commentRoutes);
+app.use('/rating', ratingRoutes);
 
 mongoose.connect('mongodb://localhost:27017/recipe-app')
     .then(() => console.log('Connected to MongoDB'))

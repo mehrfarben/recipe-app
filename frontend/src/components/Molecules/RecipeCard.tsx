@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Image, Text, Group, Flex, SimpleGrid, Container, Avatar, Rating, Badge, Fieldset } from '@mantine/core';
+import { Card, Image, Text, Group, Flex, SimpleGrid, Avatar, Rating, Badge, Fieldset } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton';
 import LikeButton from '../Atoms/LikeButton';
@@ -42,7 +42,7 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
 
     try {
       const response = await addRecipeToFavorites(recipeId, username);
-      console.log(response.data.message); // Recipe added to or removed from favorites
+      console.log(response.data.message);
 
       setFavorites((prevFavorites) => {
         if (prevFavorites.includes(recipeId)) {
@@ -64,8 +64,8 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
     <Fieldset legend='Newest Recipes' mt={20} radius='md' p={30}>
       <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }}>
         {recipes.map((recipe) => (
-          <Flex w='100%' key={recipe.name}>
-            <Card w={330} h={400} shadow="md" padding="md" radius="md" withBorder>
+          <Flex w='100%' justify='center' key={recipe.name}>
+            <Card w={330} h={'100%'} shadow="md" padding="md" radius="md" withBorder>
               <Card.Section>
                 <Image
                   src={recipe.image}
@@ -90,13 +90,13 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
                   <Avatar radius="xl" />
                   <Text ml={5}>{recipe.author || "Anon User"}</Text>
                   </Flex>
-                  <Rating defaultValue={4} />
+                  <Rating value={recipe.averageRating} readOnly fractions={2} />
                   </Flex>
 
 
                 <Flex justify='space-between' align='center' mih={60}>
                   <Link to={`/recipe/${recipe.recipeId}`}>
-                    <Button w={200}>
+                    <Button w={{base: '180px', xl:'11vw'}}>
                       See recipe detail
                     </Button>
                   </Link>

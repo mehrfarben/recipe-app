@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchRecipeById, RecipeType } from '../../api/index';
-import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group } from '@mantine/core';
+import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../api/index';
+import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group, Paper, Rating } from '@mantine/core';
 import { IconInnerShadowLeft, IconClock, IconUserCircle, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
 import CommentForm from '../Molecules/CommentForm';
 import CommentList from '../Molecules/CommentList';
@@ -12,6 +12,7 @@ const RecipeDetails: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshComments, setRefreshComments] = useState<boolean>(false);
+  const [userRating, setUserRating] = useState<number>(0);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -27,6 +28,36 @@ const RecipeDetails: React.FC = () => {
 
     fetchRecipe();
   }, [recipeId]);
+
+  useEffect(() => {
+    const fetchUserRating = async () => {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const username = userData.username;
+      if (username) {
+        try {
+          const response = await getUserRating(recipeId, username);
+          setUserRating(response.data?.rating || 0);
+        } catch (err) {
+          console.error('Failed to fetch user rating');
+        }
+      }
+    };
+
+    fetchUserRating();
+  }, [recipeId]);
+
+  const handleRatingChange = async (value) => {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const username = userData.username;
+    if (username) {
+      try {
+        await submitRating(recipeId, username, value);
+        setUserRating(value);
+      } catch (err) {
+        console.error('Failed to submit rating');
+      }
+    }
+  };
 
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
@@ -65,7 +96,9 @@ const RecipeDetails: React.FC = () => {
                 </Group>
               </Flex>
               <Text mb={30} ta='left' w='85%'>{recipe.description}</Text>
-              <SimpleGrid w='80%' mt={25} cols={{base: 1, lg: 2}}>
+              <SimpleGrid w='90%' mt={25} cols={{base: 1, lg: 2}}>
+
+                <Paper p={25}>
                 <Flex direction='column'>
                   <Title mb={20} order={2}>Ingredients</Title>
                   <List spacing='md' icon={<IconInnerShadowLeft size={20} color='red'/>}>
@@ -76,6 +109,9 @@ const RecipeDetails: React.FC = () => {
                     ))}
                   </List>
                 </Flex>
+                </Paper>
+
+                <Paper p={25}>
                 <Flex w='90%' direction='column'>
                   <Title mb={20} order={2}>Preparation Steps</Title>
                   <List center spacing='md'>
@@ -86,16 +122,22 @@ const RecipeDetails: React.FC = () => {
                     ))}
                   </List>
                 </Flex>
+                </Paper>
+
               </SimpleGrid>
+              <Flex mt={50} align='center'>
+                <Text size='xl' fw={500} mr={10}>Rate this recipe:</Text>
+              <Rating size='xl' value={userRating} onChange={handleRatingChange} />
+              </Flex>
               <Flex mt={50} direction='column' w='90%'>
               <CommentForm recipeId={recipeId} username={username} onCommentAdded={() => setRefreshComments(!refreshComments)} />
-              <CommentList recipeId={recipeId} key={refreshComments} />
+              <CommentList recipeId={recipeId} refresh={refreshComments} />
               </Flex>
             </Flex>
           </Card.Section>
         </Card>
       ) : (
-        <Text>No recipe found</Text>
+        <div>Recipe not found.</div>
       )}
     </Center>
   );

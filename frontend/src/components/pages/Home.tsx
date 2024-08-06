@@ -1,10 +1,11 @@
-import { AppShell, Group, Button, Flex, Burger } from '@mantine/core';
+import { AppShell, Group, Button, Flex, Burger, Image } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Link} from 'react-router-dom';
-import { IconUserCircle, IconHeart, IconHome2 } from '@tabler/icons-react';
+import { IconUserCircle, IconHome2, IconLibraryPlus } from '@tabler/icons-react';
 import  Router  from '../../utils/Router';
 import { Login } from '../Molecules/Login';
 import Header from '../Molecules/Header';
+import Logo from "../../assets/logotexticon.png"
+import DefaultLink from '../Atoms/DefaultLink';
 
 function Home() {
   const [opened, { toggle }] = useDisclosure();
@@ -19,20 +20,21 @@ function Home() {
       <AppShell.Header >
         <Flex align='center' h='100%'>
         <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="md" ml={25} />
+        <Flex w='80%' justify='center' hiddenFrom='md'>
+        <Image h={60} src={Logo} alt="logo" />
+        </Flex>
         <Header/>
         </Flex>
       </AppShell.Header>
 
-      <AppShell.Navbar bg='#f2f2f2' p="md" hiddenFrom='md'>
-        <Link to="/">
-        <Button leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="rgba(128, 128, 128, 1)" size="md" w={"50%"} mt={"md"}>Home</Button>
-        </Link>
-        <Link to="/profile">
-        <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="rgba(128, 128, 128, 1)" size="md" w={"50%"} mt={"md"}>Profile</Button>
-        </Link>
-        <Link to="/favorites">
-        <Button leftSection={<IconHeart size={30} />} justify="start" variant="subtle" color="rgba(128, 128, 128, 1)" size="md" w={"50%"} mt={"md"}>Favorites</Button>
-        </Link>
+      <AppShell.Navbar p="md" hiddenFrom='md'>
+
+        <Button onClick={toggle} leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/">Home</DefaultLink></Button>
+        
+        <Button onClick={toggle} leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/profile">Profile</DefaultLink></Button>
+
+        <Button onClick={toggle} leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/addrecipe">Add Recipe</DefaultLink></Button>
+        
         <Group pos="absolute" bottom={40} left={30}>
           <Login />
         </Group>

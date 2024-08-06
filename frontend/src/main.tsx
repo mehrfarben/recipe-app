@@ -14,7 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <MantineProvider
     theme={{
       fontFamily: "Roboto, monospace, sans-serif",
-    }}>
+    }}
+    defaultColorScheme="auto">
     <App />
     </MantineProvider>
     </BrowserRouter>

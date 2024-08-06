@@ -64,6 +64,10 @@ export const Login = () => {
                 title="Login"
                 yOffset="25vh"
                 transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}
+                overlayProps={{
+                    backgroundOpacity: 0.55,
+                    blur: 3,
+                  }}
             >
                 <form onSubmit={handleLogin}>
                     <TextInput

@@ -20,7 +20,7 @@ exports.getComments = async (req, res) => {
     const { recipeId } = req.params;
 
     try {
-        const comments = await Comment.find({ recipeId });
+        const comments = await Comment.find({ recipeId }).sort({ createdAt: -1 });
         res.status(200).json(comments);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
