@@ -62,7 +62,7 @@ const RecipeDetails: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
 
-  if (loading) return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='#ff3131'/></Flex>;
+  if (loading) return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
   if (error) return <Center h='80vh'> <Text fw={700} size='xl'>{error}</Text></Center>;
 
   return (
@@ -73,14 +73,14 @@ const RecipeDetails: React.FC = () => {
             <Flex direction='column' justify='center' align='center'>
               <Flex w='100%' direction='column' align='center' justify='center' mb={30}>
                 <Image w='80%' src={recipe.image} alt={recipe.name}></Image>
-                <Container py={25} w='80%' bg='#e00000'>
+                <Container py={25} w='80%' bg='primary'>
                   <Title c='#f2f2f2' order={1}>{recipe.name}</Title>
                 </Container>
               </Flex>
               <Flex mb={30} w='80%' justify='space-around' align='center'>
                 <Group gap={5}>
                   <IconClock size={30} color='red'/>
-                  <Text size='xl' fw={700} c='#ff0000'>{recipe.preptime}</Text>
+                  <Text size='xl' fw={700} c='primary'>{recipe.preptime}</Text>
                 </Group>
                 <Group gap={5}>
                   <IconUsers size={30} color='#40c057'/>

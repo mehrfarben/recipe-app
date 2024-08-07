@@ -6,12 +6,7 @@ interface CustomButtonProps extends ButtonProps {
 }
 
 const StyledCustomButton = styled(Button)<CustomButtonProps>`
-    background-color: #ff3131;
-    color: white;
     width: 100%;
-    &:hover {
-        background-color: #E00000;
-    }
         &:active {
         
             transform: scale(99%);
@@ -20,7 +15,7 @@ const StyledCustomButton = styled(Button)<CustomButtonProps>`
 
 const CustomButton = ({ children, ...props }: CustomButtonProps) => {
   return (
-    <StyledCustomButton {...props}>
+    <StyledCustomButton bg='primary' {...props}>
       {children}
     </StyledCustomButton>
   );

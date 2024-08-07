@@ -33,12 +33,12 @@ const Header = () => {
         {username ? (
           <>
             <Link to="/profile">
-              <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"100%"}>
+              <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="outline" color="primary" size="md" w={"100%"}>
                 Profile
               </Button>
             </Link>
             <Link to="/addrecipe">
-              <Button leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"100%"}>
+              <Button leftSection={<IconLibraryPlus size={30} />} justify="start" variant="outline" color="primary" size="md" w={"100%"}>
                 Add Recipe
               </Button>
             </Link>

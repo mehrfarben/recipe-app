@@ -65,7 +65,7 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
       <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }}>
         {recipes.map((recipe) => (
           <Flex w='100%' justify='center' key={recipe.name}>
-            <Card w={330} h={'100%'} shadow="md" padding="md" radius="md" withBorder>
+            <Card w={330} h={'100%'} shadow="md" padding="md" radius="lg" withBorder>
               <Card.Section>
                 <Image
                   src={recipe.image}

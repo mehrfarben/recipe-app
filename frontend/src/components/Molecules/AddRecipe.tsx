@@ -199,7 +199,7 @@ export const AddRecipe = () => {
               )}
             </Group>
           ))}
-          <Button radius='xl' w={{ base: '60%', lg: '20%' }} mb='lg' color='white' variant='outline' onClick={handleAddStep}>Add Step</Button>
+          <Button radius='xl' w={{ base: '60%', lg: '20%' }} mb='lg' color='white' variant='subtle' onClick={handleAddStep}>Add Step</Button>
         </Flex>
         {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
         <Button mt="md" radius='md' w="100%" h={50} type="submit">Add Recipe</Button>

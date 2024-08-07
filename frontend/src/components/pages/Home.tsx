@@ -29,11 +29,11 @@ function Home() {
 
       <AppShell.Navbar p="md" hiddenFrom='md'>
 
-        <Button onClick={toggle} leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/">Home</DefaultLink></Button>
+        <Button onClick={toggle} leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"50%"} mt={"md"}><DefaultLink to="/">Home</DefaultLink></Button>
         
-        <Button onClick={toggle} leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/profile">Profile</DefaultLink></Button>
+        <Button onClick={toggle} leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"50%"} mt={"md"}><DefaultLink to="/profile">Profile</DefaultLink></Button>
 
-        <Button onClick={toggle} leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="#e00000" size="md" w={"50%"} mt={"md"}><DefaultLink to="/addrecipe">Add Recipe</DefaultLink></Button>
+        <Button onClick={toggle} leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"50%"} mt={"md"}><DefaultLink to="/addrecipe">Add Recipe</DefaultLink></Button>
         
         <Group pos="absolute" bottom={40} left={30}>
           <Login />

@@ -50,10 +50,10 @@ export const Login = () => {
 
     return (
         <>
-            {!isLoggedIn && <Button px={50} bg="#e00000" onClick={open}>Sign In</Button>}
+            {!isLoggedIn && <Button px={50} bg="primary" onClick={open}>Sign In</Button>}
             {isLoggedIn && (
                 <Flex gap={10} direction='column' align="center">
-                    <Button leftSection={<IconLogout size={30} />} variant='subtle' color='#e00000' size="md" onClick={handleLogout}>
+                    <Button leftSection={<IconLogout size={30} />} variant='subtle' color='primary' size="md" onClick={handleLogout}>
                         Logout
                     </Button>
                 </Flex>
@@ -86,7 +86,7 @@ export const Login = () => {
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
                     <Flex mt={24} justify="space-between" align="center">
-                        <Button bg='#e00000' type="submit">Login</Button>
+                        <Button bg='primary' type="submit">Login</Button>
                         <DefaultLink onClick={close} to="/register">
                             <Text size="sm">
                                 Don't have an account? Click here to register.

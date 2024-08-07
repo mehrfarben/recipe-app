@@ -1,5 +1,5 @@
 html, *, body {
-  font-family: "Roboto", monospace;
+  font-family: "Poppins", monospace;
 }
 
 .mantine-Fieldset-legend{
@@ -7,3 +7,20 @@ html, *, body {
   font-weight: 600;
   font-size: 40px !important;
 }
+
+.search-bar .mantine-TextInput-input{
+  background-color: #f2f2f2 !important;
+  border: none !important;
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.search-bar .mantine-TextInput-input::placeholder{
+  color: #afafaf;
+}
+
+.search-icon{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+

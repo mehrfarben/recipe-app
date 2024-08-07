@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input, InputBase, Combobox, useCombobox } from '@mantine/core';
 
-const category = ['Breakfast', 'Lunch', 'Dinner', 'Dessert'];
+const category = ['Breakfast', 'Main Course', 'Snack', 'Dessert', 'Salad', 'Vegan', 'Soup'];
 
 interface CategoriesDropdownProps {
   onCategorySelect: (category: string) => void;
