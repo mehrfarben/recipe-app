@@ -85,10 +85,10 @@ export const Login = () => {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
-                    <Flex mt={24} justify="space-between" align="center">
-                        <Button bg='primary' type="submit">Login</Button>
+                    <Flex mt={24} justify="space-between" align="center" direction={{base: 'column', md: 'row'}}>
+                        <Button bg='primary' type="submit" w={{base:'50%', md:'30%'}}>Login</Button>
                         <DefaultLink onClick={close} to="/register">
-                            <Text size="sm">
+                            <Text size="xs" mt={{base:30, md:0}}>
                                 Don't have an account? Click here to register.
                             </Text>
                         </DefaultLink>

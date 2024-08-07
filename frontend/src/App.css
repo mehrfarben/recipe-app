@@ -1,10 +1,15 @@
 html, *, body {
-  font-family: "Poppins", monospace;
+  font-family: "Montserrat", monospace;
+}
+
+@font-face {
+  font-family: 'Monarcha';
+  src: local('Monarcha'), url(./fonts/Monarcha.woff) format('woff');
 }
 
 .mantine-Fieldset-legend{
-  font-family: "Dancing Script", cursive;
-  font-weight: 600;
+  font-family: "Monarcha", cursive;
+  font-weight: 500;
   font-size: 40px !important;
 }
 
@@ -21,6 +26,16 @@ html, *, body {
 
 .search-icon{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.mantine-Switch-track{
+  cursor: pointer !important;
+  transition: 200ms ease-in-out !important;
+}
+
+
+.mantine-Switch-thumb{
+  transition: 200ms ease-in-out !important;
 }
 
 

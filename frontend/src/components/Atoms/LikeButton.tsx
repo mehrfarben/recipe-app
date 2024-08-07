@@ -3,13 +3,17 @@ import { Flex } from '@mantine/core';
 import styled from 'styled-components';
 
 const StyledLikeButton = styled.button`
+  position: absolute;
+  top:10px;
+  right:10px;
   color: red;
   border: none;
   cursor: pointer;
-  background-color: transparent;
-  padding: 0;
-  width: 30px;
-  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 5;
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
   &:active {
     transform: scale(80%);

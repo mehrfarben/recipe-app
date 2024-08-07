@@ -61,50 +61,44 @@ const RecipeCard = ({ recipes }: RecipeCardProps) => {
   };
 
   return (
-    <Fieldset legend='Newest Recipes' mt={20} radius='md' p={30}>
-      <SimpleGrid cols={{ base: 1, sm: 2, xl: 4 }}>
+    <Fieldset legend='Newest Recipes' mt={20} radius='md' p={10}>
+      <SimpleGrid mt={30} cols={{ base: 1, sm: 2, lg:2, xl: 3 }}>
         {recipes.map((recipe) => (
-          <Flex w='100%' justify='center' key={recipe.name}>
-            <Card w={330} h={'100%'} shadow="md" padding="md" radius="lg" withBorder>
-              <Card.Section>
+          <Flex my={15} w='100%' justify='center' key={recipe.name}>
+            <Card w={375} h={'100%'} shadow="md" padding="md" radius="lg" mx={5} withBorder>
+              <Card.Section pos='relative'>
                 <Image
+                
                   src={recipe.image}
                   h={200}
                   alt="Yemek"
                 />
+                <LikeButton
+                    isFavorite={favorites.includes(recipe.recipeId)}
+                    onClick={() => handleToggleFavorite(recipe.recipeId)}
+                  />
               </Card.Section>
 
-                <Flex mih={50} align='center' justify='space-between'>
+                <Flex mt={10} mih={30} align='center' justify='space-between'>
                 <CustomText fw={500}>{recipe.name}</CustomText>
                 <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
                 </Flex>
 
-                <Flex gap={5} mih={20} align='center'>
-                <Badge size='xs' color='green' variant='light' m={0}>{recipe.preptime}</Badge>
-                <Badge size='xs' color='red' variant='light' m={0}>{recipe.serving} Servings</Badge>
-                <Badge size='xs' color="#FF9505" variant="light">{recipe.category}</Badge>
+                <Flex mt={5} mih={20} align='center'>
+                <Rating value={recipe.averageRating} readOnly fractions={2} />
                 </Flex>
 
-                  <Flex align='center' justify='space-between' mt={10} mih={60}>
-                  <Flex align='center'>
+
+                <Flex mt={20} justify='space-between' align='center' mih={60}>
+                <Flex align='center'>
                   <Avatar radius="xl" />
                   <Text ml={5}>{recipe.author || "Anon User"}</Text>
-                  </Flex>
-                  <Rating value={recipe.averageRating} readOnly fractions={2} />
-                  </Flex>
-
-
-                <Flex justify='space-between' align='center' mih={60}>
+                  </Flex> 
                   <Link to={`/recipe/${recipe.recipeId}`}>
-                    <Button w={{base: '150px', md:'180px', xl:'11vw'}}>
-                      See recipe detail
+                    <Button w={{base:'130px', md:'150px'}}>
+                      Read recipe
                     </Button>
                   </Link>
-
-                  <LikeButton
-                    isFavorite={favorites.includes(recipe.recipeId)}
-                    onClick={() => handleToggleFavorite(recipe.recipeId)}
-                  />
                   </Flex>
             </Card>
           </Flex>

@@ -1,35 +1,25 @@
 import { Link } from "react-router-dom";
-import { Button, Flex, Image, Group, useMantineColorScheme, ActionIcon, Tooltip } from "@mantine/core";
-import { IconUserCircle, IconSunFilled, IconMoonFilled, IconLibraryPlus } from "@tabler/icons-react";
-import Logo from "../../assets/logotexticon.png";
+import { Button, Flex, Image, Group } from "@mantine/core";
+import { IconUserCircle,  IconLibraryPlus } from "@tabler/icons-react";
+import DarkModeButton from "../Atoms/DarkModeButton";
+import Logo from "../../assets/logotexticon.svg";
+import LogoWhite from "../../assets/logotexticonwhite.svg";
 import { Login } from "./Login";
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
 
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
 
   return (
     <Flex visibleFrom="md" align='center' w='100%' justify='space-around'>
       <Link to="/">
-        <Image h={60} p={0} m={0} src={Logo} alt="logo" />
+        <Image darkHidden h={50} p={0} m={0} src={Logo} alt="logo" />
+        <Image lightHidden h={50} p={0} m={0} src={LogoWhite} alt="logo" />
       </Link>
       <Group>
-        <Tooltip closeDelay={200} label="Toggle color scheme">
-          <ActionIcon
-            variant="subtle"
-            color="white"
-            onClick={() => toggleColorScheme()}
-            size="xl"
-          >
-            {colorScheme === "dark" ? (
-              <IconSunFilled stroke={1.5} />
-            ) : (
-              <IconMoonFilled color="black" stroke={1.5} />
-            )}
-          </ActionIcon>
-        </Tooltip>
+<DarkModeButton/>
         {username ? (
           <>
             <Link to="/profile">

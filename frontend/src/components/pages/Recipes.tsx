@@ -42,7 +42,7 @@ const Recipes = () => {
   return (
     <>
     <HeroSection/>
-    <Container maw={{ base: '100%', lg: '80%' }}>
+    <Container maw={{ base: '100%', lg: '80%' }} p={0}>
       
       <RecipeCard recipes={recipes} />
       <Group my={30} justify='end'>
