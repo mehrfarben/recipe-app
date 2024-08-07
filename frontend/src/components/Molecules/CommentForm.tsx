@@ -20,20 +20,23 @@ const CommentForm = ({ recipeId, username, onCommentAdded }) => {
   };
 
   return (
-    <Container w='100%' p={30} mt={20}>
+    <Container w='100%' m={0}>
         <Title mb={10} order={1}>Comments</Title>
       <form onSubmit={handleSubmit}>
         <Flex direction="column" gap="sm" mt={10}>
           <Textarea
             autosize
-            minRows={2}
+            size='lg'
+            minRows={3}
             maxRows={10}
-            placeholder="Add a comment"
+            placeholder="What do you think about this recipe?"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             required
           />
-          <Button w={100} type="submit" variant='outline' color='red'>Comment</Button>
+          <Flex w='100%' justify='end'>
+          <Button w={125} type="submit" variant='outline' color='#ff0307'>Comment</Button>
+          </Flex>
         </Flex>
       </form>
     </Container>

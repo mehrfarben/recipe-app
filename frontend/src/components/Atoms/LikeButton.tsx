@@ -6,7 +6,7 @@ const StyledLikeButton = styled.button`
   position: absolute;
   top:10px;
   right:10px;
-  color: red;
+  color: #fc6160;
   border: none;
   cursor: pointer;
   background-color: white;
@@ -21,7 +21,7 @@ const StyledLikeButton = styled.button`
 `;
 
 const StyledLikeButtonIcon = styled(IconHeart)<{ filled: boolean }>`
-  ${({ filled }) => filled && 'fill: #ff0000;'}
+  ${({ filled }) => filled && 'fill: #fc6160;'}
 `;
 
 const LikeButton = ({ isFavorite, onClick }: { isFavorite: boolean; onClick: () => void }) => {

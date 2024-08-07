@@ -37,12 +37,12 @@ const CommentList = ({ recipeId }) => {
   };
 
   return (
-    <Container w='100%' p={30} pt={0}>
+    <Container w='100%' pt={0}>
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <Group py={15} key={comment._id}>
+          <Group py={10} key={comment._id}>
             <Flex w='100%' justify='space-between'>
-              <Paper w='100%' p={20}>
+              <Paper radius='lg' shadow="xs" withBorder w='100%' p={20}>
               <Avatar mr={10}/>
               <Flex  justify='space-between'>
                 <Flex  align="start" justify='space-between' direction='column'>

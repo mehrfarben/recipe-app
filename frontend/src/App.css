@@ -38,4 +38,14 @@ html, *, body {
   transition: 200ms ease-in-out !important;
 }
 
+.ingredients{
+  color: #181818;
+  border-bottom: 1px solid rgba(24, 24, 24, 0.2);
+}
+
+.recipe-details{
+  padding-left: 25px;
+  border-left: 1px solid rgba(24, 24, 24, 0.2);
+}
+
 

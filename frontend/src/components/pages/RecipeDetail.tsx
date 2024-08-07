@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../api/index';
-import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Container, Group, Paper, Rating, Loader } from '@mantine/core';
-import { IconInnerShadowLeft, IconClock, IconUserCircle, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
+import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Group, Paper, Rating, Loader, Avatar, Stack } from '@mantine/core';
+import { IconClock, IconCircle, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
+import { parseISO, format } from 'date-fns';
 import CommentForm from '../Molecules/CommentForm';
 import CommentList from '../Molecules/CommentList';
 
@@ -65,77 +66,110 @@ const RecipeDetails: React.FC = () => {
   if (loading) return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
   if (error) return <Center h='80vh'> <Text fw={700} size='xl'>{error}</Text></Center>;
 
+  const formattedDate = recipe ? format(parseISO(recipe.createdAt), 'dd MMMM yyyy') : '';
+
   return (
     <Center>
       {recipe ? (
-        <Card pb={50} w={{base: '100%', lg: '70%', xl: '60%'}} shadow="lg" padding="xl" radius="md">
-          <Card.Section p={50}>
-            <Flex direction='column' justify='center' align='center'>
-              <Flex w='100%' direction='column' align='center' justify='center' mb={30}>
-                <Image w='80%' src={recipe.image} alt={recipe.name}></Image>
-                <Container py={25} w='80%' bg='primary'>
-                  <Title c='#f2f2f2' order={1}>{recipe.name}</Title>
-                </Container>
-              </Flex>
-              <Flex mb={30} w='80%' justify='space-around' align='center'>
-                <Group gap={5}>
-                  <IconClock size={30} color='red'/>
-                  <Text size='xl' fw={700} c='primary'>{recipe.preptime}</Text>
-                </Group>
-                <Group gap={5}>
-                  <IconUsers size={30} color='#40c057'/>
-                  <Text size='xl' fw={700} c='#40c057'>{recipe.serving} Servings</Text>
-                </Group>
-                <Group gap={5}>
-                  <IconToolsKitchen2 size={30} color='#228be6'/>
-                  <Text size='xl' fw={700} c='#228be6'>{recipe.category}</Text>
-                </Group>
-                <Group gap={5}>
-                  <IconUserCircle size={30} color='#FF9505'/>
-                  <Text size='xl' fw={700} c='#FF9505'>{recipe.author}</Text>
-                </Group>
-              </Flex>
-              <Text mb={30} ta='left' w='85%'>{recipe.description}</Text>
-              <SimpleGrid w='90%' mt={25} cols={{base: 1, lg: 2}}>
+        <Card w={{base: '100%', md: '85%'}} withBorder padding="xl" radius="lg" >
 
-                <Paper p={25}>
-                <Flex direction='column'>
-                  <Title mb={20} order={2}>Ingredients</Title>
-                  <List spacing='md' icon={<IconInnerShadowLeft size={20} color='red'/>}>
-                    {recipe.ingredients.map((ingredient, index) => (
-                      <List.Item key={index}>
-                        <Text>{ingredient}</Text>
-                      </List.Item>
-                    ))}
-                  </List>
-                </Flex>
-                </Paper>
+<Card.Section mt={20} px={75}>
+<Title ff={'Montserrat'} size={60} fw={600} mb={30}>{recipe.name}</Title>
 
-                <Paper p={25}>
-                <Flex w='90%' direction='column'>
-                  <Title mb={20} order={2}>Preparation Steps</Title>
-                  <List center spacing='md'>
-                    {recipe.prep.map((step, index) => (
-                      <List.Item key={index}>
-                        <Text w='100%'>{step}</Text>
-                      </List.Item>
-                    ))}
-                  </List>
-                </Flex>
-                </Paper>
 
-              </SimpleGrid>
-              <Flex mt={50} align='center'>
-                <Text size='xl' fw={500} mr={10}>Rate this recipe:</Text>
-              <Rating size='xl' value={userRating} onChange={handleRatingChange} />
-              </Flex>
-              <Flex mt={50} direction='column' w='90%'>
+<Flex w='100%' justify='space-between'>
+<Flex gap={25}>
+
+  <Group mr={50} gap={10}>
+  <Avatar size='lg'/>
+  <Stack gap={0}>
+    <Text size='xl' fw={600}>{recipe.author}</Text>
+    <Text size='md'>{formattedDate}</Text>
+  </Stack>
+  </Group>
+
+  <Group className='recipe-details' gap={10}>
+  <IconToolsKitchen2 stroke={1.5} size={40} />
+  <Stack gap={0}>
+    <Text size='md' fw={600}>Category</Text>
+    <Text size='sm'>{recipe.category}</Text>
+  </Stack>
+  </Group>
+
+  <Group className='recipe-details' gap={10}>
+    <IconClock stroke={1.5} size={40} />
+    <Stack gap={0}>
+      <Text size='md' fw={600}>Prep Time</Text>
+      <Text size='sm'>{recipe.preptime}</Text>
+    </Stack>
+  </Group>
+
+  <Group className='recipe-details' gap={10}>
+    <IconUsers stroke={1.5} size={40} />
+    <Stack gap={0}>
+      <Text size='md' fw={600}>Serving Size</Text>
+      <Text size='sm'>{recipe.serving} Servings</Text>
+    </Stack>
+  </Group>
+</Flex>
+
+  <Paper p={20} radius='lg' shadow='md' withBorder>
+    <Flex>
+  <Text size='lg' fw={600} mr={10}>Rate this recipe:</Text>
+  <Rating size='lg' value={userRating} onChange={handleRatingChange} />
+  </Flex>
+  </Paper>
+
+</Flex>
+</Card.Section>
+
+<Card.Section p={75} pb={0}>
+  <SimpleGrid cols={{ base: 1, lg: 2 }}>
+    <Image h='100%' radius='lg' src={recipe.image} alt={recipe.name}></Image>
+
+    <Flex justify='end'>
+      <Paper p={40} w={{base:'100%', lg:'95%'}} radius='lg' shadow='lg' bg='rgba(255, 186, 9, 0.4)'>
+        <Flex direction='column'>
+            <Title ff={'Montserrat'} mb={10} order={1} fw={600}>Ingredients</Title>
+              {recipe.ingredients.map((ingredient, index) => (
+              <Text className='ingredients' mt={20} key={index}>
+                {ingredient}
+              </Text>
+              ))}
+        </Flex>
+      </Paper>
+    </Flex>
+  </SimpleGrid>
+</Card.Section>
+
+<Card.Section px={75} py={30}>
+  <Paper bg='transparent' p={30}>
+<Text>{recipe.description}</Text>
+  </Paper>
+</Card.Section>
+
+<Card.Section p={75} pt={0}>
+<Paper bg={'rgba(255, 3, 7, 0.4)'} p={40} radius='lg' shadow='lg'>
+  <Flex w='90%' direction='column'>
+      <Title mb={20} order={2}>Preparation Steps</Title>
+          <List fw={700} type='ordered' listStyleType='decimal' center spacing='lg'>
+              {recipe.prep.map((step, index) => (
+                <List.Item key={index}>
+                  <Text w='100%'>{step}</Text>
+                </List.Item>
+              ))}
+          </List>
+  </Flex>
+</Paper>
+</Card.Section>
+
+
+
+              <Flex w='100%' direction='column' align='center' p={40} gap={20}>
               <CommentForm recipeId={recipeId} username={username} onCommentAdded={() => setRefreshComments(!refreshComments)} />
               <CommentList recipeId={recipeId} refresh={refreshComments} />
               </Flex>
-            </Flex>
-          </Card.Section>
-        </Card>
+              </Card>
       ) : (
         <div>Recipe not found.</div>
       )}
