@@ -51,6 +51,9 @@ export const fetchYourRecipes = (currentUser: string) =>
 
 export const deleteRecipe = (recipeId: string) => API.delete(`/recipes/${recipeId}`);
 
+export const updateRecipe = (recipeId: number, recipeData: RecipeType) =>
+  API.put(`/recipes/${recipeId}`, recipeData);
+
 export const addComment = (recipeId: number, username: string, comment: string) => 
   API.post('/comments', { recipeId, username, comment });
 

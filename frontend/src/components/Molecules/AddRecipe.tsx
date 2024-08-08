@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { createRecipe } from '../../api/index';
-import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper } from '@mantine/core';
+import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper, Dialog } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import Button from '../Atoms/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
 import { useNavigate } from 'react-router-dom';
-import NotSignedIn from '../Pages/NotSignedIn';
 
 interface FormData {
   recipeId: string | null;
@@ -120,8 +119,6 @@ export const AddRecipe = () => {
 
 
   return (
-    <>
-    {userData ? (
     <Flex w='100%' justify='center'>
     <Paper shadow='xl' p={50} w={{base: '100%', md: '50%'}}>
       <Title mb={20} size={40}>Add Recipe</Title>
@@ -209,10 +206,5 @@ export const AddRecipe = () => {
       </form>
       </Paper>
       </Flex>
-        ): (
-          <NotSignedIn />
-            
-        ) }
-        </>
   );
 };

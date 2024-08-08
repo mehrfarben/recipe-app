@@ -55,10 +55,11 @@ const YourRecipes = () => {
                   <Card.Section>
                     <Image h={150} src={recipe.image} alt={recipe.name} />
                   </Card.Section>
-                  <RecipeEditButton 
-                    recipeId={recipe.recipeId}
-                    onDelete={handleDeleteRecipe} 
-                  />
+                  <RecipeEditButton
+                   recipeId={recipe.recipeId}
+                    onDelete={handleDeleteRecipe}
+                    recipe={recipe}
+/>
                   <Flex gap={10} direction="column" w='100%' justify='center' align='center'>
                     <Text fw={700} size="sm" mt={10}>{recipe.name}</Text>
                     <Link to={`/recipe/${recipe.recipeId}`}>

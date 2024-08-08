@@ -110,3 +110,35 @@ exports.deleteRecipe = async (req, res) => {
     }
 };
 
+
+exports.updateRecipe = async (req, res) => {
+    const { recipeId } = req.params;
+    const { name, description, image, preptime, prep, ingredients, category, serving, author } = req.body;
+  
+    if (!Array.isArray(prep) || !Array.isArray(ingredients)) {
+      return res.status(400).json({ message: "Prep and ingredients must be arrays" });
+    }
+  
+    try {
+      const recipe = await Recipe.findOne({ recipeId: Number(recipeId) });
+      if (!recipe) {
+        return res.status(404).json({ message: "Recipe not found" });
+      }
+  
+      recipe.name = name;
+      recipe.description = description;
+      recipe.image = image;
+      recipe.preptime = preptime;
+      recipe.prep = prep;
+      recipe.ingredients = ingredients;
+      recipe.category = category;
+      recipe.serving = serving;
+      recipe.author = author;
+  
+      await recipe.save();
+      res.status(200).json(recipe);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+

@@ -1,7 +1,9 @@
 import { IconSettings, IconTrash, IconEdit } from '@tabler/icons-react';
-import { Flex, Menu, Text } from '@mantine/core';
+import { Flex, Menu, Text, Container } from '@mantine/core';
 import styled from 'styled-components';
 import { modals } from '@mantine/modals';
+import { useNavigate } from 'react-router-dom';
+import { RecipeType } from '../../api'; // Import your RecipeType
 
 const StyledEditButton = styled.button`
   position: absolute;
@@ -47,26 +49,32 @@ const RecipeEditButton = ({ recipeId, onDelete }: RecipeEditButtonProps) => {
   });
 
   return (
-    <Menu>
-      <Menu.Target>
-        <StyledEditButton>
-          <Flex align='center' justify='center'>
-            <IconSettings size={30} />
-          </Flex>
-        </StyledEditButton>
-      </Menu.Target>
-      <Menu.Dropdown>
-        <Menu.Item leftSection={<IconEdit size={14} />}>Edit Recipe</Menu.Item>
-        <Menu.Divider />
-        <Menu.Item
-          color='red'
-          leftSection={<IconTrash size={14} />}
-          onClick={() => openDeleteModal()}
-        >
-          Delete Recipe
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+    <Container>
+      <Menu>
+        <Menu.Target>
+          <StyledEditButton>
+            <Flex align='center' justify='center'>
+              <IconSettings size={30} />
+            </Flex>
+          </StyledEditButton>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item 
+            leftSection={<IconEdit size={14} />}
+          >
+            Edit Recipe
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item
+            color='red'
+            leftSection={<IconTrash size={14} />}
+            onClick={() => openDeleteModal()}
+          >
+            Delete Recipe
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </Container>
   );
 };
 
