@@ -54,3 +54,26 @@ html, *, body {
   background-size: cover;
   background-position: left;
 }
+
+.footer {
+  margin-top: rem(120px);
+  border-top: 1px solid rgba(24, 24, 24, 0.15);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--mantine-spacing-xl);
+  padding-bottom: var(--mantine-spacing-xl);
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    flex-direction: column;
+  }
+}
+
+.links {
+  @media (max-width: $mantine-breakpoint-xs) {
+    margin-top: var(--mantine-spacing-md);
+  }
+}

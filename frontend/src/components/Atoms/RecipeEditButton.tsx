@@ -7,7 +7,7 @@ const StyledEditButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  color: gray;
+  color: black;
   border: none;
   cursor: pointer;
   background-color: white;

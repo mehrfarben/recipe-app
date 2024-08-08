@@ -9,6 +9,7 @@ import LogoWhite from "./assets/logotexticonwhite.svg";
 import DefaultLink from './components/Atoms/DefaultLink';
 import DarkModeButton from './components/Atoms/DarkModeButton';
 import { Link } from 'react-router-dom';
+import { Footer } from './components/Molecules/Footer';
 
 function Home() {
   const [opened, { toggle }] = useDisclosure();
@@ -49,6 +50,7 @@ function Home() {
 
       <AppShell.Main>
         <Router/>
+        <Footer/>
       </AppShell.Main>
       
     </AppShell>

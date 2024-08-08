@@ -60,7 +60,7 @@ const YourRecipes = () => {
                     onDelete={handleDeleteRecipe} 
                   />
                   <Flex gap={10} direction="column" w='100%' justify='center' align='center'>
-                    <Text fw={700} size="sm" my="md">{recipe.name}</Text>
+                    <Text fw={700} size="sm" mt={10}>{recipe.name}</Text>
                     <Link to={`/recipe/${recipe.recipeId}`}>
                       <Button size="xs" w='100%'>See recipe detail</Button>
                     </Link>

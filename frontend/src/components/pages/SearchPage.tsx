@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { fetchRecipes } from '../../api/index';
 import { useLocation } from 'react-router-dom';
 import RecipeCard from '../Molecules/RecipeCard';
-import { Pagination, Text, SimpleGrid, Flex, Group, Title, Container, Card, Image } from '@mantine/core';
+import { Pagination, Text, Loader, Flex, Group, Title, Container, Card, Image } from '@mantine/core';
 import SearchBar from '../Atoms/SearchBar';
-import Panel from '../../assets/searchpanel.png';
 
 const SearchPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -14,6 +13,7 @@ const SearchPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const searchTerm = queryParams.get('query') || '';
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -21,6 +21,7 @@ const SearchPage = () => {
         const response = await fetchRecipes(page, 12, '', searchTerm);
         setRecipes(response.data.recipes);
         setTotalPages(response.data.totalPages);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
@@ -28,6 +29,11 @@ const SearchPage = () => {
 
     getRecipes(currentPage);
   }, [searchTerm, currentPage]);
+
+
+  if (isLoading) {
+    return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
+  }
 
   return (
 

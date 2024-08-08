@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Recipe = require('../models/recipe');
 const Rating = require('../models/rating');
 

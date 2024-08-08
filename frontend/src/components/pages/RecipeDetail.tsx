@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../api/index';
 import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Group, Paper, Rating, Loader, Avatar, Stack } from '@mantine/core';
-import { IconClock, IconCircle, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
+import { IconClock, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
 import { parseISO, format } from 'date-fns';
 import CommentForm from '../Molecules/CommentForm';
 import CommentList from '../Molecules/CommentList';
