@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import Recipes from "../components/pages/Recipes";
-import Profile from "../components/pages/Profile";
+import Recipes from "../components/Pages/Recipes";
+import Profile from "../components/Pages/Profile";
 import Register from "../components/Molecules/Register";
-import RecipeDetail from "../components/pages/RecipeDetail";
+import RecipeDetail from "../components/Pages/RecipeDetail";
 import { AddRecipe } from "../components/Molecules/AddRecipe";
+import  SearchPage  from "../components/Pages/SearchPage";
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
         <Route path="/addrecipe" element={<AddRecipe />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </div>
   );

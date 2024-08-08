@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Recipe = require('../models/recipe');
 const Rating = require('../models/rating');
 
@@ -20,11 +21,14 @@ exports.addRecipe = async (req, res) => {
 
 exports.getRecipes = async (req, res) => {
     try {
-        const { author, page = 1, limit = 12 } = req.query;
+        const { author, name, page = 1, limit = 12 } = req.query;
         
         let query = {};
         if (author) {
             query.author = author;
+        }
+        if (name) {
+            query.name = new RegExp(name, 'i');
         }
 
         const recipes = await Recipe.find(query)
@@ -58,6 +62,7 @@ exports.getRecipes = async (req, res) => {
 };
 
 
+
 exports.getRecipeById = async (req, res) => {
     const { recipeId } = req.params;
 
@@ -82,3 +87,27 @@ exports.getRecipeById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+exports.deleteRecipe = async (req, res) => {
+    const { recipeId } = req.params;
+
+    try {
+        const numericRecipeId = Number(recipeId);
+        if (isNaN(numericRecipeId)) {
+            return res.status(400).json({ message: 'Invalid Recipe ID' });
+        }
+
+        const recipe = await Recipe.findOne({ recipeId: numericRecipeId });
+
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+
+        await Recipe.deleteOne({ recipeId: numericRecipeId });
+        res.status(200).json({ message: 'Recipe deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+

@@ -29,8 +29,8 @@ export type RecipeType = {
   author: string;
 };
 
-export const fetchRecipes = (page = 1, limit = 12, author = '') => 
-  API.get('/recipes', { params: { page, limit, author } });
+export const fetchRecipes = (page = 1, limit = 12, author = '', name = '') => 
+  API.get('/recipes', { params: { page, limit, author, name } });
 
 export const fetchRecipeById = (id: number) => API.get(`/recipes/${id}`);
 
@@ -48,6 +48,8 @@ export const fetchFavoriteRecipes = (username: string) =>
 
 export const fetchYourRecipes = (currentUser: string) => 
   API.get(`/recipes`, { params: { author: currentUser } });
+
+export const deleteRecipe = (recipeId: string) => API.delete(`/recipes/${recipeId}`);
 
 export const addComment = (recipeId: number, username: string, comment: string) => 
   API.post('/comments', { recipeId, username, comment });

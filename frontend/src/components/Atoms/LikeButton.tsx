@@ -16,7 +16,7 @@ const StyledLikeButton = styled.button`
   height: 35px;
   margin-right: 10px;
   &:active {
-    transform: scale(80%);
+    transform: scale(90%);
   }
 `;
 

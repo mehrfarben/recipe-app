@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchFavoriteRecipes, fetchRecipeById, RecipeType } from "../../api";
-import { Card, Text, Image, Flex, Fieldset } from "@mantine/core";
-import { Carousel } from '@mantine/carousel';
-import Button from "../Atoms/CustomButton";
-import { Link } from "react-router-dom";
+import { Card, Text, Flex, Fieldset, Container } from "@mantine/core";
+import RecipeCard from "./RecipeCard";
+
 
 const Favorites = () => {
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
@@ -43,27 +42,13 @@ const Favorites = () => {
     <Flex justify='center'>
       <Fieldset legend='Favorite Recipes' w='100%' mt={20} mb={20} radius='md' p={30}>
         {favoriteRecipes.length > 0 ? (
-          
-        
-      <Carousel slideSize="25%" height={275} slideGap="md" controlSize={35} align='start' dragFree controlsOffset="xs">
-          {favoriteRecipes.map(recipe => (
-            <Carousel.Slide key={recipe.recipeId}>
-              <Card w={250} h={275} shadow="md" padding='md' radius='md' withBorder>
-                <Card.Section>
-                  <Image h={150} src={recipe.image} alt={recipe.name} />
-                  <Flex gap={10} direction="column" w='100%' justify='center' align='center'>
-                    <Text fw={700} size="lg" mt="sm">{recipe.name}</Text>
-                    <Link to={`/recipe/${recipe.recipeId}`}>
-                      <Button mt={15} w='100%'>See recipe detail</Button>
-                    </Link>
-                  </Flex>
-                </Card.Section>
-              </Card>
-            </Carousel.Slide>
-          ))}
-        </Carousel>
+            <Container miw='100%' p={0}>
+
+                <RecipeCard recipes={favoriteRecipes} />
+
+            </Container>
         ) : (
-          <Text>You have any favorite recipes.</Text>
+          <Text>You don't have any favorite recipes.</Text>
         )}
       </Fieldset>
     </Flex>

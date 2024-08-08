@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import './index.css';
 import './App.css';
 import { MantineProvider, createTheme, virtualColor, MantineColorsTuple } from '@mantine/core';
 import '@mantine/core/styles.css';
-import '@mantine/carousel/styles.css';
 import { BrowserRouter } from "react-router-dom";
+import ScrollToTop from "./utils/ScrollToTop"
+import { ModalsProvider } from '@mantine/modals';
 
 const cesniRed: MantineColorsTuple = [
   '#ffe7e7',
@@ -50,16 +50,19 @@ const theme = createTheme({
     }),
   },
 });
-console.log(theme)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <MantineProvider
         theme={theme}
-        defaultColorScheme="auto"
-      >
+        defaultColorScheme="auto">
+        <ModalsProvider>
+          
+        <ScrollToTop/>
         <App />
+
+        </ModalsProvider>
       </MantineProvider>
     </BrowserRouter>
   </React.StrictMode>,

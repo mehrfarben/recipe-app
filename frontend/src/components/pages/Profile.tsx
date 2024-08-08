@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { UserCredentials } from '../../api';
-import { Text, Flex, Group, Button, Card } from '@mantine/core';
-import { Login } from '../Molecules/Login';
-import { Link } from 'react-router-dom';
+import { Text, Flex, Card, Tabs } from '@mantine/core';
 import Favorites from '../Molecules/Favorites';
 import YourRecipes from '../Molecules/YourRecipes';
+import NotSignedIn from './NotSignedIn';
+import { IconHeart, IconReceipt } from '@tabler/icons-react';
 
 const Profile = () => {
-    const [userData, setUserData] = useState<UserCredentials[] | null>(null);
+    const [userData, setUserData] = useState<UserCredentials | null>(null);
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('userData');
@@ -16,31 +16,36 @@ const Profile = () => {
         }
     }, []);
 
-    if (!userData) {
-        return ( 
-        <Flex direction="column" justify="center" align="center" h="80vh">
-            <Text size='xl' fw={400}>You are not signed in. Please sign in or sign up.</Text>
-            <Group mt={20}>
-                <Login/>
-                <Link to="/register">
-                <Button bg='#FF9505' px={50}>Sign Up</Button>
-                </Link>
-                
-            </Group>
-            
-        </Flex>
-        )
-    }
-
     return (
-        <Flex  justify='center' align='center'>
-            <Card p={{base:15, md:50}} w={{base:'100%', md:'70%'}} shadow='sm'>
-            <Text>Welcome, {userData.username}</Text>
-            <Text>Email: {userData.email}</Text>
-            <Favorites/>
-            <YourRecipes/>
-            </Card>      
-        </Flex>
+        <>
+        {userData ? (
+            <Flex justify="center" align="center">
+                <Card p={{ base: 15, md: 50 }} w={{ base: '100%', md: '80%' }} shadow="sm">
+                    <Text>Welcome, {userData.username}</Text>
+                    <Text>Email: {userData.email}</Text>
+                        <Tabs color="primary" defaultValue="favorites">
+                            <Tabs.List>
+                                <Tabs.Tab value="favorites" leftSection={<IconHeart />}>
+                                Favorites
+                                </Tabs.Tab>
+                                <Tabs.Tab value="yourrecipes" leftSection={<IconReceipt />}>
+                                Your Recipes
+                                </Tabs.Tab>
+                            </Tabs.List>
+
+                            <Tabs.Panel value='favorites'>
+                                <Favorites />
+                            </Tabs.Panel>
+                            <Tabs.Panel value='yourrecipes'>
+                                <YourRecipes />
+                            </Tabs.Panel>
+                        </Tabs>
+                    </Card>
+                </Flex>
+            ) : (
+                <NotSignedIn />
+            )}
+        </>
     );
 };
 

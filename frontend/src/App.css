@@ -48,4 +48,9 @@ html, *, body {
   border-left: 1px solid rgba(24, 24, 24, 0.2);
 }
 
-
+.search-card{
+  background-image: url(./assets/searchpanel.png) !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+}

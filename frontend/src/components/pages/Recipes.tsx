@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Pagination, Group, Loader, Flex } from '@mantine/core';
+import { Container, Pagination, Group, Loader, Flex, Fieldset } from '@mantine/core';
 import { fetchRecipes } from '../../api/index';
 import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
@@ -43,7 +43,7 @@ const Recipes = () => {
     <>
     <HeroSection/>
     <Container maw={{ base: '100%', lg: '80%' }} p={0}>
-      
+    <Fieldset legend='Newest Recipes' mt={20} radius='md' p={10} pt={30}>
       <RecipeCard recipes={recipes} />
       <Group my={30} justify='end'>
         <Pagination
@@ -55,6 +55,7 @@ const Recipes = () => {
           withEdges
         />
       </Group>
+      </Fieldset>
     </Container>
     </>
   );
