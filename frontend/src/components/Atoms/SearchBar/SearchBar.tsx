@@ -2,6 +2,7 @@ import { Flex, TextInput, ActionIcon, TextInputProps } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import classes from "./SearchBar.module.css";
 
 interface SearchBarProps extends TextInputProps {}
 
@@ -22,12 +23,10 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <Flex h='100%' justify='center' align='center'>
+    <Flex justify='center' align='center' mb={10}>
       <TextInput
-        className="search-bar"
-        color='#f5f5f5'
-        size="xl"
-        w='50%'
+        w={{base: '70%', md:'50%'}}
+        className={classes.searchBar}
         placeholder="Search for a recipe"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -35,10 +34,10 @@ const SearchBar = (props: SearchBarProps) => {
         {...props}
       />
       <ActionIcon 
-        className="search-icon" 
-        color="#ee0000" 
-        h={60} 
-        w={60} 
+        className={classes.searchIcon} 
+        color="#ee0000"
+        h={{base:'40px', xs:'50px'}} 
+        w={{base:'40px', xs:'50px'}}  
         onClick={handleSearch}
       >
         <IconSearch stroke={3} />

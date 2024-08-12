@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Container, Pagination, Group, Loader, Flex, Fieldset } from '@mantine/core';
+import { Container, Pagination, Group, Flex, Fieldset } from '@mantine/core';
 import { fetchRecipes } from '../../api/index';
 import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
-import HeroSection from '../Molecules/HeroSection';
+import HeroSection from '../Molecules/HeroSection/HeroSection';
+import CesniLoader from '../Atoms/CesniLoader';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState<RecipeType[]>([]);
@@ -32,7 +33,7 @@ const Recipes = () => {
   }, [currentPage]);
 
   if (loading) {
-    return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
+    return <CesniLoader />;
   }
 
   return (

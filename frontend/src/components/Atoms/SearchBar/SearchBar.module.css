@@ -1,0 +1,30 @@
+.searchBar {
+    & :global(.mantine-TextInput-input){
+      background-color: #efefef;
+    border: none !important;
+    color: black;
+    font-size: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 50px;
+    }
+  }
+
+  .searchBar .mantine-TextInput-wrapper{
+    background-color: transparent !important;
+  }
+  
+  .searchIcon{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  @media screen and (max-width: 576px) {
+    .searchBar {
+        & :global(.mantine-TextInput-input){
+        border: none !important;
+        color: black;
+        font-size: 15px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        height: 38px;
+        }
+      }
+  }

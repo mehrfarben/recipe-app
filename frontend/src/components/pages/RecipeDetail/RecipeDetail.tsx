@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../api/index';
-import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Group, Paper, Rating, Loader, Avatar, Stack } from '@mantine/core';
+import { fetchRecipeById, RecipeType, submitRating, getUserRating } from '../../../api/index';
+import { Card, Center, Flex, Image, Text, Title, SimpleGrid, List, Group, Paper, Rating, Avatar, Stack } from '@mantine/core';
 import { IconClock, IconUsers, IconToolsKitchen2 } from '@tabler/icons-react';
 import { parseISO, format } from 'date-fns';
-import CommentForm from '../Molecules/CommentForm';
-import CommentList from '../Molecules/CommentList';
+import CommentForm from '../../Molecules/CommentForm';
+import CommentList from '../../Molecules/CommentList';
+import CesniLoader from '../../Atoms/CesniLoader';
+import classes from './RecipeDetail.module.css';
 
 const RecipeDetails: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: number }>();
@@ -63,7 +65,7 @@ const RecipeDetails: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
 
-  if (loading) return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
+  if (loading) return <CesniLoader/>;
   if (error) return <Center h='80vh'> <Text fw={700} size='xl'>{error}</Text></Center>;
 
   const formattedDate = recipe ? format(parseISO(recipe.createdAt), 'dd MMMM yyyy') : '';
@@ -71,9 +73,9 @@ const RecipeDetails: React.FC = () => {
   return (
     <Center>
       {recipe ? (
-        <Card w={{base: '100%', md: '85%'}} withBorder padding="xl" radius="lg" >
+        <Card w={{base: '100%', md: '85%'}} p={{base: 0, md: '1%'}} withBorder padding="xl" radius="lg" >
 
-<Card.Section mt={20} px={75}>
+<Card.Section mt={20} px={{base: 20, md: 75}}>
 <Title ff={'Montserrat'} size={60} fw={600} mb={30}>{recipe.name}</Title>
 
 
@@ -123,12 +125,12 @@ const RecipeDetails: React.FC = () => {
 </Flex>
 </Card.Section>
 
-<Card.Section p={75} pb={0}>
-  <SimpleGrid cols={{ base: 1, lg: 2 }}>
+<Card.Section p={{base: 20, md: 75}} pb={0}>
+  <SimpleGrid cols={{ base: 1, xl: 2 }}>
     <Image h='100%' radius='lg' src={recipe.image} alt={recipe.name}></Image>
 
     <Flex justify='end'>
-      <Paper p={40} w={{base:'100%', lg:'95%'}} radius='lg' shadow='lg' bg='rgba(255, 186, 9, 0.4)'>
+      <Paper p={40} w={{base:'100%', xl:'95%'}} radius='lg' shadow='lg' bg='rgba(255, 186, 9, 0.4)'>
         <Flex direction='column'>
             <Title ff={'Montserrat'} mb={10} order={1} fw={600}>Ingredients</Title>
               {recipe.ingredients.map((ingredient, index) => (
@@ -142,20 +144,20 @@ const RecipeDetails: React.FC = () => {
   </SimpleGrid>
 </Card.Section>
 
-<Card.Section px={75} py={30}>
+<Card.Section px={{base: 0, md: 75}} py={{base: 0, md: 30}}>
   <Paper bg='transparent' p={30}>
-<Text>{recipe.description}</Text>
+<Text className={classes.description}>{recipe.description}</Text>
   </Paper>
 </Card.Section>
 
-<Card.Section p={75} pt={0}>
+<Card.Section p={{base: 20, md: 75}} pt={0}>
 <Paper bg={'rgba(255, 3, 7, 0.4)'} p={40} radius='lg' shadow='lg'>
   <Flex w='90%' direction='column'>
       <Title mb={20} order={2}>Preparation Steps</Title>
           <List fw={700} type='ordered' listStyleType='decimal' center spacing='lg'>
               {recipe.prep.map((step, index) => (
                 <List.Item key={index}>
-                  <Text w='100%'>{step}</Text>
+                  <Text className={classes.prepstep} w='100%'>{step}</Text>
                 </List.Item>
               ))}
           </List>

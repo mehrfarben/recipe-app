@@ -44,7 +44,7 @@ const RecipeEditButton = ({ recipe, onDelete }: RecipeEditButtonProps) => {
       </Text>
     ),
     labels: { confirm: 'Delete', cancel: 'Cancel' },
-    confirmProps: { color: 'primary' },
+    confirmProps: { color: '#ff3131' },
     onCancel: () => console.log('Cancel'),
     onConfirm: () => onDelete(recipe.recipeId),
   });

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchYourRecipes, RecipeType, deleteRecipe } from '../../api/index';
 import { Card, Text, Image, Flex, Fieldset, Container, SimpleGrid } from '@mantine/core';
-import Button from "../Atoms/CustomButton";
+import Button from "../Atoms/CustomButton/CustomButton";
 import RecipeEditButton from '../Atoms/RecipeEditButton';
 import { Link } from "react-router-dom";
 

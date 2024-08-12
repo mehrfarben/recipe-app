@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { Button, Flex, Image, Group } from "@mantine/core";
+import { Flex, Image, Group } from "@mantine/core";
 import { IconUserCircle,  IconLibraryPlus } from "@tabler/icons-react";
 import DarkModeButton from "../Atoms/DarkModeButton";
 import Logo from "../../assets/logotexticon.svg";
 import LogoWhite from "../../assets/logotexticonwhite.svg";
 import { Login } from "./Login";
+import Button from "../Atoms/CustomButton/CustomButton";
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
@@ -23,12 +24,12 @@ const Header = () => {
         {username ? (
           <>
             <Link to="/profile">
-              <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="outline" color="primary" size="md" w={"100%"}>
+              <Button leftSection={<IconUserCircle size={30} />} variant="outline">
                 Profile
               </Button>
             </Link>
             <Link to="/addrecipe">
-              <Button leftSection={<IconLibraryPlus size={30} />} justify="start" variant="outline" color="primary" size="md" w={"100%"}>
+              <Button leftSection={<IconLibraryPlus size={30} />} variant="outline">
                 Add Recipe
               </Button>
             </Link>

@@ -1,0 +1,46 @@
+.title{
+    margin: 0;
+    font-family: 'Monarcha'; 
+    z-index: 1;
+    color: #181818;
+    font-weight: 600;
+    font-size: 85px;
+}
+
+.subtitle{
+    color: #181818;
+    z-index: 1;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+@media screen and (max-width: 1198px) {
+    .title{
+        font-size: 60px;
+        color: #f0ffff;
+    }
+    .subtitle{
+        font-size: 25px;
+        color: #f0ffff;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title{
+        font-size: 50px;
+    }
+    .subtitle{
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .title{
+        font-size: 40px;
+    }
+    .subtitle{
+        font-size: 15px;
+    }
+}

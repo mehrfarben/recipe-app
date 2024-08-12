@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchFavoriteRecipes, fetchRecipeById, RecipeType } from "../../api";
-import { Text, Flex, Fieldset, Container, Loader } from "@mantine/core";
+import { Text, Flex, Fieldset, Container } from "@mantine/core";
 import RecipeCard from "./RecipeCard";
+import CesniLoader from "../Atoms/CesniLoader";
 
 const Favorites = () => {
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
@@ -16,6 +17,7 @@ const Favorites = () => {
         try {
           const response = await fetchFavoriteRecipes(username);
           setFavoriteIds(response.data.favorites);
+          
         } catch (error) {
           console.error('Error fetching favorite recipes', error);
         }
@@ -42,7 +44,7 @@ const Favorites = () => {
       const validRecipes = recipeDetails.filter((recipe): recipe is RecipeType => recipe !== null);
 
       setFavoriteRecipes(validRecipes);
-      setIsLoading(false);
+
     };
 
     if (favoriteIds.length > 0) {
@@ -53,7 +55,7 @@ const Favorites = () => {
   }, [favoriteIds]);
 
   if (isLoading) {
-    return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary' /></Flex>;
+    return <CesniLoader />;
   }
 
   return (
@@ -64,7 +66,7 @@ const Favorites = () => {
             <RecipeCard recipes={favoriteRecipes} />
           </Container>
         ) : (
-          <Text>You don't have any favorite recipes.</Text>
+          <Text>No favorite recipes found.</Text>
         )}
       </Fieldset>
     </Flex>

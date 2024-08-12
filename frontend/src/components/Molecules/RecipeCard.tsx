@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Image, Text, Flex, SimpleGrid, Avatar, Rating } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import Button from '../Atoms/CustomButton';
+import Button from '../Atoms/CustomButton/CustomButton';
 import LikeButton from '../Atoms/LikeButton';
 import CustomText from '../Atoms/CustomText';
 import { addRecipeToFavorites, fetchFavoriteRecipes, RecipeType } from '../../api';
@@ -94,7 +94,7 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
                 <Text size='sm' ml={5}>{recipe.author || "Anon User"}</Text>
               </Flex> 
               <Link to={`/recipe/${recipe.recipeId}`}>
-                <Button size='xs' w={{ base: '100px', md: '120px' }}>
+                <Button size='xs' w={{ base: '120px', md: '130px' }}>
                   Read recipe
                 </Button>
               </Link>

@@ -19,7 +19,7 @@ const DarkModeButton = () => {
 
   return (
     <Tooltip closeDelay={200} label="Toggle color scheme">
-            <Switch color="#ffba09" size="xl" checked={colorScheme === 'light'} onChange={() => toggleColorScheme()} onLabel={sunIcon} offLabel={moonIcon} />
+            <Switch color="#ffba09" size="lg" checked={colorScheme === 'light'} onChange={() => toggleColorScheme()} onLabel={sunIcon} offLabel={moonIcon} />
     </Tooltip>
   )
 }

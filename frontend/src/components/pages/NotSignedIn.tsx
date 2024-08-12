@@ -9,7 +9,7 @@ const NotSignedIn = () => {
             <Group mt={20}>
                 <Login/>
                 <Link to="/register">
-                <Button bg='#FF9505' px={50}>Sign Up</Button>
+                <Button bg='#FF9505'>Sign Up</Button>
                 </Link>
                 
             </Group>

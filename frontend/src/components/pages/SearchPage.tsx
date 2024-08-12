@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { fetchRecipes } from '../../api/index';
 import { useLocation } from 'react-router-dom';
 import RecipeCard from '../Molecules/RecipeCard';
-import { Pagination, Text, Loader, Flex, Group, Title, Container, Card, Image } from '@mantine/core';
-import SearchBar from '../Atoms/SearchBar';
+import { Pagination, Text, Flex, Group, Title, Container, Card, BackgroundImage } from '@mantine/core';
+import SearchBar from '../Atoms/SearchBar/SearchBar';
+import CesniLoader from '../Atoms/CesniLoader';
+import SearchPanel from '../../assets/searchpanel.png'
 
 const SearchPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -27,25 +29,27 @@ const SearchPage = () => {
       }
     };
 
-    getRecipes(currentPage);
+    getRecipes();
   }, [searchTerm, currentPage]);
 
 
   if (isLoading) {
-    return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
+    return <CesniLoader />;
   }
 
   return (
 
     <Container maw={{ base: '100%', lg: '80%' }} p={0}>
     <Card radius='lg' p={20}>
-    <Card className='search-card' mt={10} mb={25} shadow="xl" withBorder radius="lg" h={{base:'20vh', xl:"30vh"}}>
+    <Card mt={10} mb={25} p={0} shadow="xl" withBorder radius="lg" h={{base:'20vh', xl:"30vh"}}>
+      <BackgroundImage h='100%' src={SearchPanel}>
           
           <Flex w='100%' h='100%' justify='center' direction='column' mb={30}>
           <Text ta='center' ff='Monarcha' c='#181818' fw={600} size='35px' mt={30} h='50%'>What are you looking for?</Text>
-          <SearchBar w='60%'/>
+          <SearchBar w='60%' />
           </Flex>
 
+          </BackgroundImage>
       </Card>
     <Title p={25} fw={500} ff='Monarcha'>Search results for "{searchTerm}"</Title>
     

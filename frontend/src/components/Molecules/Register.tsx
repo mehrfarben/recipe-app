@@ -48,7 +48,7 @@ const Register = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-                <Button bg='primary' mt="md" onClick={handleSubmit}>Sign Up</Button>   
+                <Button mt="md" onClick={handleSubmit}>Sign Up</Button>   
                 <Text mt="md">{loginMessage}</Text>
            </Fieldset>
            </Flex>

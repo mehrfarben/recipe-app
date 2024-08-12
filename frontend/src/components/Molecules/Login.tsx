@@ -1,4 +1,4 @@
-import { Modal, TextInput, PasswordInput, Button, Text, Flex } from '@mantine/core';
+import { Modal, TextInput, PasswordInput, Text, Flex } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { loginUser } from '../../api/index';
@@ -6,6 +6,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconLogout } from '@tabler/icons-react';
 import { UserCredentials } from '../../api/index';
 import DefaultLink from '../Atoms/DefaultLink';
+import Button from '../Atoms/CustomButton/CustomButton';
 
 export const Login = () => {
     const [opened, { open, close }] = useDisclosure(false);
@@ -50,10 +51,10 @@ export const Login = () => {
 
     return (
         <>
-            {!isLoggedIn && <Button px={50} bg="primary" onClick={open}>Sign In</Button>}
+            {!isLoggedIn && <Button onClick={open}>Sign In</Button>}
             {isLoggedIn && (
                 <Flex gap={10} direction='column' align="center">
-                    <Button leftSection={<IconLogout size={30} />} variant='subtle' color='primary' size="md" onClick={handleLogout}>
+                    <Button leftSection={<IconLogout size={25} />} variant='subtle' onClick={handleLogout}>
                         Sign Out
                     </Button>
                 </Flex>
@@ -86,7 +87,7 @@ export const Login = () => {
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
                     <Flex mt={24} justify="space-between" align="center" direction={{base: 'column', md: 'row'}}>
-                        <Button bg='primary' type="submit" w={{base:'50%', md:'30%'}}>Sign In</Button>
+                        <Button type="submit" w={{base:'50%', md:'30%'}}>Sign In</Button>
                         <DefaultLink onClick={close} to="/register">
                             <Text size="xs" mt={{base:30, md:0}}>
                                 Don't have an account? Click here to sign up.

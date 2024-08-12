@@ -1,23 +1,15 @@
-import styled from "styled-components"
 import { Button, ButtonProps } from "@mantine/core";
+import classes from "./CustomButton.module.css";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
 }
 
-const StyledCustomButton = styled(Button)<CustomButtonProps>`
-    width: 100%;
-        &:active {
-        
-            transform: scale(99%);
-        }
-`;
-
 const CustomButton = ({ children, ...props }: CustomButtonProps) => {
   return (
-    <StyledCustomButton bg='primary' {...props}>
+    <Button className={classes.customButton} color='#ff3131' {...props}>
       {children}
-    </StyledCustomButton>
+    </Button>
   );
 }
 

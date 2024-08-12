@@ -1,0 +1,13 @@
+.description{
+    font-size: 15px;
+}
+
+.prepstep{
+    font-size: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .description{
+        font-size: 12px;
+    }
+}

@@ -17,17 +17,19 @@ function Home() {
 
   return (
     <AppShell
-      header={{ height: 80 }}
+      header={{ height: 60 }}
       navbar={{ width: 400, breakpoint: 'md', collapsed: { desktop: true, mobile: !opened } }}
       padding="md"
     >
       <AppShell.Header >
-        <Flex align='center' h='100%'>
+        <Flex align='center' h='100%' w='100%'>
+          <Flex>
         <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="md" ml={25} />
-        <Flex w='80%' justify='center' hiddenFrom='md'>
+        </Flex>
+        <Flex w='85%' justify='center' hiddenFrom='md'>
           <Link to="/">
-        <Image darkHidden w={160} src={Logo} alt="logo" />
-        <Image lightHidden w={160} src={LogoWhite} alt="logo" />
+        <Image darkHidden w={110} src={Logo} alt="logo" />
+        <Image lightHidden w={110} src={LogoWhite} alt="logo" />
         </Link>
         </Flex>
         <Header/>
@@ -36,11 +38,11 @@ function Home() {
 
       <AppShell.Navbar p="md" hiddenFrom='md'>
 
-        <Button onClick={toggle} leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"60%"} mt={"md"}><DefaultLink to="/">Home</DefaultLink></Button>
+        <Button leftSection={<IconHome2 size={30} />} justify="start" variant="subtle" color="#ff3131" size="md" w={"60%"} mt={"md"}><DefaultLink onClick={toggle} to="/">Home</DefaultLink></Button>
         
-        <Button onClick={toggle} leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"60%"} mt={"md"}><DefaultLink to="/profile">Profile</DefaultLink></Button>
+        <Button leftSection={<IconUserCircle size={30} />} justify="start" variant="subtle" color="#ff3131" size="md" w={"60%"} mt={"md"}><DefaultLink onClick={toggle} to="/profile">Profile</DefaultLink></Button>
 
-        <Button onClick={toggle} leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="primary" size="md" w={"60%"} mt={"md"}><DefaultLink to="/addrecipe">Add Recipe</DefaultLink></Button>
+        <Button leftSection={<IconLibraryPlus size={30} />} justify="start" variant="subtle" color="#ff3131" size="md" w={"60%"} mt={"md"}><DefaultLink onClick={toggle} to="/addrecipe">Add Recipe</DefaultLink></Button>
         
         <Flex gap={40} h='100%' justify='space-around' align='end' mb={10}>
           <Login />

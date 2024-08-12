@@ -13,26 +13,10 @@ html, *, body {
   font-size: 40px !important;
 }
 
-.search-bar .mantine-TextInput-input{
-  background-color: #f2f2f2 !important;
-  border: none !important;
-  color: black;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.search-bar .mantine-TextInput-input::placeholder{
-  color: #afafaf;
-}
-
-.search-icon{
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
 .mantine-Switch-track{
   cursor: pointer !important;
   transition: 200ms ease-in-out !important;
 }
-
 
 .mantine-Switch-thumb{
   transition: 200ms ease-in-out !important;
@@ -74,5 +58,11 @@ html, *, body {
 .links {
   @media (max-width: $mantine-breakpoint-xs) {
     margin-top: var(--mantine-spacing-md);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .mantine-Fieldset-legend{;
+    font-size: 25px !important;
   }
 }

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { createRecipe, updateRecipe } from '../../api/index';
-import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
-import Button from '../Atoms/CustomButton';
+import { Flex, TagsInput, ActionIcon, Text, Title, Paper } from '@mantine/core';
+import { IconTrash, IconCheck } from '@tabler/icons-react';
+import Button from '../Atoms/CustomButton/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CustomTextArea from '../Atoms/CustomTextArea/CustomTextArea';
 
 interface FormData {
   recipeId: number | null;
@@ -129,82 +130,88 @@ export const AddRecipe = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Flex justify='center' w='100%'>
-        <Paper withBorder w='50%' shadow='sm' p='md' radius='md'>
+        <Paper withBorder w={{base: '100%',md:'50%'}} shadow='sm' p='md' radius='md'>
+
           <Title order={2} mb={20}>
             {formData.recipeId ? 'Edit Recipe' : 'Add New Recipe'}
           </Title>
-          <TextInput
+          
+          <CustomTextArea
             label='Recipe Image URL'
             placeholder='Enter image URL'
             value={formData.image}
             onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-            required
           />
-          <TextInput
-            mt={30}
+
+          <CustomTextArea
             label='Recipe Name'
             placeholder='Enter recipe name'
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
           />
-          <Textarea
-            mt={30}
+
+          <CustomTextArea
             label='Recipe Description'
             placeholder='Enter recipe description'
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            required
           />
-          <TextInput
-            mt={30}
+
+          <CustomTextArea
             label='Preparation Time'
             placeholder='e.g. 30 minutes'
             value={formData.preptime}
             onChange={(e) => setFormData({ ...formData, preptime: e.target.value })}
-            required
           />
+
           <TagsInput
-            my={30}
+          mt={30}
+          c='#dd3131'
             value={formData.ingredients}
             onChange={handleIngredientsChange}
             placeholder='Please separate ingredients with commas'
             label='Ingredients'
           />
-          <Text fw={500} size='sm'>Category</Text>
+
+          <Text c='#dd3131' mt={30} fw={500} size='sm'>Category</Text>
           <CategoriesDropdown
             onCategorySelect={handleCategorySelect}
           />
-          <TextInput
-            mt={20}
+
+          <CustomTextArea
             label='Serving Size'
             placeholder='e.g. 2-4 people'
             value={formData.serving}
             onChange={(e) => setFormData({ ...formData, serving: e.target.value })}
-            required
+
           />
+
+          <Text c='#dd3131' mt={20} fw={500} size='sm'>Preparation Steps</Text>
           {formData.prep.map((step, index) => (
             <Flex key={index} align='center'>
-              <Textarea
-                mt={20}
+              <CustomTextArea
+                w='100%'
+                minRows={2}
                 value={step}
                 onChange={(e) => handleStepChange(index, e.target.value)}
                 placeholder={`Step ${index + 1}`}
                 required
               />
               {index > 0 && (
-                <ActionIcon color='red' onClick={() => handleRemoveStep(index)}>
+                <ActionIcon variant='subtle' mx={5} color='#ff3131' onClick={() => handleRemoveStep(index)}>
                   <IconTrash size={16} />
                 </ActionIcon>
               )}
             </Flex>
           ))}
-          <Group mt={10}>
-            <Button w='20%' onClick={handleAddStep}>
+            <Button mt={10} variant='outline' w='20%' onClick={handleAddStep}>
               Add Another Step
             </Button>
-            <Button type='submit'>{formData.recipeId ? 'Update Recipe' : 'Add Recipe'}</Button>
-          </Group>
+
+            <Flex w='100%' justify='end' mt={50}>
+            <Button rightSection={<IconCheck />} type='submit'>{formData.recipeId ? 'Update Recipe' : 'Add Recipe'}</Button>
+            </Flex>
+
           {error && <Text c='red'>{error}</Text>}
         </Paper>
       </Flex>

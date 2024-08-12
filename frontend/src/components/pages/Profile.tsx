@@ -32,7 +32,7 @@ const Profile = () => {
                         </Flex>
 
                     </Box>
-                        <Tabs mt={20} color="primary" defaultValue="favorites">
+                        <Tabs mt={20} color="#ff3131" defaultValue="favorites">
                             <Tabs.List>
                                 <Tabs.Tab value="favorites" leftSection={<IconHeart />}>
                                 Favorites
