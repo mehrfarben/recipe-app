@@ -49,7 +49,7 @@ export const fetchFavoriteRecipes = (username: string) =>
 export const fetchYourRecipes = (currentUser: string) => 
   API.get(`/recipes`, { params: { author: currentUser } });
 
-export const deleteRecipe = (recipeId: string) => API.delete(`/recipes/${recipeId}`);
+export const deleteRecipe = (recipeId: number) => API.delete(`/recipes/${recipeId}`);
 
 export const updateRecipe = (recipeId: number, recipeData: RecipeType) =>
   API.put(`/recipes/${recipeId}`, recipeData);
@@ -61,8 +61,8 @@ export const fetchComments = (recipeId: number) => API.get(`/comments/${recipeId
 
 export const deleteComment = (commentId: string) => API.delete(`/comments/${commentId}`);
 
-export const getUserRating = (recipeId: string, username: string) => 
+export const getUserRating = (recipeId: number, username: string) => 
   API.get(`rating/user-rating`, { params: { recipeId, username } });
 
-export const submitRating = (recipeId: string, username: string, rating: number) => 
+export const submitRating = (recipeId: number, username: string, rating: number) => 
   API.post(`rating/rate`, { recipeId, username, rating });

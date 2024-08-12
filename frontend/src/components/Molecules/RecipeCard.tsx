@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Image, Text, Group, Flex, SimpleGrid, Avatar, Rating, Fieldset } from '@mantine/core';
+import { Card, Image, Text, Flex, SimpleGrid, Avatar, Rating } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton';
 import LikeButton from '../Atoms/LikeButton';
@@ -13,28 +13,28 @@ interface RecipeCardProps {
 
 const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
   const [favorites, setFavorites] = useState<number[]>([]);
-  
+  const [username, setUsername] = useState<string | null>(null);
+
   useEffect(() => {
-    const fetchFavorites = async () => {
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-      const username = userData.username;
-      if (username) {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const username = userData.username;
+    setUsername(username || null);
+
+    if (username) {
+      const fetchFavorites = async () => {
         try {
           const response = await fetchFavoriteRecipes(username);
           setFavorites(response.data.favorites);
         } catch (error) {
           console.error('Error fetching favorite recipes', error);
         }
-      }
-    };
+      };
 
-    fetchFavorites();
+      fetchFavorites();
+    }
   }, []);
 
   const handleToggleFavorite = async (recipeId: number) => {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const username = userData.username;
-
     if (!username) {
       console.error('Username not found in localStorage');
       return;
@@ -60,49 +60,49 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
   };
 
   return (
-    
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 2, xl: 3 }}>
-        {recipes.map((recipe) => (
-          <Flex my={15} w='100%' justify='center' key={recipe.recipeId}>
-            <Card w={375} h={'100%'} shadow="md" padding="md" radius="lg" mx={5} withBorder>
-              <Card.Section pos='relative'>
-                <Image
-                  src={recipe.image}
-                  h={200}
-                  alt="Recipe Image"
-                />
+    <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
+      {recipes.map((recipe) => (
+        <Flex my={15} w='100%' justify='center' key={recipe.recipeId}>
+          <Card w={320} h={'100%'} shadow="md" padding="sm" radius="lg" mx={5} withBorder>
+            <Card.Section pos='relative'>
+              <Image
+                src={recipe.image}
+                h={200}
+                alt="Recipe Image"
+              />
+              {username && (
                 <LikeButton
-                    isFavorite={favorites.includes(recipe.recipeId)}
-                    onClick={() => handleToggleFavorite(recipe.recipeId)}
+                  isFavorite={favorites.includes(recipe.recipeId)}
+                  onClick={() => handleToggleFavorite(recipe.recipeId)}
                 />
-              </Card.Section>
+              )}
+            </Card.Section>
 
-                <Flex mt={10} mih={30} align='center' justify='space-between'>
-                <CustomText fw={500}>{recipe.name}</CustomText>
-                <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
-                </Flex>
+            <Flex mt={10} mih={30} align='center' justify='space-between'>
+              <CustomText fw={500} size='sm'>{recipe.name}</CustomText>
+              <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
+            </Flex>
 
-                <Flex mt={5} mih={20} align='center'>
-                <Rating value={recipe.averageRating} readOnly fractions={2} />
-                <Text size='sm' ml={5}>{recipe.averageRating}</Text>
-                </Flex>
+            <Flex mt={5} mih={20} align='center'>
+              <Rating size='xs' value={recipe.averageRating} readOnly fractions={2} />
+              <Text size='sm' ml={5}>{recipe.averageRating}</Text>
+            </Flex>
 
-                <Flex mt={20} justify='space-between' align='center' mih={60}>
-                <Flex align='center'>
-                  <Avatar radius="xl" />
-                  <Text ml={5}>{recipe.author || "Anon User"}</Text>
-                  </Flex> 
-                  <Link to={`/recipe/${recipe.recipeId}`}>
-                    <Button w={{ base: '130px', md: '150px' }}>
-                      Read recipe
-                    </Button>
-                  </Link>
-                </Flex>
-            </Card>
-          </Flex>
-        ))}
-      </SimpleGrid>
-
+            <Flex mt={20} justify='space-between' align='center' mih={60}>
+              <Flex align='center'>
+                <Avatar radius="xl" />
+                <Text size='sm' ml={5}>{recipe.author || "Anon User"}</Text>
+              </Flex> 
+              <Link to={`/recipe/${recipe.recipeId}`}>
+                <Button size='xs' w={{ base: '100px', md: '120px' }}>
+                  Read recipe
+                </Button>
+              </Link>
+            </Flex>
+          </Card>
+        </Flex>
+      ))}
+    </SimpleGrid>
   );
 };
 

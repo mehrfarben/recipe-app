@@ -8,7 +8,7 @@ import CommentForm from '../Molecules/CommentForm';
 import CommentList from '../Molecules/CommentList';
 
 const RecipeDetails: React.FC = () => {
-  const { recipeId } = useParams<{ recipeId: string }>();
+  const { recipeId } = useParams<{ recipeId: number }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -132,7 +132,7 @@ const RecipeDetails: React.FC = () => {
         <Flex direction='column'>
             <Title ff={'Montserrat'} mb={10} order={1} fw={600}>Ingredients</Title>
               {recipe.ingredients.map((ingredient, index) => (
-              <Text className='ingredients' mt={20} key={index}>
+              <Text size='sm' className='ingredients' mt={15} key={index}>
                 {ingredient}
               </Text>
               ))}

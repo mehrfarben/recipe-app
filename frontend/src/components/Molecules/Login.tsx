@@ -54,14 +54,14 @@ export const Login = () => {
             {isLoggedIn && (
                 <Flex gap={10} direction='column' align="center">
                     <Button leftSection={<IconLogout size={30} />} variant='subtle' color='primary' size="md" onClick={handleLogout}>
-                        Logout
+                        Sign Out
                     </Button>
                 </Flex>
             )}
             <Modal
                 opened={opened}
                 onClose={close}
-                title="Login"
+                title="Sign In"
                 yOffset="25vh"
                 transitionProps={{ transition: 'slide-up', duration: 250, timingFunction: 'ease-in-out' }}
                 overlayProps={{
@@ -86,10 +86,10 @@ export const Login = () => {
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
                     <Flex mt={24} justify="space-between" align="center" direction={{base: 'column', md: 'row'}}>
-                        <Button bg='primary' type="submit" w={{base:'50%', md:'30%'}}>Login</Button>
+                        <Button bg='primary' type="submit" w={{base:'50%', md:'30%'}}>Sign In</Button>
                         <DefaultLink onClick={close} to="/register">
                             <Text size="xs" mt={{base:30, md:0}}>
-                                Don't have an account? Click here to register.
+                                Don't have an account? Click here to sign up.
                             </Text>
                         </DefaultLink>
                     </Flex>

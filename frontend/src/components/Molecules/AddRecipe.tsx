@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { createRecipe } from '../../api/index';
-import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper, Dialog } from '@mantine/core';
+import { createRecipe, updateRecipe } from '../../api/index';
+import { TextInput, Textarea, Group, Flex, TagsInput, ActionIcon, Text, Title, Paper } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import Button from '../Atoms/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface FormData {
-  recipeId: string | null;
+  recipeId: number | null;
   image: string;
   name: string;
   description: string;
@@ -20,21 +20,25 @@ interface FormData {
 }
 
 export const AddRecipe = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const editingRecipe = location.state?.recipe as FormData | null;
+
   const [formData, setFormData] = useState<FormData>({
-    recipeId: null,
-    image: '',
-    name: '',
-    description: '',
-    preptime: '',
-    prep: [''],
-    ingredients: [],
-    category: '',
-    serving: '',
-    author: ''
+    recipeId: editingRecipe?.recipeId || null,
+    image: editingRecipe?.image || '',
+    name: editingRecipe?.name || '',
+    description: editingRecipe?.description || '',
+    preptime: editingRecipe?.preptime || '',
+    prep: editingRecipe?.prep || [''],
+    ingredients: editingRecipe?.ingredients || [],
+    category: editingRecipe?.category || '',
+    serving: editingRecipe?.serving || '',
+    author: editingRecipe?.author || ''
   });
+
   const [userData, setUserData] = useState<{ username: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -48,6 +52,10 @@ export const AddRecipe = () => {
       setFormData(prevData => ({ ...prevData, author: userData.username }));
     }
   }, [userData]);
+
+  const handleCategorySelect = (selectedCategory: string) => {
+    setFormData(prevData => ({ ...prevData, category: selectedCategory }));
+  };
 
   const handleAddStep = () => {
     if (formData.prep[formData.prep.length - 1] === '') {
@@ -76,10 +84,6 @@ export const AddRecipe = () => {
     setFormData(prevData => ({ ...prevData, ingredients: filteredValue }));
   };
 
-  const handleCategorySelect = (category: string) => {
-    setFormData(prevData => ({ ...prevData, category: category }));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.ingredients.some(ingredient => ingredient === '') || formData.prep.some(step => step === '')) {
@@ -87,13 +91,14 @@ export const AddRecipe = () => {
       return;
     }
     try {
-      const updatedFormData = {
-        ...formData,
-        recipeId: Math.floor(Math.random() * 1000000) + 1
-      };
-      await createRecipe(updatedFormData);
+      if (formData.recipeId) {
+        await updateRecipe(formData.recipeId, formData);
+      } else {
+        const newRecipeId = Math.floor(Math.random() * 1000000) + 1;
+        const updatedFormData = { ...formData, recipeId: newRecipeId };
+        await createRecipe(updatedFormData);
+      }
       navigate('/');
-      
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
         setError('A recipe with this name already exists. Please choose a different name.');
@@ -102,109 +107,107 @@ export const AddRecipe = () => {
       }
       console.error(error);
     } finally {
-      setFormData({
-        recipeId: null,
-        image: '',
-        name: '',
-        description: '',
-        preptime: '',
-        prep: [''],
-        ingredients: [],
-        category: '',
-        serving: '',
-        author: userData?.username || ''
-      });
+      resetForm();
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      recipeId: null,
+      image: '',
+      name: '',
+      description: '',
+      preptime: '',
+      prep: [''],
+      ingredients: [],
+      category: '',
+      serving: '',
+      author: userData?.username || ''
+    });
+  };
 
   return (
-    <Flex w='100%' justify='center'>
-    <Paper shadow='xl' p={50} w={{base: '100%', md: '50%'}}>
-      <Title mb={20} size={40}>Add Recipe</Title>
-      <hr />
-      <form onSubmit={handleSubmit}>
-        <TextInput
-        mt={30}
-          label="Name"
-          mb="md"
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <TextInput
-          label="Image"
-          mb="md"
-          type="text"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-        />
-        <TextInput
-          label="Preparation Time"
-          mb="md"
-          placeholder="1hr 30min"
-          value={formData.preptime}
-          onChange={(e) => setFormData({ ...formData, preptime: e.target.value })}
-        />
-        <TextInput
-          label="Serving Size"
-          mb="md"
-          placeholder="For how many people?"
-          value={formData.serving}
-          onChange={(e) => setFormData({ ...formData, serving: e.target.value })}
-        />
-        <Textarea
-          label="Description"
-          mb="md"
-          autosize
-          minRows={5}
-          placeholder="Description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        />
-
-        <Text size='sm' fw={600} mt='md'>Category</Text>
-        <CategoriesDropdown onCategorySelect={handleCategorySelect} />
-
-        <Flex mt='md' mb="md" direction="column">
-          <Text size='sm' fw={600}>Ingredients</Text>
+    <form onSubmit={handleSubmit}>
+      <Flex justify='center' w='100%'>
+        <Paper withBorder w='50%' shadow='sm' p='md' radius='md'>
+          <Title order={2} mb={20}>
+            {formData.recipeId ? 'Edit Recipe' : 'Add New Recipe'}
+          </Title>
+          <TextInput
+            label='Recipe Image URL'
+            placeholder='Enter image URL'
+            value={formData.image}
+            onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+            required
+          />
+          <TextInput
+            mt={30}
+            label='Recipe Name'
+            placeholder='Enter recipe name'
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+          />
+          <Textarea
+            mt={30}
+            label='Recipe Description'
+            placeholder='Enter recipe description'
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            required
+          />
+          <TextInput
+            mt={30}
+            label='Preparation Time'
+            placeholder='e.g. 30 minutes'
+            value={formData.preptime}
+            onChange={(e) => setFormData({ ...formData, preptime: e.target.value })}
+            required
+          />
           <TagsInput
+            my={30}
             value={formData.ingredients}
             onChange={handleIngredientsChange}
-            placeholder="Add ingredients"
-            mb="lg"
-            radius="md"
+            placeholder='Please separate ingredients with commas'
+            label='Ingredients'
           />
-        </Flex>
-        <Flex mb="md" direction="column">
-          <Text size='sm' fw={600}>Preparation Steps</Text>
+          <Text fw={500} size='sm'>Category</Text>
+          <CategoriesDropdown
+            onCategorySelect={handleCategorySelect}
+          />
+          <TextInput
+            mt={20}
+            label='Serving Size'
+            placeholder='e.g. 2-4 people'
+            value={formData.serving}
+            onChange={(e) => setFormData({ ...formData, serving: e.target.value })}
+            required
+          />
           {formData.prep.map((step, index) => (
-            <Group key={index} mb="sm" align="center">
+            <Flex key={index} align='center'>
               <Textarea
-                w={{ base: '80%', lg: '90%' }}
-                minRows={2}
-                maxRows={5}
-                autosize
-                radius="md"
-                placeholder={`Step ${index + 1}`}
+                mt={20}
                 value={step}
                 onChange={(e) => handleStepChange(index, e.target.value)}
+                placeholder={`Step ${index + 1}`}
+                required
               />
-              {formData.prep.length > 1 && (
-                <ActionIcon variant='outline' color="red" onClick={() => handleRemoveStep(index)}>
-                  <IconTrash size={20} />
+              {index > 0 && (
+                <ActionIcon color='red' onClick={() => handleRemoveStep(index)}>
+                  <IconTrash size={16} />
                 </ActionIcon>
               )}
-            </Group>
+            </Flex>
           ))}
-          <Button radius='xl' w={{ base: '60%', lg: '20%' }} mb='lg' color='white' variant='subtle' onClick={handleAddStep}>Add Step</Button>
-        </Flex>
-        {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
-        <Button mt="md" radius='md' w="100%" h={50} type="submit">Add Recipe</Button>
-      </form>
-      </Paper>
+          <Group mt={10}>
+            <Button w='20%' onClick={handleAddStep}>
+              Add Another Step
+            </Button>
+            <Button type='submit'>{formData.recipeId ? 'Update Recipe' : 'Add Recipe'}</Button>
+          </Group>
+          {error && <Text c='red'>{error}</Text>}
+        </Paper>
       </Flex>
+    </form>
   );
 };

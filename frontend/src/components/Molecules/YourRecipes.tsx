@@ -5,9 +5,9 @@ import Button from "../Atoms/CustomButton";
 import RecipeEditButton from '../Atoms/RecipeEditButton';
 import { Link } from "react-router-dom";
 
-
 const YourRecipes = () => {
   const [recipes, setRecipes] = useState<RecipeType[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     async function getYourRecipes(): Promise<void> {
@@ -33,12 +33,12 @@ const YourRecipes = () => {
     }
 
     getYourRecipes();
-  }, []);
+  }, [refresh]);
 
-  const handleDeleteRecipe = async (recipeId: string) => {
+  const handleDeleteRecipe = async (recipeId: number) => {
     try {
       await deleteRecipe(recipeId);
-      setRecipes(recipes.filter(recipe => recipe._id !== recipeId));
+      setRefresh(prev => !prev); 
     } catch (error) {
       console.error('Error deleting recipe', error);
     }
@@ -56,10 +56,10 @@ const YourRecipes = () => {
                     <Image h={150} src={recipe.image} alt={recipe.name} />
                   </Card.Section>
                   <RecipeEditButton
-                   recipeId={recipe.recipeId}
+                    recipeId={recipe.recipeId}
                     onDelete={handleDeleteRecipe}
                     recipe={recipe}
-/>
+                  />
                   <Flex gap={10} direction="column" w='100%' justify='center' align='center'>
                     <Text fw={700} size="sm" mt={10}>{recipe.name}</Text>
                     <Link to={`/recipe/${recipe.recipeId}`}>

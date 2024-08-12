@@ -3,7 +3,7 @@ import { Flex, Menu, Text, Container } from '@mantine/core';
 import styled from 'styled-components';
 import { modals } from '@mantine/modals';
 import { useNavigate } from 'react-router-dom';
-import { RecipeType } from '../../api'; // Import your RecipeType
+import { RecipeType } from '../../api';
 
 const StyledEditButton = styled.button`
   position: absolute;
@@ -28,11 +28,12 @@ const StyledEditButton = styled.button`
 `;
 
 interface RecipeEditButtonProps {
-  recipeId: string;
-  onDelete: (recipeId: string) => void;
+  recipe: RecipeType;
+  onDelete: (recipeId: number) => void;
 }
 
-const RecipeEditButton = ({ recipeId, onDelete }: RecipeEditButtonProps) => {
+const RecipeEditButton = ({ recipe, onDelete }: RecipeEditButtonProps) => {
+  const navigate = useNavigate();
 
   const openDeleteModal = () => modals.openConfirmModal({
     title: 'Are you sure you want to delete this recipe?',
@@ -45,8 +46,12 @@ const RecipeEditButton = ({ recipeId, onDelete }: RecipeEditButtonProps) => {
     labels: { confirm: 'Delete', cancel: 'Cancel' },
     confirmProps: { color: 'primary' },
     onCancel: () => console.log('Cancel'),
-    onConfirm: () => onDelete(recipeId)
+    onConfirm: () => onDelete(recipe.recipeId),
   });
+
+  const handleEdit = () => {
+    navigate('/edit-recipe', { state: { recipe } });
+  };
 
   return (
     <Container>
@@ -61,6 +66,7 @@ const RecipeEditButton = ({ recipeId, onDelete }: RecipeEditButtonProps) => {
         <Menu.Dropdown>
           <Menu.Item 
             leftSection={<IconEdit size={14} />}
+            onClick={handleEdit}
           >
             Edit Recipe
           </Menu.Item>
@@ -68,7 +74,7 @@ const RecipeEditButton = ({ recipeId, onDelete }: RecipeEditButtonProps) => {
           <Menu.Item
             color='red'
             leftSection={<IconTrash size={14} />}
-            onClick={() => openDeleteModal()}
+            onClick={openDeleteModal}
           >
             Delete Recipe
           </Menu.Item>

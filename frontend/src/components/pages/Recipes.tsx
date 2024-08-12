@@ -35,30 +35,29 @@ const Recipes = () => {
     return <Flex w='100%' h='100vh' justify='center' align='center'><Loader color='primary'/></Flex>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <>
-    <HeroSection/>
-    <Container maw={{ base: '100%', lg: '80%' }} p={0}>
-    <Fieldset legend='Newest Recipes' mt={20} mb={50} radius='md' p={10} pt={30}>
-      <RecipeCard recipes={recipes} />
-      <Group my={30} justify='end'>
-        <Pagination
-          size='lg'
-          total={totalPages}
-          value={currentPage}
-          onChange={setCurrentPage}
-          color="#ff3131"
-          withEdges
-        />
-      </Group>
-      </Fieldset>
-    </Container>
+      <HeroSection />
+      
+      <Container maw={{ base: '100%', lg: '80%' }} p={0}>
+        <Fieldset legend='Newest Recipes' mt={20} mb={50} radius='md' p={10} pt={30}>
+          {error && <div>{error}</div>}
+          <RecipeCard recipes={recipes} />
+          <Group my={30} justify='end'>
+            <Pagination
+              size='lg'
+              total={totalPages}
+              value={currentPage}
+              onChange={setCurrentPage}
+              color="#ff3131"
+              withEdges
+            />
+          </Group>
+        </Fieldset>
+      </Container>
     </>
   );
+  
 };
 
 export default Recipes;
