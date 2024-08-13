@@ -6,9 +6,10 @@ import Button from '../Atoms/CustomButton/CustomButton';
 import CategoriesDropdown from '../Atoms/CategoriesDropdown';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomTextArea from '../Atoms/CustomTextArea/CustomTextArea';
+import NotSignedIn from '../Pages/NotSignedIn';
 
 interface FormData {
-  recipeId: number ;
+  recipeId: number;
   image: string;
   name: string;
   description: string;
@@ -25,7 +26,7 @@ export const AddRecipe = () => {
   const location = useLocation();
   const editingRecipe = location.state?.recipe as RecipeType | null;
 
-  const [formData, setFormData] = useState<FormData>({
+  const initialFormData: FormData = {
     recipeId: editingRecipe?.recipeId || 0,
     image: editingRecipe?.image || '',
     name: editingRecipe?.name || '',
@@ -36,8 +37,9 @@ export const AddRecipe = () => {
     category: editingRecipe?.category || '',
     serving: editingRecipe?.serving || '',
     author: editingRecipe?.author || ''
-  });
+  };
 
+  const [formData, setFormData] = useState<FormData>(initialFormData);
   const [userData, setUserData] = useState<{ username: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,8 +56,12 @@ export const AddRecipe = () => {
     }
   }, [userData]);
 
+  const handleFormChange = (field: keyof FormData, value: string | string[]) => {
+    setFormData(prevData => ({ ...prevData, [field]: value }));
+  };
+
   const handleCategorySelect = (selectedCategory: string) => {
-    setFormData(prevData => ({ ...prevData, category: selectedCategory }));
+    handleFormChange('category', selectedCategory);
   };
 
   const handleAddStep = () => {
@@ -68,29 +74,35 @@ export const AddRecipe = () => {
   };
 
   const handleStepChange = (index: number, value: string) => {
-    const newSteps = [...formData.prep];
-    newSteps[index] = value;
-    setFormData(prevData => ({ ...prevData, prep: newSteps }));
+    setFormData(prevData => {
+      const newSteps = [...prevData.prep];
+      newSteps[index] = value;
+      return { ...prevData, prep: newSteps };
+    });
   };
 
   const handleRemoveStep = (index: number) => {
-    const newSteps = formData.prep.filter((_, i) => i !== index);
-    setFormData(prevData => ({ ...prevData, prep: newSteps }));
+    setFormData(prevData => {
+      const newSteps = prevData.prep.filter((_, i) => i !== index);
+      return { ...prevData, prep: newSteps };
+    });
   };
 
   const handleIngredientsChange = (value: string[]) => {
     const filteredValue = value
       .map(ingredient => ingredient.trim())
       .filter(ingredient => ingredient !== '');
-    setFormData(prevData => ({ ...prevData, ingredients: filteredValue }));
+    handleFormChange('ingredients', filteredValue);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (formData.ingredients.some(ingredient => ingredient === '') || formData.prep.some(step => step === '')) {
       setError('Please fill in all ingredients and steps.');
       return;
     }
+
     try {
       if (formData.recipeId) {
         await updateRecipe(formData.recipeId, formData);
@@ -114,59 +126,53 @@ export const AddRecipe = () => {
 
   const resetForm = () => {
     setFormData({
-      recipeId: 0,
-      image: '',
-      name: '',
-      description: '',
-      preptime: '',
-      prep: [''],
-      ingredients: [],
-      category: '',
-      serving: '',
+      ...initialFormData,
       author: userData?.username || ''
     });
   };
 
+  if (!userData) {
+    return <NotSignedIn/>;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <Flex justify='center' w='100%'>
-        <Paper withBorder w={{base: '100%',md:'50%'}} shadow='sm' p='md' radius='md'>
-
+        <Paper withBorder w={{ base: '100%', md: '50%' }} shadow='sm' p='md' radius='md'>
           <Title order={2} mb={20}>
             {formData.recipeId ? 'Edit Recipe' : 'Add New Recipe'}
           </Title>
-          
+
           <CustomTextArea
             label='Recipe Image URL'
             placeholder='Enter image URL'
             value={formData.image}
-            onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+            onChange={(e) => handleFormChange('image', e.target.value)}
           />
 
           <CustomTextArea
             label='Recipe Name'
             placeholder='Enter recipe name'
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => handleFormChange('name', e.target.value)}
           />
 
           <CustomTextArea
             label='Recipe Description'
             placeholder='Enter recipe description'
             value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            onChange={(e) => handleFormChange('description', e.target.value)}
           />
 
           <CustomTextArea
             label='Preparation Time'
             placeholder='e.g. 30 minutes'
             value={formData.preptime}
-            onChange={(e) => setFormData({ ...formData, preptime: e.target.value })}
+            onChange={(e) => handleFormChange('preptime', e.target.value)}
           />
 
           <TagsInput
-          mt={30}
-          c='#dd3131'
+            mt={30}
             value={formData.ingredients}
             onChange={handleIngredientsChange}
             placeholder='Please separate ingredients with commas'
@@ -174,22 +180,20 @@ export const AddRecipe = () => {
           />
 
           <Text c='#dd3131' mt={30} fw={500} size='sm'>Category</Text>
-          <CategoriesDropdown
-            onCategorySelect={handleCategorySelect}
-          />
+          <CategoriesDropdown onCategorySelect={handleCategorySelect} />
 
           <CustomTextArea
             label='Serving Size'
             placeholder='e.g. 2-4 people'
             value={formData.serving}
-            onChange={(e) => setFormData({ ...formData, serving: e.target.value })}
-
+            onChange={(e) => handleFormChange('serving', e.target.value)}
           />
 
           <Text c='#dd3131' mt={20} fw={500} size='sm'>Preparation Steps</Text>
           {formData.prep.map((step, index) => (
-            <Flex key={index} align='center'>
+            <Flex key={index} align='start' >
               <CustomTextArea
+                mt={5}
                 w='90%'
                 minRows={2}
                 value={step}
@@ -204,13 +208,15 @@ export const AddRecipe = () => {
               )}
             </Flex>
           ))}
-            <Button mt={10} variant='outline' w='20%' onClick={handleAddStep}>
-              Add Another Step
-            </Button>
+          <Button mt={10} variant='outline' w={200} onClick={handleAddStep}>
+            Add Another Step
+          </Button>
 
-            <Flex w='100%' justify='end' mt={50}>
-            <Button rightSection={<IconCheck />} type='submit'>{formData.recipeId ? 'Update Recipe' : 'Add Recipe'}</Button>
-            </Flex>
+          <Flex w='100%' justify='end' mt={50}>
+            <Button rightSection={<IconCheck />} type='submit'>
+              {formData.recipeId ? 'Update Recipe' : 'Add Recipe'}
+            </Button>
+          </Flex>
 
           {error && <Text c='red'>{error}</Text>}
         </Paper>

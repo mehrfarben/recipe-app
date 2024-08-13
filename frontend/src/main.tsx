@@ -7,6 +7,8 @@ import '@mantine/core/styles.css';
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./utils/ScrollToTop"
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <MantineProvider
         defaultColorScheme="auto">
         <ModalsProvider>
+          <Notifications />
           
         <ScrollToTop/>
         <App />

@@ -21,7 +21,7 @@ const Profile = () => {
         <>
         {userData ? (
             <Flex mih='85vh' justify="center" align="start">
-                <Card mb={50} p={{ base: 15, md: 50 }} w={{ base: '100%', md: '80%' }}>
+                <Card mb={50} p={{ base: 15, md: 50 }} w={{ base: '100%', md: '85%' }}>
 
                     <Box py={20} pl={20}>
                         <Flex align='center' direction={{ base: 'column', md: 'row' }}>

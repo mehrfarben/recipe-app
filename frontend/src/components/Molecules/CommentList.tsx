@@ -4,6 +4,8 @@ import { fetchComments, deleteComment, RecipeType, UserCredentials } from '../..
 import { IconX } from '@tabler/icons-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import io from 'socket.io-client';
+import { notifications } from '@mantine/notifications';
+import { modals } from '@mantine/modals';
 
 const socket = io('http://localhost:3000');
 
@@ -41,6 +43,20 @@ const CommentList = ({ recipeId }: { recipeId: RecipeType['recipeId'] }) => {
       console.error('Error deleting comment', error);
     }
   };
+
+  const openDeleteModal = () => modals.openConfirmModal({
+    title: 'Are you sure ?',
+    centered: true,
+    children: (
+      <Text size="sm">
+        You will not be able to recover it after deletion.
+      </Text>
+    ),
+    labels: { confirm: 'Delete', cancel: 'Cancel' },
+    confirmProps: { color: '#ff3131' },
+    onCancel: () => console.log('Cancel'),
+    onConfirm: () => {handleDeleteComment(comments[0]._id), notifications.show({ title: 'Comment Deleted', message: 'Comment deleted successfully', color: '#ff3131' })},
+  });
 
   const formatTimeAgo = (timestamp: string) => {
     return formatDistanceToNow(parseISO(timestamp), { addSuffix: true });
@@ -84,7 +100,7 @@ const CommentList = ({ recipeId }: { recipeId: RecipeType['recipeId'] }) => {
                     <ActionIcon
                       mt={5}
                       color="red"
-                      onClick={() => handleDeleteComment(comment._id)}
+                      onClick= {openDeleteModal}
                       variant='subtle'
                       size="sm"
                     >

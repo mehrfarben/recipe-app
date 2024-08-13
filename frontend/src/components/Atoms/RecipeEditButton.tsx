@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { modals } from '@mantine/modals';
 import { useNavigate } from 'react-router-dom';
 import { RecipeType } from '../../api';
+import { notifications } from '@mantine/notifications';
 
 const StyledEditButton = styled.button`
   position: absolute;
@@ -47,7 +48,7 @@ const RecipeEditButton = ({ recipe, onDelete }: RecipeEditButtonProps) => {
     labels: { confirm: 'Delete', cancel: 'Cancel' },
     confirmProps: { color: '#ff3131' },
     onCancel: () => console.log('Cancel'),
-    onConfirm: () => onDelete(recipe.recipeId),
+    onConfirm: () => {onDelete(recipe.recipeId), notifications.show({ title: 'Recipe Deleted', message: 'Recipe deleted successfully', color: '#ff3131' })},
   });
 
   const handleEdit = () => {

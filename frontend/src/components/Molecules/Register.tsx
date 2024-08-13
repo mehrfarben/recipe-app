@@ -2,19 +2,24 @@ import { useState } from 'react';
 import { registerUser } from '../../api/index';
 import { TextInput, PasswordInput, Flex, Fieldset, Text} from '@mantine/core';
 import Button from '../Atoms/CustomButton/CustomButton'
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({ email: '', username: '', password: '' });
-    const [loginMessage, setLoginMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
             const { data } = await registerUser(formData);
-            setLoginMessage('You have successfully signed up. Please sign in.');
+            notifications.show({ title: 'Success', message: 'You have successfully signed up. Redirecting to the home page', color: 'green', loading: true});
+            setTimeout(() => {
+                navigate('/');
+            }, 3000);
         } catch (error) {
             console.error(error);
-            setLoginMessage('Something went wrong. Please try again.');
+            notifications.show({ title: 'Error', message: 'Something went wrong. Please try again.', color: '#ff3131' });
         }
         finally {
             setFormData({ email: '', username: '', password: '' });
@@ -52,7 +57,6 @@ const Register = () => {
                 <Flex justify='end'>
                 <Button mt="md" onClick={handleSubmit}>Sign Up</Button>   
                 </Flex>
-                <Text mt="md">{loginMessage}</Text>
            </Fieldset>
            </Flex>
     );

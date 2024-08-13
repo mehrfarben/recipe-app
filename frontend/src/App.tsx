@@ -16,7 +16,7 @@ function Home() {
 
   return (
     <AppShell
-      header={{ height: 60 }}
+      header={{ height: 70 }}
       navbar={{ width: 400, breakpoint: 'md', collapsed: { desktop: true, mobile: !opened } }}
       padding="md"
     >

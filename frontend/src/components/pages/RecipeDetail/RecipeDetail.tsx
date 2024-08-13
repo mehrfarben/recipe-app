@@ -73,7 +73,7 @@ const handleRatingChange = async (value: number) => {
   return (
     <Center>
       {recipe ? (
-        <Card w={{base: '100%', md: '85%'}} p={{base: 0, md: '1%'}} withBorder padding="xl" radius="lg" >
+        <Card w={{base: '100%', md: '85%'}} p={{base: 0, md: '1%'}} mb={100} withBorder padding="xl" radius="lg" >
 
 <Card.Section mt={20} px={{base: 20, md: 75}}>
 <p className={classes.recipeTitle}>{recipe.name}</p>
@@ -118,7 +118,7 @@ const handleRatingChange = async (value: number) => {
 
   <Paper p={{base: 0,md:20}} radius='lg' shadow='md' withBorder>
     <Flex justify='center' align='center'>
-  <p className={classes.ratingText}>Rate this recipe:</p>
+  <p className={classes.ratingText}>{userRating ? `Your Rating:` : 'Rate This Recipe:'}</p>
   <Rating size='lg' value={userRating} onChange={handleRatingChange} />
   </Flex>
   </Paper>
