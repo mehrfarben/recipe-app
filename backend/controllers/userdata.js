@@ -29,6 +29,8 @@ exports.toggleFavorite = async (req, res) => {
     }
 };
 
+const Recipe = require('../models/recipe');
+
 exports.getFavorites = async (req, res) => {
     const { username } = req.params;
 
@@ -39,8 +41,14 @@ exports.getFavorites = async (req, res) => {
             return res.status(404).json({ message: 'Favorites not found' });
         }
 
-        return res.status(200).json(userFavorite);
+        const favoriteRecipes = await Recipe.find({ recipeId: { $in: userFavorite.favorites } });
+
+        return res.status(200).json({
+            favorites: userFavorite.favorites,
+            recipes: favoriteRecipes
+        });
     } catch (error) {
         return res.status(500).json({ message: 'Server error', error });
     }
 };
+
