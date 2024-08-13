@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Recipes from "../components/Pages/Recipes";
-import Profile from "../components/Pages/Profile";
+import Profile from "../components/Pages/Profile/Profile";
 import Register from "../components/Molecules/Register";
 import RecipeDetail from "../components/Pages/RecipeDetail/RecipeDetail";
 import { AddRecipe } from "../components/Molecules/AddRecipe";

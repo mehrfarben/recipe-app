@@ -46,7 +46,7 @@ const YourRecipes = () => {
 
   return (
     <Flex justify='center'>
-      <Fieldset legend='Recipes By You' w='100%' mt={20} mb={20} radius='md' p={30}>
+      <Fieldset legend='Your Recipes' w='100%' mt={20} mb={20} radius='md' p={30}>
         {recipes.length > 0 ? (
           <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
             {recipes.map((recipe) => (

@@ -40,11 +40,11 @@ const Recipes = () => {
     <>
       <HeroSection />
       
-      <Container maw={{ base: '100%', lg: '80%' }} p={0}>
+      <Container maw={{ base: '100%', lg: '80%' }} p={20}>
         <Fieldset legend='Newest Recipes' mt={20} mb={50} radius='md' p={10} pt={30}>
           {error && <div>{error}</div>}
           <RecipeCard recipes={recipes} />
-          <Group my={30} justify='end'>
+          <Group mt={50} justify='end'>
             <Pagination
               size='lg'
               total={totalPages}

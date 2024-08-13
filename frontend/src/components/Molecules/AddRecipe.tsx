@@ -190,7 +190,7 @@ export const AddRecipe = () => {
           {formData.prep.map((step, index) => (
             <Flex key={index} align='center'>
               <CustomTextArea
-                w='100%'
+                w='90%'
                 minRows={2}
                 value={step}
                 onChange={(e) => handleStepChange(index, e.target.value)}
@@ -198,7 +198,7 @@ export const AddRecipe = () => {
                 required
               />
               {index > 0 && (
-                <ActionIcon variant='subtle' mx={5} color='#ff3131' onClick={() => handleRemoveStep(index)}>
+                <ActionIcon mt={15} variant='subtle' mx={3} color='#ff3131' onClick={() => handleRemoveStep(index)}>
                   <IconTrash size={16} />
                 </ActionIcon>
               )}

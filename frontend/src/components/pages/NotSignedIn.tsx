@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 
 const NotSignedIn = () => {
     return ( 
-        <Flex direction="column" justify="center" align="center" h="80vh">
-            <Text size='xl' fw={400}>You are not signed in. Please sign in or sign up.</Text>
+        <Flex direction="column" justify="center" align="center" h="80vh" p={30}>
+            <Text ta='center' size='xl' fw={400}>You are not signed in. Please sign in or sign up.</Text>
             <Group mt={20}>
                 <Login/>
                 <Link to="/register">

@@ -7,6 +7,11 @@ html, *, body {
   src: local('Monarcha'), url(./fonts/Monarcha.woff) format('woff');
 }
 
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
 .mantine-Fieldset-legend{
   font-family: "Monarcha", cursive;
   font-weight: 500;
@@ -25,11 +30,6 @@ html, *, body {
 .ingredients{
   color: #181818;
   border-bottom: 1px solid rgba(24, 24, 24, 0.2);
-}
-
-.recipe-details{
-  padding-left: 25px;
-  border-left: 1px solid rgba(24, 24, 24, 0.2);
 }
 
 .search-card{

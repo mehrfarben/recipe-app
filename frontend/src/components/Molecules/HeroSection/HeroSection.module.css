@@ -19,11 +19,11 @@
 @media screen and (max-width: 1198px) {
     .title{
         font-size: 60px;
-        color: #f0ffff;
+        color: #fff;
     }
     .subtitle{
         font-size: 25px;
-        color: #f0ffff;
+        color: #fff;
         margin: 0;
     }
 }

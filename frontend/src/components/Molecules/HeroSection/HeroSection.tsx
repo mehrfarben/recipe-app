@@ -5,7 +5,7 @@ import HeroImage from "../../../assets/herosection.png";
 
 const HeroSection = () => {
   return (
-    <Flex mt={20} mb={50} justify="center">
+    <Flex px={20} mt={20} mb={50} justify="center">
       <Card p={0} shadow="xl" withBorder radius="lg" w={{base:"100%", lg:"80%"}} h={{base:'30vh', lg:"60vh"}}>
       <BackgroundImage src={HeroImage} w="100%" h="100%" radius="lg"> 
       <Overlay hiddenFrom="lg" zIndex={0} color="#000" backgroundOpacity={0.1} />

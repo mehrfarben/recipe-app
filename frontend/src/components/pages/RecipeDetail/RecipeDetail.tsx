@@ -76,48 +76,48 @@ const handleRatingChange = async (value: number) => {
         <Card w={{base: '100%', md: '85%'}} p={{base: 0, md: '1%'}} withBorder padding="xl" radius="lg" >
 
 <Card.Section mt={20} px={{base: 20, md: 75}}>
-<Title ff={'Montserrat'} size={60} fw={600} mb={30}>{recipe.name}</Title>
+<p className={classes.recipeTitle}>{recipe.name}</p>
 
 
-<Flex w='100%' justify='space-between'>
-<Flex gap={25}>
+<Flex w='100%' gap={20} justify='space-between' direction={{base: 'column', md: 'row'}}>
+<Flex>
 
-  <Group mr={50} gap={10}>
-  <Avatar size='lg'/>
+  <Group mr={{base: 5, md: 50}} justify='center' gap={10}>
+  <Avatar className={classes.avatar}/>
   <Stack gap={0}>
-    <Text size='xl' fw={600}>{recipe.author}</Text>
-    <Text size='md'>{formattedDate}</Text>
+    <p className={classes.upperText}>{recipe.author}</p>
+    <p className={classes.lowerText}>{formattedDate}</p>
   </Stack>
   </Group>
 
-  <Group className='recipe-details' gap={10}>
-  <IconToolsKitchen2 stroke={1.5} size={40} />
+  <Group className={classes.recipeDetails} gap={5}>
+  <IconToolsKitchen2 stroke={1.5} size={30} />
   <Stack gap={0}>
-    <Text size='md' fw={600}>Category</Text>
-    <Text size='sm'>{recipe.category}</Text>
+    <p className={classes.upperText}>Category</p>
+    <p className={classes.lowerText} >{recipe.category}</p>
   </Stack>
   </Group>
 
-  <Group className='recipe-details' gap={10}>
-    <IconClock stroke={1.5} size={40} />
+  <Group className={classes.recipeDetails} gap={5}>
+    <IconClock stroke={1.5} size={30} />
     <Stack gap={0}>
-      <Text size='md' fw={600}>Prep Time</Text>
-      <Text size='sm'>{recipe.preptime}</Text>
+      <p className={classes.upperText}>Prep Time</p>
+      <p className={classes.lowerText} >{recipe.preptime}</p>
     </Stack>
   </Group>
 
-  <Group className='recipe-details' gap={10}>
-    <IconUsers stroke={1.5} size={40} />
+  <Group className={classes.recipeDetails} gap={5}>
+    <IconUsers stroke={1.5} size={30} />
     <Stack gap={0}>
-      <Text size='md' fw={600}>Serving Size</Text>
-      <Text size='sm'>{recipe.serving} Servings</Text>
+      <p className={classes.upperText}>Serving Size</p>
+      <p className={classes.lowerText} >{recipe.serving} Servings</p>
     </Stack>
   </Group>
 </Flex>
 
-  <Paper p={20} radius='lg' shadow='md' withBorder>
-    <Flex>
-  <Text size='lg' fw={600} mr={10}>Rate this recipe:</Text>
+  <Paper p={{base: 0,md:20}} radius='lg' shadow='md' withBorder>
+    <Flex justify='center' align='center'>
+  <p className={classes.ratingText} >Rate this recipe:</p>
   <Rating size='lg' value={userRating} onChange={handleRatingChange} />
   </Flex>
   </Paper>
@@ -167,7 +167,7 @@ const handleRatingChange = async (value: number) => {
 
 
 
-              <Flex w='100%' direction='column' align='center' p={40} gap={20}>
+              <Flex w='100%' direction='column' align='center' gap={20}>
               <CommentForm recipeId={recipeId} username={username} onCommentAdded={() => setRefreshComments(!refreshComments)} />
               <CommentList recipeId={recipeId} refresh={refreshComments} />
               </Flex>

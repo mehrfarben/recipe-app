@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { registerUser } from '../../api/index';
-import { TextInput, PasswordInput, Button, Flex, Fieldset, Text} from '@mantine/core';
+import { TextInput, PasswordInput, Flex, Fieldset, Text} from '@mantine/core';
+import Button from '../Atoms/CustomButton/CustomButton'
 
 const Register = () => {
     const [formData, setFormData] = useState({ email: '', username: '', password: '' });
@@ -22,7 +23,7 @@ const Register = () => {
 
     return (
         <Flex h='75vh' mt={50} align="start" justify="center">
-        <Fieldset w="35%">
+        <Fieldset w={{base:'90%' ,md:"35%"}}>
                 <TextInput
                     label="Email"
                     type='email'
@@ -48,7 +49,9 @@ const Register = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
+                <Flex justify='end'>
                 <Button mt="md" onClick={handleSubmit}>Sign Up</Button>   
+                </Flex>
                 <Text mt="md">{loginMessage}</Text>
            </Fieldset>
            </Flex>

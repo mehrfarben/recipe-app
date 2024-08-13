@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { UserCredentials } from '../../api';
-import { Text, Flex, Card, Tabs, Avatar, Stack, Box } from '@mantine/core';
-import Favorites from '../Molecules/Favorites';
-import YourRecipes from '../Molecules/YourRecipes';
-import NotSignedIn from './NotSignedIn';
+import { UserCredentials } from '../../../api';
+import { Flex, Card, Tabs, Avatar, Stack, Box } from '@mantine/core';
+import Favorites from '../../Molecules/Favorites';
+import YourRecipes from '../../Molecules/YourRecipes';
+import NotSignedIn from '../NotSignedIn';
 import { IconHeart, IconReceipt } from '@tabler/icons-react';
+import classes from './Profile.module.css';
 
 const Profile = () => {
     const [userData, setUserData] = useState<UserCredentials | null>(null);
@@ -20,14 +21,14 @@ const Profile = () => {
         <>
         {userData ? (
             <Flex justify="center" align="center">
-                <Card mb={50} p={{ base: 15, md: 50 }} w={{ base: '100%', md: '80%' }} shadow="sm">
+                <Card mb={50} p={{ base: 15, md: 50 }} w={{ base: '100%', md: '80%' }}>
 
                     <Box py={20} pl={20}>
-                        <Flex align='center'>
+                        <Flex align='center' direction={{ base: 'column', md: 'row' }}>
                             <Avatar size={150} />
-                                <Stack ml={20} gap={5}>
-                                    <Text size='xl' fw={500}>Username: {userData.username}</Text>
-                                    <Text size='xl' fw={500}>Email: {userData.email}</Text>
+                                <Stack ml={{base: 0, md:20}} mt={20} gap={5}>
+                                    <p className={classes.credentials}>Username: <span className={classes.credentialsText}>{userData.username}</span></p>
+                                    <p className={classes.credentials}>Email: <span className={classes.credentialsText}>{userData.email}</span></p>
                                 </Stack>
                         </Flex>
 

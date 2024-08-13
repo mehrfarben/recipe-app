@@ -41,7 +41,7 @@ const SearchPage = () => {
 
     <Container maw={{ base: '100%', lg: '80%' }} p={0}>
     <Card radius='lg' p={20}>
-    <Card mt={10} mb={25} p={0} shadow="xl" withBorder radius="lg" h={{base:'20vh', xl:"30vh"}}>
+    <Card mt={10} mb={25} p={0} shadow="xl" withBorder radius="lg" h={{base:'25vh', xl:"30vh"}}>
       <BackgroundImage h='100%' src={SearchPanel}>
           
           <Flex w='100%' h='100%' justify='center' direction='column' mb={30}>
@@ -51,7 +51,7 @@ const SearchPage = () => {
 
           </BackgroundImage>
       </Card>
-    <Title p={25} fw={500} ff='Monarcha'>Search results for "{searchTerm}"</Title>
+    <Text size='xl' p={15} fw={500} ff='Monarcha'>Search results for "{searchTerm}"</Text>
     
     <RecipeCard recipes={recipes} />
       <Group my={30} justify='end'>

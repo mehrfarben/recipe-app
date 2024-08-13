@@ -6,8 +6,57 @@
     font-size: 15px;
 }
 
+.recipeTitle{
+    font-family: 'Montserrat';
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.upperText{
+    font-weight: 600;
+    padding-left: 3px;
+    margin: 0;
+}
+
+.lowerText{
+    padding-left: 3px;
+    margin: 0;
+}
+
+.ratingText{
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.recipeDetails{
+    padding-left: 25px;
+    padding-right: 25px;
+    border-left: 1px solid rgba(24, 24, 24, 0.2);
+}
+
+
 @media screen and (max-width: 768px) {
     .description{
         font-size: 12px;
     }
+
+    .upperText{
+        text-align: center;
+        font-size: 9px;
+    }
+        
+    .lowerText{
+        font-size: 9px;
+    }
+
+    .recipeTitle{
+        font-size: 35px;
+        margin-bottom: 10px;
+    }
+    .recipeDetails{
+        padding-left: 10px;
+        padding-right: 10px;
+      }
 }

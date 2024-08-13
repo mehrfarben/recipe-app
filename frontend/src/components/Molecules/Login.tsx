@@ -88,7 +88,7 @@ export const Login = () => {
                     <Flex mt={24} justify="space-between" align="center" direction={{base: 'column', md: 'row'}}>
                         <Button type="submit" w={{base:'50%', md:'30%'}}>Sign In</Button>
                         <Link onClick={close} to="/register">
-                            <Text c='black' size="xs" mt={{base:30, md:0}}>
+                            <Text size="xs" mt={{base:30, md:0}}>
                                 Don't have an account? Click here to sign up.
                             </Text>
                         </Link>
