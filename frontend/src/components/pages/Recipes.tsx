@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Pagination, Group, Flex, Fieldset } from '@mantine/core';
+import { Container, Pagination, Group, Fieldset } from '@mantine/core';
 import { fetchRecipes } from '../../api/index';
 import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';

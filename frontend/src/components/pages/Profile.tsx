@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { UserCredentials } from '../../api';
-import { Text, Flex, Card, Tabs, Avatar, SimpleGrid, Group, Stack, Box } from '@mantine/core';
+import { Text, Flex, Card, Tabs, Avatar, Stack, Box } from '@mantine/core';
 import Favorites from '../Molecules/Favorites';
 import YourRecipes from '../Molecules/YourRecipes';
 import NotSignedIn from './NotSignedIn';

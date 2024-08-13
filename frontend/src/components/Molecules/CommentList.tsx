@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Text, Group, Avatar, ActionIcon, Flex, Container, Paper } from '@mantine/core';
-import { fetchComments, deleteComment } from '../../api/index';
+import { fetchComments, deleteComment, RecipeType, UserCredentials } from '../../api/index';
 import { IconX } from '@tabler/icons-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
-const CommentList = ({ recipeId }) => {
-  const [comments, setComments] = useState([]);
-  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+interface CommentType {
+  _id: string;
+  username: UserCredentials['username'];
+  comment: string;
+  createdAt: string;
+}
+
+const CommentList = ({ recipeId }: { recipeId: RecipeType['recipeId'] }) => {
+  const [comments, setComments] = useState<CommentType[]>([]);
+  const userData: UserCredentials = JSON.parse(localStorage.getItem('userData') || '{}');
   const currentUser = userData.username;
 
   useEffect(() => {
@@ -23,7 +30,7 @@ const CommentList = ({ recipeId }) => {
     getComments();
   }, [recipeId]);
 
-  const handleDeleteComment = async (commentId) => {
+  const handleDeleteComment = async (commentId: string) => {
     try {
       await deleteComment(commentId);
       setComments(comments.filter(comment => comment._id !== commentId));
@@ -32,7 +39,7 @@ const CommentList = ({ recipeId }) => {
     }
   };
 
-  const formatTimeAgo = (timestamp) => {
+  const formatTimeAgo = (timestamp: string) => {
     return formatDistanceToNow(parseISO(timestamp), { addSuffix: true });
   };
 
@@ -43,27 +50,27 @@ const CommentList = ({ recipeId }) => {
           <Group py={10} key={comment._id}>
             <Flex w='100%' justify='space-between'>
               <Paper radius='lg' shadow="xs" withBorder w='100%' p={20}>
-              <Avatar mr={10}/>
-              <Flex  justify='space-between'>
-                <Flex  align="start" justify='space-between' direction='column'>
-                <Group >
-                <Text size='lg' fw={700}>{comment.username}</Text>
-                <Text size='sm' c='dimmed'>{formatTimeAgo(comment.createdAt)}</Text>
-                </Group>
-                <Text>{comment.comment}</Text>
+                <Avatar mr={10} />
+                <Flex justify='space-between'>
+                  <Flex align="start" justify='space-between' direction='column'>
+                    <Group>
+                      <Text size='lg' fw={700}>{comment.username}</Text>
+                      <Text size='sm' c='dimmed'>{formatTimeAgo(comment.createdAt)}</Text>
+                    </Group>
+                    <Text>{comment.comment}</Text>
+                  </Flex>
+                  {currentUser && comment.username === currentUser && (
+                    <ActionIcon
+                      mt={5}
+                      color="red"
+                      onClick={() => handleDeleteComment(comment._id)}
+                      variant='subtle'
+                      size="sm"
+                    >
+                      <IconX />
+                    </ActionIcon>
+                  )}
                 </Flex>
-                {currentUser && comment.username === currentUser && (
-                <ActionIcon
-                  mt={5}
-                  color="red" 
-                  onClick={() => handleDeleteComment(comment._id)}
-                  variant='subtle'
-                  size="sm"
-                >
-                  <IconX/>
-                </ActionIcon>
-              )}
-              </Flex>
               </Paper>
             </Flex>
           </Group>

@@ -2,10 +2,16 @@ import { useState } from 'react';
 import { Button, Textarea, Container, Title, Flex } from '@mantine/core';
 import { addComment } from '../../api/index'; 
 
-const CommentForm = ({ recipeId, username, onCommentAdded }) => {
+interface CommentFormProps {
+  recipeId: number;
+  username: string;
+  onCommentAdded: () => void;
+}
+
+const CommentForm: React.FC<CommentFormProps> = ({ recipeId, username, onCommentAdded }) => {
   const [comment, setComment] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!comment.trim()) {
       return;
@@ -21,7 +27,7 @@ const CommentForm = ({ recipeId, username, onCommentAdded }) => {
 
   return (
     <Container w='100%' m={0}>
-        <Title mb={10} order={1}>Comments</Title>
+      <Title mb={10} order={1}>Comments</Title>
       <form onSubmit={handleSubmit}>
         <Flex direction="column" gap="sm" mt={10}>
           <Textarea
@@ -35,7 +41,7 @@ const CommentForm = ({ recipeId, username, onCommentAdded }) => {
             required
           />
           <Flex w='100%' justify='end'>
-          <Button w={125} type="submit" variant='outline' color='#ff0307'>Comment</Button>
+            <Button w={125} type="submit" variant='outline' color='#ff0307'>Comment</Button>
           </Flex>
         </Flex>
       </form>

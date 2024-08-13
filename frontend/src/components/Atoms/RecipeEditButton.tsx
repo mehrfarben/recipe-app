@@ -28,6 +28,7 @@ const StyledEditButton = styled.button`
 `;
 
 interface RecipeEditButtonProps {
+  recipeId: number;
   recipe: RecipeType;
   onDelete: (recipeId: number) => void;
 }

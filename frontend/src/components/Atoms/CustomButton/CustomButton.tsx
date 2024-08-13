@@ -3,6 +3,8 @@ import classes from "./CustomButton.module.css";
 
 interface CustomButtonProps extends ButtonProps {
   children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const CustomButton = ({ children, ...props }: CustomButtonProps) => {

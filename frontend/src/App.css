@@ -40,6 +40,7 @@ html, *, body {
 }
 
 .footer {
+  background-color: #ffba09;
   border-top: 1px solid rgba(24, 24, 24, 0.15);
 }
 
@@ -47,6 +48,7 @@ html, *, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
   padding-top: var(--mantine-spacing-md);
   padding-bottom: var(--mantine-spacing-md);
 

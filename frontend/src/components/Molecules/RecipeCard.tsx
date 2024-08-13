@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Image, Text, Flex, SimpleGrid, Avatar, Rating } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton/CustomButton';
-import LikeButton from '../Atoms/LikeButton';
-import CustomText from '../Atoms/CustomText';
+import LikeButton from '../Atoms/LikeButton/LikeButton';
 import { addRecipeToFavorites, fetchFavoriteRecipes, RecipeType } from '../../api';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
@@ -50,7 +49,7 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
           return [...prevFavorites, recipeId];
         }
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response?.data?.message || 'Error toggling recipe favorite status');
     }
   };
@@ -79,7 +78,7 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
             </Card.Section>
 
             <Flex mt={10} mih={30} align='center' justify='space-between'>
-              <CustomText fw={500} size='sm'>{recipe.name}</CustomText>
+              <Text fw={500} size='sm'>{recipe.name}</Text>
               <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
             </Flex>
 

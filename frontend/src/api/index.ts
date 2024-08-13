@@ -10,9 +10,9 @@ API.interceptors.request.use((req) => {
 });
 
 export type UserCredentials = {
-  identifier: string;
-  email: string;
-  username: string;
+  identifier?: string;
+  email?: string;
+  username?: string;
   password: string;
 };
 
@@ -27,6 +27,8 @@ export type RecipeType = {
   category: string;
   serving: string;
   author: string;
+  averageRating: number;
+  createdAt: string;
 };
 
 export const fetchRecipes = (page = 1, limit = 12, author = '', name = '') => 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createRecipe, updateRecipe } from '../../api/index';
+import { createRecipe, updateRecipe, RecipeType } from '../../api/index';
 import { Flex, TagsInput, ActionIcon, Text, Title, Paper } from '@mantine/core';
 import { IconTrash, IconCheck } from '@tabler/icons-react';
 import Button from '../Atoms/CustomButton/CustomButton';
@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CustomTextArea from '../Atoms/CustomTextArea/CustomTextArea';
 
 interface FormData {
-  recipeId: number | null;
+  recipeId: number ;
   image: string;
   name: string;
   description: string;
@@ -23,10 +23,10 @@ interface FormData {
 export const AddRecipe = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const editingRecipe = location.state?.recipe as FormData | null;
+  const editingRecipe = location.state?.recipe as RecipeType | null;
 
   const [formData, setFormData] = useState<FormData>({
-    recipeId: editingRecipe?.recipeId || null,
+    recipeId: editingRecipe?.recipeId || 0,
     image: editingRecipe?.image || '',
     name: editingRecipe?.name || '',
     description: editingRecipe?.description || '',
@@ -114,7 +114,7 @@ export const AddRecipe = () => {
 
   const resetForm = () => {
     setFormData({
-      recipeId: null,
+      recipeId: 0,
       image: '',
       name: '',
       description: '',

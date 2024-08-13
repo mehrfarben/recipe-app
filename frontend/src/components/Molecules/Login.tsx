@@ -1,11 +1,10 @@
 import { Modal, TextInput, PasswordInput, Text, Flex } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { loginUser } from '../../api/index';
+import { loginUser, UserCredentials } from '../../api/index';
 import { useDisclosure } from '@mantine/hooks';
 import { IconLogout } from '@tabler/icons-react';
-import { UserCredentials } from '../../api/index';
-import DefaultLink from '../Atoms/DefaultLink';
+import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton/CustomButton';
 
 export const Login = () => {
@@ -88,11 +87,11 @@ export const Login = () => {
                     />
                     <Flex mt={24} justify="space-between" align="center" direction={{base: 'column', md: 'row'}}>
                         <Button type="submit" w={{base:'50%', md:'30%'}}>Sign In</Button>
-                        <DefaultLink onClick={close} to="/register">
-                            <Text size="xs" mt={{base:30, md:0}}>
+                        <Link onClick={close} to="/register">
+                            <Text c='black' size="xs" mt={{base:30, md:0}}>
                                 Don't have an account? Click here to sign up.
                             </Text>
-                        </DefaultLink>
+                        </Link>
                     </Flex>
                     <Text ta="center" mt={10} size='sm' c='red'>{loginMessage}</Text>
                 </form>

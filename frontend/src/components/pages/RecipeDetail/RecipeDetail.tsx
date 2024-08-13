@@ -10,7 +10,7 @@ import CesniLoader from '../../Atoms/CesniLoader';
 import classes from './RecipeDetail.module.css';
 
 const RecipeDetails: React.FC = () => {
-  const { recipeId } = useParams<{ recipeId: number }>();
+  const { recipeId } = useParams<{ recipeId: string }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -49,18 +49,18 @@ const RecipeDetails: React.FC = () => {
     fetchUserRating();
   }, [recipeId]);
 
-  const handleRatingChange = async (value) => {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const username = userData.username;
-    if (username) {
-      try {
-        await submitRating(recipeId, username, value);
-        setUserRating(value);
-      } catch (err) {
-        console.error('Failed to submit rating');
-      }
+const handleRatingChange = async (value: number) => {
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const username = userData.username;
+  if (username) {
+    try {
+      await submitRating(recipeId, username, value);
+      setUserRating(value);
+    } catch (err) {
+      console.error('Failed to submit rating');
     }
-  };
+  }
+};
 
   const userData = JSON.parse(localStorage.getItem('userData') || '{}');
   const username = userData.username;
