@@ -31,6 +31,7 @@ export const Login = () => {
             setUserData(data.user);
             setIsLoggedIn(true);
             setFormData({ identifier: '', password: '' });
+            navigate('/');
             close();
             setLoginMessage('');
             window.location.reload();

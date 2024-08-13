@@ -39,7 +39,7 @@ const SearchPage = () => {
 
   return (
 
-    <Container maw={{ base: '100%', lg: '80%' }} p={0}>
+    <Container mih='85vh' maw={{ base: '100%', lg: '80%' }} p={0}>
     <Card radius='lg' p={20}>
     <Card mt={10} mb={25} p={0} shadow="xl" withBorder radius="lg" h={{base:'25vh', xl:"30vh"}}>
       <BackgroundImage h='100%' src={SearchPanel}>

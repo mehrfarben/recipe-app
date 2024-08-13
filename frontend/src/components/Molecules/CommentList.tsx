@@ -3,6 +3,9 @@ import { Text, Group, Avatar, ActionIcon, Flex, Container, Paper } from '@mantin
 import { fetchComments, deleteComment, RecipeType, UserCredentials } from '../../api/index';
 import { IconX } from '@tabler/icons-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
 
 interface CommentType {
   _id: string;
@@ -42,6 +45,24 @@ const CommentList = ({ recipeId }: { recipeId: RecipeType['recipeId'] }) => {
   const formatTimeAgo = (timestamp: string) => {
     return formatDistanceToNow(parseISO(timestamp), { addSuffix: true });
   };
+
+  useEffect(() => {
+
+    socket.on('commentAdded', (newComment: CommentType) => {
+      setComments((prevComments) => [newComment, ...prevComments]);
+    });
+
+    socket.on('commentDeleted', (deletedCommentId: number) => {
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== deletedCommentId.toString())
+      );
+    });
+
+    return () => {
+      socket.off('commentAdded');
+      socket.off('commentDeleted');
+    };
+  }, []);
 
   return (
     <Container w='100%' pt={0}>

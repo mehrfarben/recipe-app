@@ -20,7 +20,7 @@ const Profile = () => {
     return (
         <>
         {userData ? (
-            <Flex justify="center" align="center">
+            <Flex mih='85vh' justify="center" align="start">
                 <Card mb={50} p={{ base: 15, md: 50 }} w={{ base: '100%', md: '80%' }}>
 
                     <Box py={20} pl={20}>

@@ -11,6 +11,7 @@ exports.addComment = async (req, res) => {
         });
         await newComment.save();
         res.status(201).json(newComment);
+        req.app.get('io').emit('commentAdded', newComment);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -42,6 +43,7 @@ exports.deleteComment = async (req, res) => {
         }
 
         await Comment.findByIdAndDelete(commentId);
+        req.app.get('io').emit('commentDeleted', commentId);
         res.status(200).json({ message: 'Comment deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

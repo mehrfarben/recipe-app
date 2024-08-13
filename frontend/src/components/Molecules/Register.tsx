@@ -22,7 +22,7 @@ const Register = () => {
     };
 
     return (
-        <Flex h='75vh' mt={50} align="start" justify="center">
+        <Flex mih='80vh' mt={50} align="start" justify="center">
         <Fieldset w={{base:'90%' ,md:"35%"}}>
                 <TextInput
                     label="Email"

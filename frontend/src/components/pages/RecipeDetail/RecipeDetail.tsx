@@ -98,6 +98,7 @@ const handleRatingChange = async (value: number) => {
   </Stack>
   </Group>
 
+
   <Group className={classes.recipeDetails} gap={5}>
     <IconClock stroke={1.5} size={30} />
     <Stack gap={0}>
@@ -117,7 +118,7 @@ const handleRatingChange = async (value: number) => {
 
   <Paper p={{base: 0,md:20}} radius='lg' shadow='md' withBorder>
     <Flex justify='center' align='center'>
-  <p className={classes.ratingText} >Rate this recipe:</p>
+  <p className={classes.ratingText}>Rate this recipe:</p>
   <Rating size='lg' value={userRating} onChange={handleRatingChange} />
   </Flex>
   </Paper>
