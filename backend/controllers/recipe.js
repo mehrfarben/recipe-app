@@ -12,11 +12,15 @@ exports.addRecipe = async (req, res) => {
 
     try {
         await newRecipe.save();
+
+        req.app.get('io').emit('recipeAdded', newRecipe);
+
         res.status(201).json(newRecipe);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 };
+
 
 exports.getRecipes = async (req, res) => {
     try {
@@ -104,6 +108,7 @@ exports.deleteRecipe = async (req, res) => {
         }
 
         await Recipe.deleteOne({ recipeId: numericRecipeId });
+        req.app.get('io').emit('recipeDeleted', numericRecipeId);
         res.status(200).json({ message: 'Recipe deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -136,6 +141,7 @@ exports.updateRecipe = async (req, res) => {
       recipe.author = author;
   
       await recipe.save();
+      req.app.get('io').emit('recipeUpdated', recipe);
       res.status(200).json(recipe);
     } catch (error) {
       res.status(500).json({ message: error.message });

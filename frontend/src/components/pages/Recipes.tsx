@@ -5,6 +5,9 @@ import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
 import HeroSection from '../Molecules/HeroSection/HeroSection';
 import CesniLoader from '../Atoms/CesniLoader';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState<RecipeType[]>([]);
@@ -32,6 +35,33 @@ const Recipes = () => {
     getRecipes(currentPage);
   }, [currentPage]);
 
+  useEffect(() => {
+
+    socket.on('recipeAdded', (newRecipe: RecipeType) => {
+      setRecipes((prevRecipes) => [newRecipe, ...prevRecipes]);
+    });
+
+    socket.on('recipeUpdated', (updatedRecipe: RecipeType) => {
+      setRecipes((prevRecipes) =>
+        prevRecipes.map((recipe) =>
+          recipe.recipeId === updatedRecipe.recipeId ? updatedRecipe : recipe
+        )
+      );
+    });
+
+    socket.on('recipeDeleted', (deletedRecipeId: number) => {
+      setRecipes((prevRecipes) =>
+        prevRecipes.filter((recipe) => recipe.recipeId !== deletedRecipeId)
+      );
+    });
+
+    return () => {
+      socket.off('recipeAdded');
+      socket.off('recipeUpdated');
+      socket.off('recipeDeleted');
+    };
+  }, []);
+
   if (loading) {
     return <CesniLoader />;
   }
@@ -58,7 +88,6 @@ const Recipes = () => {
       </Container>
     </>
   );
-  
 };
 
 export default Recipes;
