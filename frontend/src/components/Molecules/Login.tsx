@@ -6,12 +6,14 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconLogout } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton/CustomButton';
+import { useAtom } from 'jotai'
+import { isLoggedInAtom } from '../../Atoms';
 
 export const Login = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [formData, setFormData] = useState({ identifier: '', password: '' });
     const [userData, setUserData] = useState<UserCredentials | null>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+    const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
     const [loginMessage, setLoginMessage] = useState('');
     const navigate = useNavigate();
 
@@ -19,6 +21,7 @@ export const Login = () => {
         const storedUserData = localStorage.getItem('userData');
         if (storedUserData) {
             setUserData(JSON.parse(storedUserData));
+            setIsLoggedIn(true);
         }
     }, []);
 
