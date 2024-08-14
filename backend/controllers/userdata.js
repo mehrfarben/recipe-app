@@ -30,6 +30,7 @@ exports.toggleFavorite = async (req, res) => {
 };
 
 const Recipe = require('../models/recipe');
+const Rating = require('../models/rating');
 
 exports.getFavorites = async (req, res) => {
     const { username } = req.params;
@@ -43,9 +44,17 @@ exports.getFavorites = async (req, res) => {
 
         const favoriteRecipes = await Recipe.find({ recipeId: { $in: userFavorite.favorites } });
 
+        const favoriteRecipesWithRatings = await Promise.all(
+            favoriteRecipes.map(async (recipe) => {
+                const ratings = await Rating.find({ recipeId: recipe.recipeId });
+                const averageRating = ratings.reduce((acc, curr) => acc + curr.rating, 0) / (ratings.length || 1);
+                return { ...recipe.toObject(), averageRating };
+            })
+        );
+
         return res.status(200).json({
             favorites: userFavorite.favorites,
-            recipes: favoriteRecipes
+            recipes: favoriteRecipesWithRatings,
         });
     } catch (error) {
         return res.status(500).json({ message: 'Server error', error });
