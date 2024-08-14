@@ -1,6 +1,5 @@
 const Recipe = require('../models/recipe');
 const Rating = require('../models/rating');
-const UserData = require('../models/userdata');
 const { escapeRegExp } = require('lodash');
 
 exports.addRecipe = async (req, res) => {

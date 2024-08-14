@@ -8,6 +8,8 @@ import CommentForm from '../../Molecules/CommentForm';
 import CommentList from '../../Molecules/CommentList';
 import CesniLoader from '../../Atoms/CesniLoader';
 import classes from './RecipeDetail.module.css';
+import Hunger from '../../../assets/Hunger'
+import HungerEmpty from '../../../assets/HungerEmpty'
 
 const RecipeDetails: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -16,6 +18,8 @@ const RecipeDetails: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [refreshComments, setRefreshComments] = useState<boolean>(false);
   const [userRating, setUserRating] = useState<number>(0);
+  const HungerIcon = (props) => <Hunger width={40} height={35} {...props} />;
+  const HungerEmptyIcon = (props) => <HungerEmpty width={40} height={35} {...props} />;
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -119,7 +123,7 @@ const handleRatingChange = async (value: number) => {
   <Paper p={{base: 0,md:20}} radius='lg' shadow='md' withBorder>
     <Flex justify='center' align='center'>
   <p className={classes.ratingText}>{userRating ? `Your Rating:` : 'Rate This Recipe:'}</p>
-  <Rating size='lg' value={userRating} onChange={handleRatingChange} />
+  <Rating fullSymbol={<HungerIcon />} emptySymbol={<HungerEmptyIcon />} size='lg' value={userRating} onChange={handleRatingChange} />
   </Flex>
   </Paper>
 

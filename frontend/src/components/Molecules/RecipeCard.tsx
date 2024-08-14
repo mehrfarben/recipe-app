@@ -5,6 +5,8 @@ import Button from '../Atoms/CustomButton/CustomButton';
 import LikeButton from '../Atoms/LikeButton/LikeButton';
 import { addRecipeToFavorites, fetchFavoriteRecipes, RecipeType } from '../../api';
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import Hunger from '../../assets/Hunger'
+import HungerEmpty from '../../assets/HungerEmpty'
 
 interface RecipeCardProps {
   recipes: RecipeType[];
@@ -85,7 +87,7 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
             </Flex>
 
             <Flex mt={5} mih={20} align='center'>
-              <Rating size='xs' value={recipe.averageRating || 0} readOnly fractions={2} />
+              <Rating  fullSymbol={Hunger} emptySymbol={HungerEmpty} size='xs' value={recipe.averageRating || 0} readOnly fractions={2} />
               <Text size='xs' ml={5}>{(recipe.averageRating || 0).toFixed(1)} </Text>
             </Flex>
 

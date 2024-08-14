@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './App.css';
@@ -11,7 +10,7 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+
     <BrowserRouter>
       <MantineProvider
         defaultColorScheme="auto">
@@ -24,5 +23,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </ModalsProvider>
       </MantineProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+
 );

@@ -13,7 +13,7 @@ a{
 }
 
 .mantine-Fieldset-legend{
-  font-family: "Monarcha", cursive;
+  font-family: "Monarcha", sans-serif;
   font-weight: 500;
   font-size: 40px !important;
 }
@@ -40,8 +40,7 @@ a{
 }
 
 .footer {
-  background-color: #ffba09;
-  border-top: 1px solid rgba(24, 24, 24, 0.15);
+  border-top: 1px solid #aaa;
 }
 
 .inner {

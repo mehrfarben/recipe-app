@@ -34,10 +34,8 @@ mongoose.connect('mongodb://localhost:27017/recipe-app')
     .catch(err => console.error('MongoDB connection error:', err));
 
 io.on('connection', (socket) => {
-    console.log('A user connected');
 
     socket.on('disconnect', () => {
-        console.log('User disconnected');
     });
 });
 
