@@ -79,12 +79,14 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
 
             <Flex mt={10} mih={30} align='center' justify='space-between'>
               <Text fw={500} size='sm'>{recipe.name}</Text>
-              <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
+              {recipe.createdAt && (
+                <Text size='xs' c='dimmed'>{formatTimeAgo(recipe.createdAt)}</Text>
+              )}
             </Flex>
 
             <Flex mt={5} mih={20} align='center'>
-              <Rating size='xs' value={recipe.averageRating} readOnly fractions={2} />
-              <Text size='sm' ml={5}>{recipe.averageRating} </Text>
+              <Rating size='xs' value={recipe.averageRating || 0} readOnly fractions={2} />
+              <Text size='xs' ml={5}>{(recipe.averageRating || 0).toFixed(1)} </Text>
             </Flex>
 
             <Flex mt={20} justify='space-between' align='center' mih={60}>

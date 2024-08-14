@@ -1,4 +1,6 @@
 const UserData = require('../models/userdata');
+const Recipe = require('../models/recipe');
+const Rating = require('../models/rating');
 
 exports.toggleFavorite = async (req, res) => {
     const { recipeId, username } = req.body;
@@ -29,9 +31,6 @@ exports.toggleFavorite = async (req, res) => {
     }
 };
 
-const Recipe = require('../models/recipe');
-const Rating = require('../models/rating');
-
 exports.getFavorites = async (req, res) => {
     const { username } = req.params;
 
@@ -42,22 +41,29 @@ exports.getFavorites = async (req, res) => {
             return res.status(404).json({ message: 'Favorites not found' });
         }
 
-        const favoriteRecipes = await Recipe.find({ recipeId: { $in: userFavorite.favorites } });
+        const favoriteRecipes = await Recipe.find({ recipeId: { $in: userFavorite.favorites } }).lean();
 
-        const favoriteRecipesWithRatings = await Promise.all(
-            favoriteRecipes.map(async (recipe) => {
-                const ratings = await Rating.find({ recipeId: recipe.recipeId });
-                const averageRating = ratings.reduce((acc, curr) => acc + curr.rating, 0) / (ratings.length || 1);
-                return { ...recipe.toObject(), averageRating };
-            })
-        );
+        const recipeIds = favoriteRecipes.map(recipe => recipe.recipeId.toString());
+
+        const averageRatings = await Rating.aggregate([
+            { $match: { recipeId: { $in: recipeIds } } },
+            { $group: { _id: "$recipeId", averageRating: { $avg: "$rating" } } }
+        ]);
+
+        const ratingsMap = new Map(averageRatings.map(item => [item._id, item.averageRating]));
+
+        const favoriteRecipesWithRatings = favoriteRecipes.map(recipe => ({
+            ...recipe,
+            averageRating: Number((ratingsMap.get(recipe.recipeId.toString()) || 0).toFixed(1))
+        }));
 
         return res.status(200).json({
             favorites: userFavorite.favorites,
             recipes: favoriteRecipesWithRatings,
         });
     } catch (error) {
-        return res.status(500).json({ message: 'Server error', error });
+        console.error('Error in getFavorites:', error);
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 

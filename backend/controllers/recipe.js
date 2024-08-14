@@ -1,5 +1,7 @@
 const Recipe = require('../models/recipe');
 const Rating = require('../models/rating');
+const UserData = require('../models/userdata');
+const { escapeRegExp } = require('lodash');
 
 exports.addRecipe = async (req, res) => {
     const { recipeId, name, description, image, preptime, prep, ingredients, category, serving, author } = req.body;
@@ -21,7 +23,6 @@ exports.addRecipe = async (req, res) => {
     }
 };
 
-
 exports.getRecipes = async (req, res) => {
     try {
         const { author, name, page = 1, limit = 12 } = req.query;
@@ -31,39 +32,44 @@ exports.getRecipes = async (req, res) => {
             query.author = author;
         }
         if (name) {
-            query.name = new RegExp(name, 'i');
+            query.name = new RegExp(escapeRegExp(name), 'i');
         }
+
+        const skip = (Math.max(1, parseInt(page)) - 1) * Math.min(100, parseInt(limit));
+        const limitValue = Math.min(100, parseInt(limit));
 
         const recipes = await Recipe.find(query)
             .sort({ createdAt: -1 })
-            .skip((page - 1) * limit)
-            .limit(Number(limit));
+            .skip(skip)
+            .limit(limitValue)
+            .lean();
 
         const totalRecipes = await Recipe.countDocuments(query);
 
-        const recipesWithRatings = await Promise.all(recipes.map(async (recipe) => {
-            const ratings = await Rating.find({ recipeId: recipe.recipeId });
-            const avgRating = ratings.length > 0
-                ? ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
-                : 0;
-            
-            return {
-                ...recipe.toObject(),
-                averageRating: Number(avgRating.toFixed(1))
-            };
+        const recipeIds = recipes.map(recipe => recipe.recipeId.toString());
+
+        const averageRatings = await Rating.aggregate([
+            { $match: { recipeId: { $in: recipeIds } } },
+            { $group: { _id: "$recipeId", averageRating: { $avg: "$rating" } } }
+        ]);
+
+        const ratingsMap = new Map(averageRatings.map(item => [item._id, item.averageRating]));
+
+        const recipesWithRatings = recipes.map(recipe => ({
+            ...recipe,
+            averageRating: Number((ratingsMap.get(recipe.recipeId.toString()) || 0).toFixed(1))
         }));
 
         res.status(200).json({
-            totalPages: Math.ceil(totalRecipes / limit),
+            totalPages: Math.ceil(totalRecipes / limitValue),
             currentPage: Number(page),
             recipes: recipesWithRatings,
         });
     } catch (error) {
-        console.error('Error in /recipes route:', error);
-        res.status(500).json({ message: error.message });
+        console.error('Error in getRecipes:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
-
 
 
 exports.getRecipeById = async (req, res) => {
