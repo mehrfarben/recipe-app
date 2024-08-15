@@ -6,8 +6,6 @@ import RecipeCard from '../Molecules/RecipeCard';
 import HeroSection from '../Molecules/HeroSection/HeroSection';
 import CesniLoader from '../Atoms/CesniLoader';
 import io from 'socket.io-client';
-import { useAtom } from 'jotai';
-import { userAtom } from '../../Atoms';
 
 const socket = io('http://localhost:3000');
 
@@ -17,11 +15,6 @@ const Recipes = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useAtom(userAtom);
-
-  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-  setUser(userData.username || null)
-  console.log(user)
 
   useEffect(() => {
     async function getRecipes(page: number): Promise<void> {
@@ -80,7 +73,7 @@ const Recipes = () => {
       <Container maw={{ base: '100%', lg: '80%' }} p={20}>
         <Fieldset legend='Newest Recipes' mt={20} mb={50} radius='md' p={10} pt={30}>
           {error && <div>{error}</div>}
-          <RecipeCard username={user} recipes={recipes} />
+          <RecipeCard recipes={recipes} />
           <Group mt={50} justify='end'>
             <Pagination
               size='lg'
