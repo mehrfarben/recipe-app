@@ -47,7 +47,7 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
     <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
       {recipes.map((recipe) => (
         <Flex my={15} w='100%' justify='center' key={recipe.recipeId}>
-          <Card w={320} h={'100%'} shadow="md" padding="sm" radius="lg" mx={5} withBorder>
+          <Card w={320} h={350} shadow="md" padding="sm" radius="lg" mx={5} withBorder>
             <Card.Section pos='relative'>
               <Image
                 src={recipe.image}
@@ -69,19 +69,19 @@ const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
               )}
             </Flex>
 
-            <Flex mt={5} mih={20} align='center'>
+            <Flex mt={10} mih={20} align='start'>
               <Rating  fullSymbol={Hunger} emptySymbol={HungerEmpty} size='xs' value={recipe.averageRating || 0} readOnly fractions={2} />
               <Text size='xs' ml={5}>{(recipe.averageRating || 0).toFixed(1)} </Text>
             </Flex>
 
-            <Flex mt={20} justify='space-between' align='center' mih={60}>
+            <Flex h='100%' justify='space-between' align='end'>
               <Flex align='center'>
                 <Avatar radius="xl" />
                 <Text size='sm' ml={5}>{recipe.author || "Anon User"}</Text>
               </Flex> 
               <Link to={`/recipe/${recipe.recipeId}`}>
-                <Button size='xs' w={{ base: '120px', md: '130px' }}>
-                  Read recipe
+                <Button size='xs' w={100}>
+                  Details
                 </Button>
               </Link>
             </Flex>
