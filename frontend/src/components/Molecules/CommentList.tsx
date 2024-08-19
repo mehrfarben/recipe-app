@@ -3,11 +3,9 @@ import { Text, Group, Avatar, ActionIcon, Flex, Container, Paper } from '@mantin
 import { fetchComments, deleteComment, RecipeType, UserCredentials } from '../../api/index';
 import { IconX } from '@tabler/icons-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import io from 'socket.io-client';
 import { notifications } from '@mantine/notifications';
 import { modals } from '@mantine/modals';
-
-const socket = io('http://localhost:3000');
+import socket from '../../utils/Socket';
 
 interface CommentType {
   _id: string;

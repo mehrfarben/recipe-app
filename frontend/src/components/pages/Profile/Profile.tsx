@@ -6,16 +6,26 @@ import YourRecipes from '../../Molecules/YourRecipes';
 import NotSignedIn from '../NotSignedIn';
 import { IconHeart, IconReceipt } from '@tabler/icons-react';
 import classes from './Profile.module.css';
+import CesniLoader from '../../Atoms/CesniLoader';
 
 const Profile = () => {
     const [userData, setUserData] = useState<UserCredentials | null>(null);
+    const [loading, isLoading] = useState(true)
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('userData');
         if (storedUserData) {
             setUserData(JSON.parse(storedUserData));
+            isLoading(false);
+        }
+        else {
+            isLoading(false);
         }
     }, []);
+
+    if (loading) {
+        return <CesniLoader />;
+    }
 
     return (
         <>

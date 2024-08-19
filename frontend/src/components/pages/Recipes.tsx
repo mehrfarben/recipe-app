@@ -5,9 +5,7 @@ import { RecipeType } from '../../api/index';
 import RecipeCard from '../Molecules/RecipeCard';
 import HeroSection from '../Molecules/HeroSection/HeroSection';
 import CesniLoader from '../Atoms/CesniLoader';
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:3000');
+import socket from '../../utils/Socket';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState<RecipeType[]>([]);
