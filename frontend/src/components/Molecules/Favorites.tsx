@@ -1,35 +1,10 @@
-import { useEffect, useState } from "react";
-import { fetchFavoriteRecipes, RecipeType } from "../../api";
 import { Text, Flex, Fieldset, Container } from "@mantine/core";
 import RecipeCard from "./RecipeCard";
-import CesniLoader from "../Atoms/CesniLoader";
+import { useAtom } from 'jotai';
+import { favoriteRecipesAtom } from '../../utils/Atoms';
 
 const Favorites = () => {
-  const [favoriteRecipes, setFavoriteRecipes] = useState<RecipeType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-  const username = userData.username;
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      if (username) {
-        try {
-          const response = await fetchFavoriteRecipes(username);
-          setFavoriteRecipes(response.data.recipes);
-          setIsLoading(false);
-        } catch (error) {
-          console.error('Error fetching favorite recipes', error);
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchFavorites();
-  }, [username]);
-
-  if (isLoading) {
-    return <CesniLoader />;
-  }
+  const [favoriteRecipes] = useAtom(favoriteRecipesAtom);
 
   return (
     <Flex justify='center'>

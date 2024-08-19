@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Card, Image, Text, Flex, SimpleGrid, Avatar, Rating } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Button from '../Atoms/CustomButton/CustomButton';
@@ -7,33 +6,17 @@ import { addRecipeToFavorites, fetchFavoriteRecipes, RecipeType } from '../../ap
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import Hunger from '../../assets/Hunger'
 import HungerEmpty from '../../assets/HungerEmpty'
+import { useAtom } from 'jotai';
+import { favoritesAtom, favoriteRecipesAtom } from '../../utils/Atoms';
 
 interface RecipeCardProps {
   recipes: RecipeType[];
 }
 
 const RecipeCard = ({ recipes = [] }: RecipeCardProps) => {
-  const [favorites, setFavorites] = useState<number[]>([]);
-  const [username, setUsername] = useState<string | null>(null);
-
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const username = userData.username;
-    setUsername(username || null);
-
-    if (username) {
-      const fetchFavorites = async () => {
-        try {
-          const response = await fetchFavoriteRecipes(username);
-          setFavorites(response.data.favorites);
-        } catch (error) {
-          console.error('Error fetching favorite recipes', error);
-        }
-      };
-
-      fetchFavorites();
-    }
-  }, []);
+  const [favorites, setFavorites] = useAtom(favoritesAtom);
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const username = userData.username;
 
   const handleToggleFavorite = async (recipeId: number) => {
     if (!username) {

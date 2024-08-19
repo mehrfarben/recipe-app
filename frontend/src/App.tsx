@@ -9,9 +9,36 @@ import LogoWhite from "./assets/logotexticonwhite.svg";
 import DarkModeButton from './components/Atoms/DarkModeButton';
 import { Link } from 'react-router-dom';
 import { Footer } from './components/Molecules/Footer';
+import { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { favoritesAtom, favoriteRecipesAtom } from './utils/Atoms';
+import { fetchFavoriteRecipes } from './api/index';
 
 function Home() {
   const [opened, { toggle }] = useDisclosure();
+  const [favorites, setFavorites] = useAtom(favoritesAtom);
+  const [favoriteRecipes, setFavoriteRecipes] = useAtom(favoriteRecipesAtom);
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const username = userData.username;
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (username && favorites.length === 0) {
+        try {
+          const response = await fetchFavoriteRecipes(username);
+          const { favorites: favoriteIds, recipes } = response.data;
+  
+          setFavorites(favoriteIds);
+          setFavoriteRecipes(recipes);
+        } catch (error) {
+          console.error('Error fetching favorite recipes', error);
+        }
+      }
+    };
+  
+    fetchFavorites();
+  }, [username, favorites.length, setFavorites, setFavoriteRecipes]);
+  
 
 
   return (
