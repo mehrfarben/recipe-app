@@ -8,6 +8,7 @@
 - [Project Overview](#project-overview)
 - [Installation](#installation)
 - [Features](#features)
+- [Technologies](#technologies)
 
 # Project Overview
 Çeşni is created using React, Express and MongoDB. In this app you can share your recipes, favorite other's recipes, comment on them and rate them. This is the first full-stack app i wrote and I tried to polish it as much as I can but don't expect it to be perfect.
